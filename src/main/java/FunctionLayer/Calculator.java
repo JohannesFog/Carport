@@ -6,7 +6,8 @@ package FunctionLayer;
  */
 public interface Calculator {
     
-    public void udregnPris();
+    public double calculatePrice(BillOfMaterials bom);
+    
     
     
     

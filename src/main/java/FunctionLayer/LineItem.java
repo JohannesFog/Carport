@@ -2,46 +2,49 @@ package FunctionLayer;
 
 public class LineItem {
     
-    String navn;
-    int længde;
-    int antal;
-    String enhed;
-    String beskrivelse;
-    double pris;
+    String name;
+    int length;
+    int amount;
+    String unit;
+    String description;
+    double unitPrice;
 
-    public LineItem(String navn, int længde, int antal, String enhed, String beskrivelse, double pris) {
-        this.navn = navn;
-        this.længde = længde;
-        this.antal = antal;
-        this.enhed = enhed;
-        this.beskrivelse = beskrivelse;
-        this.pris = pris;
+    public LineItem(String name, int length, int amount, String unit, String description, double unitPrice) {
+        this.name = name;
+        this.length = length;
+        this.amount = amount;
+        this.unit = unit;
+        this.description = description;
+        this.unitPrice = unitPrice;
     }
 
-    public String getNavn() {
-        return navn;
+    public String getName() {
+        return name;
     }
 
-    public int getLængde() {
-        return længde;
+    public int getLength() {
+        return length;
     }
 
-    public int getAntal() {
-        return antal;
+    public int getAmount() {
+        return amount;
     }
 
-    public String getEnhed() {
-        return enhed;
+    public String getUnit() {
+        return unit;
     }
 
-    public String getBeskrivelse() {
-        return beskrivelse;
+    public String getDescription() {
+        return description;
     }
 
-    public double getPris() {
-        return pris;
+    public double getUnitPrice() {
+        return unitPrice;
     }
     
+    public double getTotslPrice() {
+        return unitPrice*amount;
+    }
     
     
     
