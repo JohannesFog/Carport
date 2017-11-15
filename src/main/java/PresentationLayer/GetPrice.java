@@ -17,7 +17,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author Mikkel Lindstrøm <Mikkel.Lindstrøm>
  */
-public class GetPris extends Command {
+public class GetPrice extends Command {
    
     @Override
     String execute( HttpServletRequest request, HttpServletResponse response ) throws LoginSampleException {

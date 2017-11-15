@@ -17,8 +17,8 @@
             <tr><td>Udfyld felterne</td>
                 <td>
                     <br>
-                    <form name="GetPris" action="FrontController" method="POST">
-                        <input type="hidden" name="command" value="GetPris">
+                    <form name="GetPrice" action="FrontController" method="POST">
+                        <input type="hidden" name="command" value="GetPrice">
                         Højde<br>
                         <input type="text" name="højde" value="">
                         <br>
