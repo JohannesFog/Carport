@@ -2,12 +2,12 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>kasper.osterbye</groupId>
-    <artifactId>LogInSample</artifactId>
+    <groupId>Chess</groupId>
+    <artifactId>Carport</artifactId>
     <version>0.1-Test</version>
     <packaging>war</packaging>
 
-    <name>LogInSample</name>
+    <name>Carport</name>
 
     <properties>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
