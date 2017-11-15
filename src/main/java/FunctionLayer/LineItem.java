@@ -4,15 +4,15 @@ public class LineItem {
     
     String name;
     int length;
-    int amount;
+    int quantity;
     String unit;
     String description;
     double unitPrice;
 
-    public LineItem(String name, int length, int amount, String unit, String description, double unitPrice) {
+    public LineItem(String name, int length, int quantity, String unit, String description, double unitPrice) {
         this.name = name;
         this.length = length;
-        this.amount = amount;
+        this.quantity = quantity;
         this.unit = unit;
         this.description = description;
         this.unitPrice = unitPrice;
@@ -26,8 +26,8 @@ public class LineItem {
         return length;
     }
 
-    public int getAmount() {
-        return amount;
+    public int getQuantity() {
+        return quantity;
     }
 
     public String getUnit() {
@@ -42,8 +42,8 @@ public class LineItem {
         return unitPrice;
     }
     
-    public double getTotslPrice() {
-        return unitPrice*amount;
+    public double getTotalPrice() {
+        return unitPrice*quantity;
     }
     
     
