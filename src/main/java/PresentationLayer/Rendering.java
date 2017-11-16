@@ -15,6 +15,8 @@ import java.util.ArrayList;
  */
 public class Rendering {    
     
+    
+    
     public String getHTML(double price, BillOfMaterials bom) {
         String output = ""
                 + "<h1>Velkommen til Pricepage</h1>"
