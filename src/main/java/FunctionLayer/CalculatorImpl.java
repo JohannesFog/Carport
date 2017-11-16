@@ -22,11 +22,12 @@ public class CalculatorImpl implements Calculator {
     public BillOfMaterials bomCalculator(double length, double width) {
         BillOfMaterials totalBom = new BillOfMaterials();
 
+        totalBom.mergeBom(calculateStern(length, width));
+        totalBom.mergeBom(calculateRemme(length, width));
+        totalBom.mergeBom(calculateSpær(length, width));
         totalBom.mergeBom(calculateStolper(length, width));
         totalBom.mergeBom(calculateTagplader(length, width));
-        totalBom.mergeBom(calculateRemme(length, width));
-        totalBom.mergeBom(calculateStern(length, width));
-        totalBom.mergeBom(calculateSpær(length, width));
+        
 
         return totalBom;
     }
@@ -34,7 +35,7 @@ public class CalculatorImpl implements Calculator {
     @Override
     public BillOfMaterials calculateStolper(double length, double width) {
         BillOfMaterials bom = new BillOfMaterials();
-        int quantity = ((int) length) / 2;
+        int quantity = (((int) length) / 200) * 2;
         bom.addLineItem(new LineItem("97x97mm trykimp. stolpe", 300, quantity, "stk", "Stolper nedgraves 90cm i jord.", 83.85));
         return bom;
     }
