@@ -25,7 +25,7 @@ public class GetPrice extends Command {
     @Override
     String execute( HttpServletRequest request, HttpServletResponse response ) throws LoginSampleException {
         
-        String længde = request.getParameter( "længde" );
+        String længde = request.getParameter( "laengde" );
         double length = Double.parseDouble(længde);
         String bredde = request.getParameter( "bredde" );
         double width = Double.parseDouble(bredde);

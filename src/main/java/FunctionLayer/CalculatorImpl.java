@@ -22,10 +22,10 @@ public class CalculatorImpl implements Calculator {
     public BillOfMaterials bomCalculator(double length, double width) {
         BillOfMaterials totalBom = new BillOfMaterials();
         
-        totalBom.mergeBom(calculateStolper(length, width));
-        totalBom.mergeBom(calculateTagplader(length, width));
-        totalBom.mergeBom(calculateRemme(length, width));
-        totalBom.mergeBom(calculateStern(length, width));
+        //totalBom.mergeBom(calculateStolper(length, width));
+        //totalBom.mergeBom(calculateTagplader(length, width));
+        //totalBom.mergeBom(calculateRemme(length, width));
+        //totalBom.mergeBom(calculateStern(length, width));
         totalBom.mergeBom(calculateSpær(length, width));
         
         return totalBom;

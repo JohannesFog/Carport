@@ -4,6 +4,9 @@
     Author     : Mikkel Lindstrøm <Mikkel.Lindstrøm>
 --%>
 
+<%@page import="java.util.ArrayList"%>
+<%@page import="FunctionLayer.LineItem"%>
+<%@page import="FunctionLayer.BillOfMaterials"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -13,5 +16,12 @@
     </head>
     <body>
         <h1>Hello World!</h1>
+        <%=session.getAttribute("price")%> <p>kr.</p>
+        <%BillOfMaterials bom = (BillOfMaterials) session.getAttribute("bom");%>
+        <%ArrayList<LineItem> items = bom.getBomList();
+        for (LineItem li: items) {%>
+            <%= li.toString()%>
+        <%}%>
+        
     </body>
 </html>

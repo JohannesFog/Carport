@@ -23,7 +23,7 @@
                         <input type="text" name="bredde" value="">
                         <br>
                         Længde<br>
-                        <input type="text" name="længde" value="">
+                        <input type="text" name="laengde" value="">
                         <input type="submit" value="Submit">
                     </form>
                 </td>
