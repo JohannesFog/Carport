@@ -28,6 +28,8 @@ public class CalculatorImpl implements Calculator {
         totalBom.mergeBom(calculateSpær(length, width));
         totalBom.mergeBom(calculateStolper(length, width));
         totalBom.mergeBom(calculateTagplader(length, width));
+        totalBom.mergeBom(calculateHulbånd(width));
+        totalBom.mergeBom(calculateBeslag(length));
 
         return totalBom;
     }
@@ -61,9 +63,9 @@ public class CalculatorImpl implements Calculator {
         if (newLength % 60 != 0) {
             newLength += 30;
         }
-        double[] price = {113.85,136.63,159.39,182.16,204.93,287.7,316.48,345.24};
-        int index = (newLength-300)/60;
-        
+        double[] price = {113.85, 136.63, 159.39, 182.16, 204.93, 287.7, 316.48, 345.24};
+        int index = (newLength - 300) / 60;
+
         bom.addLineItem(new LineItem("45x95mm spærtræ ubh.", newLength, 2, "stk", "Remme i sider, sadles ned i stolper", price[index]));
         return bom;
     }
@@ -94,8 +96,8 @@ public class CalculatorImpl implements Calculator {
         if (newWidth % 60 != 0) {
             newWidth += 30;
         }
-        double[] price = {113.85,136.63,159.39,182.16,204.93,287.7,316.48,345.24};
-        int index = (newWidth-300)/60;
+        double[] price = {113.85, 136.63, 159.39, 182.16, 204.93, 287.7, 316.48, 345.24};
+        int index = (newWidth - 300) / 60;
         bom.addLineItem(new LineItem("45x195mm spærtræ ubh.", newWidth, quantity, "stk", "Spær monteres på rem", price[index]));
         return bom;
     }
@@ -110,7 +112,11 @@ public class CalculatorImpl implements Calculator {
 
     @Override
     public BillOfMaterials calculateBeslag(double length) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        BillOfMaterials bom = new BillOfMaterials();
+        int quantity = (int) (Math.ceil(length / 55.0));
+        bom.addLineItem(new LineItem("Universal 190mm højre", 0, quantity, "Stk", "Til montering af spær på rem", 21.95));
+        bom.addLineItem(new LineItem("Universal 190mm venstre", 0, quantity, "Stk", "Til montering af spær på rem", 21.95));
+        return bom;
     }
 
 }

@@ -16,7 +16,7 @@ public class Test {
      public static void main(String[] args) {
         
         Calculator calc = new CalculatorImpl();
-        BillOfMaterials bom = calc.bomCalculator(600.0, 500.0);
+        BillOfMaterials bom = calc.bomCalculator(600.0, 510.0);
         
         
         
