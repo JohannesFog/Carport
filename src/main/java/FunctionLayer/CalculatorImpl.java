@@ -53,7 +53,11 @@ public class CalculatorImpl implements Calculator {
 
     @Override
     public BillOfMaterials calculateSpær(double length, double width) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        BillOfMaterials bom = new BillOfMaterials();
+        
+        
+
+        return bom;
     }
     
 }
