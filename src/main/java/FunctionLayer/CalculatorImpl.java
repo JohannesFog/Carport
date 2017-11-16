@@ -54,8 +54,8 @@ public class CalculatorImpl implements Calculator {
     @Override
     public BillOfMaterials calculateSpær(double length, double width) {
         BillOfMaterials bom = new BillOfMaterials();
-        
-        
+        int quantity = (int)(Math.ceil(length/55.0));
+        bom.addLineItem(new LineItem("45x195mm spærtræ ubh.",(int) width,quantity, "stk", "Spær monteres på rem",287.70));
 
         return bom;
     }
