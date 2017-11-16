@@ -23,4 +23,8 @@ public interface Calculator {
     
     public BillOfMaterials calculateSpær(double length, double width);
     
+    public BillOfMaterials calculateHulbånd(double width);
+     
+    public BillOfMaterials calculateBeslag(double length);
+    
 }
