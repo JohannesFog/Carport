@@ -22,7 +22,7 @@
                     <select name="bredde">
                     <%
                             int b = 240;
-                            for (int i = 0; i<18; i++) {
+                            for (int i = 0; i<17; i++) {
                                 %>
                                     <option value="<%= b%>"><%= b%></option>
                                 
@@ -37,7 +37,7 @@
                     <select name="laengde">
                     <%
                             int l = 240;
-                            for (int i = 0; i<19; i++) {
+                            for (int i = 0; i<17; i++) {
                                 %>
                                     <option value="<%= l%>"><%= l%></option>
                                 
