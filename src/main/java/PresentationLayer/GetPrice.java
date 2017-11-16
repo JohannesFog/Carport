@@ -5,6 +5,9 @@
  */
 package PresentationLayer;
 
+import FunctionLayer.BillOfMaterials;
+import FunctionLayer.Calculator;
+import FunctionLayer.CalculatorImpl;
 import FunctionLayer.LogicFacade;
 import FunctionLayer.LoginSampleException;
 import FunctionLayer.User;
@@ -26,6 +29,12 @@ public class GetPrice extends Command {
         double length = Double.parseDouble(længde);
         String bredde = request.getParameter( "bredde" );
         double width = Double.parseDouble(bredde);
+        Calculator calc = new CalculatorImpl();
+        BillOfMaterials bom = calc.bomCalculator(length, width);
+        double price = calc.calculatePrice(bom);
+        HttpSession session = request.getSession();
+        session.setAttribute( "price", price );
+        session.setAttribute( "bom", bom );
         return "pricepage";
     }
 
