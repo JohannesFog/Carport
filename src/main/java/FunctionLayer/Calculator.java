@@ -16,7 +16,7 @@ public interface Calculator {
     
     public BillOfMaterials calculateTagplader(double length, double width);
     
-    public BillOfMaterials calculateRemme(double length, double width); 
+    public BillOfMaterials calculateRemme(double length); 
     
     //understern, overstern, vandbrædder
     public BillOfMaterials calculateStern(double length, double width);
@@ -26,5 +26,17 @@ public interface Calculator {
     public BillOfMaterials calculateHulbånd(double width);
      
     public BillOfMaterials calculateBeslag(double length);
+    
+    public BillOfMaterials calculateSkruerStern(double length, double width);
+    
+    public BillOfMaterials calculateSkruerBeslag(double length, double width);
+    
+    public BillOfMaterials calculateBræddebolt(double length);
+    
+    public BillOfMaterials calculateFirkantskiver(double length);
+    
+    
+    
+    
     
 }

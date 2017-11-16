@@ -24,12 +24,16 @@ public class CalculatorImpl implements Calculator {
         BillOfMaterials totalBom = new BillOfMaterials();
 
         totalBom.mergeBom(calculateStern(length, width));
-        totalBom.mergeBom(calculateRemme(length, width));
+        totalBom.mergeBom(calculateRemme(length));
         totalBom.mergeBom(calculateSpær(length, width));
         totalBom.mergeBom(calculateStolper(length, width));
         totalBom.mergeBom(calculateTagplader(length, width));
         totalBom.mergeBom(calculateHulbånd(width));
         totalBom.mergeBom(calculateBeslag(length));
+        totalBom.mergeBom(calculateSkruerStern(length, width));
+        totalBom.mergeBom(calculateSkruerBeslag(length, width));
+        totalBom.mergeBom(calculateBræddebolt(length));
+        totalBom.mergeBom(calculateFirkantskiver(length));
 
         return totalBom;
     }
@@ -54,7 +58,7 @@ public class CalculatorImpl implements Calculator {
     }
 
     @Override
-    public BillOfMaterials calculateRemme(double length, double width) {
+    public BillOfMaterials calculateRemme(double length) {
         BillOfMaterials bom = new BillOfMaterials();
         int newLength = (int) length;
         if (newLength < 300) {
@@ -119,4 +123,69 @@ public class CalculatorImpl implements Calculator {
         return bom;
     }
 
+    @Override
+    public BillOfMaterials calculateSkruerStern(double length, double width) {
+        BillOfMaterials bom = new BillOfMaterials();
+        int brætLængdeTotal = 0;
+        int skrueAntal = 0;
+        int skruePakkerAntal = 0;
+        BillOfMaterials stern = calculateStern(length, width);
+        for (LineItem li: stern.getBomList()) {
+            brætLængdeTotal += li.getLength();
+        }
+        skrueAntal = brætLængdeTotal/25; // 1 skrue pr. 25 centimeter
+        skruePakkerAntal = (skrueAntal/200)+1; // hvis antallet af skruer passer præcist, købes en ekstra pakke
+        bom.addLineItem(new LineItem("4,5 x 60 mm. skruer 200 stk.", 0, skruePakkerAntal, "pakke(r)", "1 skrue pr. 25 centimeter", 209));
+        return bom;
+    }
+
+    @Override
+    public BillOfMaterials calculateSkruerBeslag(double length, double width) {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        BillOfMaterials bom = new BillOfMaterials();
+        int skruePakkerAntal = 0;
+        BillOfMaterials hulbånd = calculateHulbånd(width);
+        BillOfMaterials beslag = calculateBeslag(length);
+        int beslagStk = 0;
+        int hilbåndStk = 0;
+        for (LineItem li: beslag.getBomList()) {
+            beslagStk += li.getQuantity();
+        }
+        for (LineItem li: hulbånd.getBomList()) {
+            hilbåndStk += li.getQuantity();
+        }
+        //jeg regner med at der går 1 pakke til 30 stk. beslag (højre+venstre)
+        skruePakkerAntal += (beslagStk/30) +1;
+        // jeg regner med at der går 1 pakke pr. rulle hulbånd.
+        skruePakkerAntal += hilbåndStk;
+        bom.addLineItem(new LineItem("4,0 x 50 mm. beslagskruer 250 stk.", 0, skruePakkerAntal, "pakke(r)", "1 pakke pr. rulle hulbånd.", 239));
+        return bom;
+    }
+
+    @Override
+    public BillOfMaterials calculateBræddebolt(double length) {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        BillOfMaterials bom = new BillOfMaterials();
+        int bræddebolte = 0;
+        BillOfMaterials rem = calculateRemme(length);
+        for (LineItem li: rem.getBomList()) {
+            bræddebolte += (li.getQuantity() * 9);//jeg regner med 9 stk, bræddebolte pr. rem.
+        }
+        bom.addLineItem(new LineItem("bræddebolte 10*120 mm.", 0, bræddebolte, "stk.", "9 stk, bræddebolte pr. rem.", 32.83));
+        return bom;
+    }
+
+    @Override
+    public BillOfMaterials calculateFirkantskiver(double length) {
+        BillOfMaterials bom = new BillOfMaterials();
+        int firkantskiver = 0;
+        BillOfMaterials rem = calculateRemme(length);
+        for (LineItem li: rem.getBomList()) {
+            firkantskiver += (li.getQuantity() * 6);//jeg regner med 6 stk, firkantskiver pr. rem.
+        }
+        bom.addLineItem(new LineItem("firkantskiver 40x40x11 mm.", 0, firkantskiver, "stk.", "6 stk, firkantskiver pr. rem.", 9.41));
+        return bom;
+    }
+
+    
 }
