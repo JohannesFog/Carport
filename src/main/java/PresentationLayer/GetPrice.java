@@ -26,8 +26,6 @@ public class GetPrice extends Command {
         double length = Double.parseDouble(længde);
         String bredde = request.getParameter( "bredde" );
         double width = Double.parseDouble(bredde);
-        String højde = request.getParameter( "højde" );
-        double height = Double.parseDouble(længde);
         return "pricepage";
     }
 

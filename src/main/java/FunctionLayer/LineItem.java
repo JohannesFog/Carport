@@ -21,7 +21,7 @@ public class LineItem {
     public String getName() {
         return name;
     }
-
+    
     public int getLength() {
         return length;
     }

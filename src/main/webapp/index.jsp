@@ -19,9 +19,6 @@
                     <br>
                     <form name="GetPrice" action="FrontController" method="POST">
                         <input type="hidden" name="command" value="GetPrice">
-                        Højde<br>
-                        <input type="text" name="højde" value="">
-                        <br>
                         Bredde<br>
                         <input type="text" name="bredde" value="">
                         <br>
