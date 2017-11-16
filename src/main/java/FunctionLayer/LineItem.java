@@ -45,6 +45,11 @@ public class LineItem {
     public double getTotalPrice() {
         return unitPrice*quantity;
     }
+
+    @Override
+    public String toString() {
+        return "LineItem{" + "name=" + name + ", length=" + length + ", quantity=" + quantity + ", unit=" + unit + ", description=" + description + '}';
+    }
     
     
     
