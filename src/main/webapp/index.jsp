@@ -12,66 +12,65 @@
         <title>Welcome page</title>
     </head>
     <body>
-        
-        <table>
-            <tr><td>Udfyld felterne</td>
-                <td>
-                    <br>
-                    <form name="GetPrice" action="FrontController" method="POST">
-                    <input type="hidden" name="command" value="GetPrice">
-                    <select name="bredde">
-                    <%
-                            int b = 240;
-                            for (int i = 0; i<17; i++) {
-                                %>
-                                    <option value="<%= b%>"><%= b%></option>
-                                
-                            <% 
-                                b+=30;
-                            }
 
-                    %>
-                    </select>
-                    
-                    
-                    <select name="laengde">
-                    <%
-                            int l = 240;
-                            for (int i = 0; i<17; i++) {
-                                %>
-                                    <option value="<%= l%>"><%= l%></option>
-                                
-                            <% 
-                                l+=30;
-                            }
 
-                    %>
-                    
-                    
-                    </select>
-                    
-                    <input type="submit" value="Submit">
-                    </form>
-                </td>
-                
-            </tr>
-        </table>
-        
-                    <% String error = (String) request.getAttribute("error");
-                    if (error != null) {%>
-                        <H2>Error!</H2>
-                        <p><%= error%></p>
-                    <%}%>            
-                    
-        <%-- 
-        <input type="text" name="bredde" value="">
-        <input type="text" name="laengde" value="">
-        
-        <select>
-            <option value="" disabled="disabled" selected="selected">Please select a name</option>
-            <option value="1">One</option>
-            <option value="2">Two</option>
-        </select>
-        --%>
+        <h2>Udfyld felterne</h2>
+
+        <form name="GetPrice" action="FrontController" method="POST">
+            <input type="hidden" name="command" value="GetPrice">
+            <br> Bredde i cm <br>
+            <select name="bredde">
+                <%
+                    int b = 240;
+                    for (int i = 0; i < 17; i++) {
+                %>
+                <option value="<%= b%>"><%= b%></option>
+
+                <%
+                        b += 30;
+                    }
+
+                %>
+            </select><br>
+
+            <br>Længde i cm <br>
+            <select name="laengde">
+                <%                        int l = 240;
+                    for (int i = 0; i < 17; i++) {
+                %>
+                <option value="<%= l%>"><%= l%></option>
+
+                <%
+                        l += 30;
+                    }
+
+                %>
+
+
+            </select><br>
+            <br>Vælg tagtype<br>
+            <select name="tagtype">
+                <option value="fladt">Fladt tag</option>
+                <option value="skråt">Skråt tag</option>
+            </select><br>
+            <br>Redskabsskur<br>
+            <select name="skur">
+                <option value="uden">Uden redskabsskur</option>
+                <option value="med">Med redskabsskur</option>
+            </select>
+            <br><br>
+            <input type="submit" value="Submit">
+        </form>
+
+
+
+
+
+        <% String error = (String) request.getAttribute("error");
+                        if (error != null) {%>
+        <H2>Error!</H2>
+        <p><%= error%></p>
+        <%}%>            
+
     </body>
 </html>

@@ -22,6 +22,8 @@
         
         <%=render.getHTML((double) session.getAttribute("price"), 
                 (BillOfMaterials) session.getAttribute("bom"))%>
+                
+                <a href="index.jsp">Home</a>
         
     </body>
 </html>
