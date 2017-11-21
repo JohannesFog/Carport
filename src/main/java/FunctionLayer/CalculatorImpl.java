@@ -20,15 +20,15 @@ public class CalculatorImpl implements Calculator {
     }
 
     @Override
-    public BillOfMaterials bomCalculator(double length, double width, double height, String tagtype, String skur) {
+    public BillOfMaterials bomCalculator(double length, double width, double height, String tagtype, double skurLength, double skurWidth) {
         BillOfMaterials totalBom = new BillOfMaterials();
 
         if (tagtype.equals("fladt") ) {
-                totalBom.mergeBom(bomCalculatorFladtTag(length, width, height, skur));
+                totalBom.mergeBom(bomCalculatorFladtTag(length, width, height, skurLength, skurWidth));
         } else {
                 totalBom.mergeBom(bomCalculatorSkråtTag(length, width, height));
         }
-        if (skur.equals("med") ) {
+        if (skurLength != 0 && skurWidth != 0) {
                 totalBom.mergeBom(bomCalculatorSkur(length, width, height));
         }
      
@@ -50,13 +50,13 @@ public class CalculatorImpl implements Calculator {
     }
 
     @Override
-    public BillOfMaterials bomCalculatorFladtTag(double length, double width, double height, String skur) {
+    public BillOfMaterials bomCalculatorFladtTag(double length, double width, double height, double skurLength, double skurWidth) {
         BillOfMaterials totalBom = new BillOfMaterials();
 
         totalBom.mergeBom(calculateStern(length, width));
         totalBom.mergeBom(calculateRemme(length));
         totalBom.mergeBom(calculateSpær(length, width));
-        totalBom.mergeBom(calculateStolper(length, width, height, skur));
+        totalBom.mergeBom(calculateStolper(length, width, height, skurLength, skurWidth));
         totalBom.mergeBom(calculateTagplader(length, width));
         totalBom.mergeBom(calculateHulbånd(width));
         totalBom.mergeBom(calculateBeslag(length));
@@ -69,11 +69,11 @@ public class CalculatorImpl implements Calculator {
     }
 
     @Override
-    public BillOfMaterials calculateStolper(double length, double width, double height, String skur) {
+    public BillOfMaterials calculateStolper(double length, double width, double height, double skurLength, double skurWidth) {
         BillOfMaterials bom = new BillOfMaterials();
         int quantity = (((int) length) / 300) * 2 + 2;
-        if (skur.equals("med")) {
-            if (width > 400) {
+        if (skurLength != 0 && skurWidth != 0) {
+            if (skurWidth > 400) {
                 quantity += 5;
             } else {
                 quantity += 3;
