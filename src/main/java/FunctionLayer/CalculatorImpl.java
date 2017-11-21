@@ -24,7 +24,7 @@ public class CalculatorImpl implements Calculator {
         BillOfMaterials totalBom = new BillOfMaterials();
 
         if (tagtype.equals("fladt") ) {
-                totalBom.mergeBom(bomCalculatorFladtTag(length, width, height));
+                totalBom.mergeBom(bomCalculatorFladtTag(length, width, height, skur));
         } else {
                 totalBom.mergeBom(bomCalculatorSkråtTag(length, width, height));
         }
@@ -47,13 +47,13 @@ public class CalculatorImpl implements Calculator {
     }
 
     @Override
-    public BillOfMaterials bomCalculatorFladtTag(double length, double width, double height) {
+    public BillOfMaterials bomCalculatorFladtTag(double length, double width, double height, String skur) {
         BillOfMaterials totalBom = new BillOfMaterials();
 
         totalBom.mergeBom(calculateStern(length, width));
         totalBom.mergeBom(calculateRemme(length));
         totalBom.mergeBom(calculateSpær(length, width));
-        totalBom.mergeBom(calculateStolper(length, width, height));
+        totalBom.mergeBom(calculateStolper(length, width, height, skur));
         totalBom.mergeBom(calculateTagplader(length, width));
         totalBom.mergeBom(calculateHulbånd(width));
         totalBom.mergeBom(calculateBeslag(length));
@@ -66,9 +66,16 @@ public class CalculatorImpl implements Calculator {
     }
 
     @Override
-    public BillOfMaterials calculateStolper(double length, double width, double height) {
+    public BillOfMaterials calculateStolper(double length, double width, double height, String skur) {
         BillOfMaterials bom = new BillOfMaterials();
-        int quantity = (((int) length) / 200) * 2 + 2;
+        int quantity = (((int) length) / 300) * 2 + 2;
+        if (skur.equals("med")) {
+            if (width > 400) {
+                quantity += 5;
+            } else {
+                quantity += 3;
+            }
+        }
         int newHeight = (int) height + 90;
         if (newHeight % 60 != 0) {
             newHeight += 30;

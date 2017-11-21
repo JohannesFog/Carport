@@ -11,15 +11,14 @@ public interface Calculator {
     
     public BillOfMaterials bomCalculatorSkråtTag(double length, double width, double height);
     
-    public BillOfMaterials bomCalculatorFladtTag(double length, double width, double height);
+    public BillOfMaterials bomCalculatorFladtTag(double length, double width, double height, String skur);
     
     public BillOfMaterials bomCalculatorSkur(double length, double width, double height);
-        
     
     //Calculates the total price of the carport based on the bill of materials
     public double calculatePrice(BillOfMaterials bom);
     
-    public BillOfMaterials calculateStolper(double length, double width, double height);
+    public BillOfMaterials calculateStolper(double length, double width, double height, String skur);
     
     public BillOfMaterials calculateTagplader(double length, double width);
     
