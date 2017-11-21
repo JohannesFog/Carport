@@ -14,5 +14,8 @@
     <body>
         <h1>Hej <%=(String)session.getAttribute("name")%></h1><br>
         <h2>Mange tak for din ordre, du vil inden for kort tid modtage en ordrebekræftelse fra en af vores medarbejdere</h2>
+        <br><br><br>
+        
+        <a href="index.jsp">Home</a>
     </body>
 </html>

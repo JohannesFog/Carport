@@ -26,10 +26,16 @@
             <input type="hidden" name="command" value="Order">
             <h2>Indtast dit navn:</h2>
             <input type="text" name="name" value="">
-            <input type="button" name="order" value="Bestil Skur">
+            <input type="submit" name="order" value="Bestil Carport">
         </form>
 
         <a href="index.jsp">Home</a>
+        
+         <% String error = (String) request.getAttribute("error");
+                        if (error != null) {%>
+        <H2>Error!</H2>
+        <p><%= error%></p>
+        <%}%> 
 
     </body>
 </html>
