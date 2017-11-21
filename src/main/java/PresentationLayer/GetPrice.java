@@ -8,6 +8,8 @@ package PresentationLayer;
 import FunctionLayer.BillOfMaterials;
 import FunctionLayer.Calculator;
 import FunctionLayer.CalculatorImpl;
+import FunctionLayer.Draw;
+import FunctionLayer.DrawImplFlat;
 import FunctionLayer.LogicFacade;
 import FunctionLayer.LoginSampleException;
 import FunctionLayer.User;
@@ -44,8 +46,12 @@ public class GetPrice extends Command {
         BillOfMaterials bom = calc.bomCalculator(length, width, height,tagtype, skur);
         double price = calc.calculatePrice(bom);
         
+        DrawImplFlat draw = new DrawImplFlat();
+        String drawing = draw.tagFraOven(bom);
+        
         session.setAttribute( "price", price );
         session.setAttribute( "bom", bom );
+        session.setAttribute( "drawing", drawing );
         return "pricepage";
     }
 
