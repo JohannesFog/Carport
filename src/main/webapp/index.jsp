@@ -48,6 +48,23 @@
 
 
             </select><br>
+            
+            <br>Højde i cm <br>
+            <select name="hoejde">
+                <%
+                    int h = 210;
+                    for (int i = 0; i < 7; i++) {
+                %>
+                <option value="<%= h%>"><%= h%></option>
+
+                <%
+                        h += 30;
+                    }
+
+                %>
+            </select><br>            
+            
+            
             <br>Vælg tagtype<br>
             <select name="tagtype">
                 <option value="fladt">Fladt tag</option>

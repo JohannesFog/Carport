@@ -15,20 +15,20 @@ public class Test {
     
      public static void main(String[] args) {
         
-        Calculator calc = new CalculatorImpl();
-        BillOfMaterials bom = calc.bomCalculator(600.0, 510.0);
-        
-        
-        
-        ArrayList<LineItem> lines = bom.getBomList();
-        
-        for (LineItem item : lines){
-            System.out.println(item.toString());
-            
-        }
-        
-        
-        
+//        Calculator calc = new CalculatorImpl();
+//        BillOfMaterials bom = calc.bomCalculator(600.0, 510.0);
+//        
+//        
+//        
+//        ArrayList<LineItem> lines = bom.getBomList();
+//        
+//        for (LineItem item : lines){
+//            System.out.println(item.toString());
+//            
+//        }
+//        
+//        
+//        
         
     }
     

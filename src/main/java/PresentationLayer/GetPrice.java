@@ -25,14 +25,25 @@ public class GetPrice extends Command {
     @Override
     String execute( HttpServletRequest request, HttpServletResponse response ) throws LoginSampleException {
         
+        HttpSession session = request.getSession();
         String længde = request.getParameter( "laengde" );
         double length = Double.parseDouble(længde);
+        session.setAttribute( "laengde", length );
         String bredde = request.getParameter( "bredde" );
         double width = Double.parseDouble(bredde);
+        session.setAttribute( "bredde", width );
+        String højde = request.getParameter( "hoejde" );
+        double height = Double.parseDouble(højde);
+        session.setAttribute( "hoejde", height );
+        String tagtype = request.getParameter( "tagtype" );
+        session.setAttribute( "tagtype", tagtype );
+        String skur = request.getParameter( "skur" );
+        session.setAttribute( "skur", skur );
+        
         Calculator calc = new CalculatorImpl();
-        BillOfMaterials bom = calc.bomCalculator(length, width);
+        BillOfMaterials bom = calc.bomCalculator(length, width, height,tagtype, skur);
         double price = calc.calculatePrice(bom);
-        HttpSession session = request.getSession();
+        
         session.setAttribute( "price", price );
         session.setAttribute( "bom", bom );
         return "pricepage";
