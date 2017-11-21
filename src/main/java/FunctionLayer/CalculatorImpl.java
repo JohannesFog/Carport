@@ -43,7 +43,10 @@ public class CalculatorImpl implements Calculator {
 
     @Override
     public BillOfMaterials bomCalculatorSkur(double length, double width, double height) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        BillOfMaterials totalBom = new BillOfMaterials();
+
+        return totalBom;
+
     }
 
     @Override
