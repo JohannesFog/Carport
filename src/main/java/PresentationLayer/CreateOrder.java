@@ -5,9 +5,11 @@
  */
 package PresentationLayer;
 
+import FunctionLayer.LogicFacade;
 import FunctionLayer.LoginSampleException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -20,7 +22,19 @@ public class CreateOrder extends Command {
 
     @Override
     String execute(HttpServletRequest request, HttpServletResponse response) throws LoginSampleException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        HttpSession session = request.getSession();
+        double length = (double) session.getAttribute("laengde");
+        double width = (double) session.getAttribute("bredde");
+        double height = (double) session.getAttribute("hoejde");
+        String roof = (String) session.getAttribute("tagtype");
+        String shed = (String) session.getAttribute("skur");
+        String name = request.getParameter("name");
+        
+        session.setAttribute("name",name);
+        
+        LogicFacade.createOrder(length, width, height, roof, shed, name);
+        
+        return "confirmationpage";
     }
     
 }
