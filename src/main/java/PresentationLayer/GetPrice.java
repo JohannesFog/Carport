@@ -49,7 +49,7 @@ public class GetPrice extends Command {
 //        session.setAttribute( "skur", skur );
         
         Calculator calc = new CalculatorImpl();
-        BillOfMaterials bom = calc.bomCalculator(length, width, height, tagtype, skurWidth, skurLength);
+        BillOfMaterials bom = calc.bomCalculator(length, width, height, tagtype, skurLength, skurWidth);
         double price = calc.calculatePrice(bom);
         
         session.setAttribute( "price", price );

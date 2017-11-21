@@ -14,7 +14,7 @@ public interface Calculator {
     
     public BillOfMaterials bomCalculatorFladtTag(double length, double width, double height, double skurLength, double skurWidth);
     
-    public BillOfMaterials bomCalculatorSkur(double length, double width, double height);
+    public BillOfMaterials bomCalculatorSkur(double length, double width, double height, double skurLength, double skurWidth);
     
     //Calculates the total price of the carport based on the bill of materials
     public double calculatePrice(BillOfMaterials bom);
@@ -42,7 +42,8 @@ public interface Calculator {
     
     public BillOfMaterials calculateFirkantskiver(double length);
     
-    
+    public BillOfMaterials calculateLøsholter(double skurLength, double skurWidth);
+
     
     
     
