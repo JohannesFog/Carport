@@ -16,14 +16,20 @@
         <title>JSP Page</title>
     </head>
     <body>
-        
+
         <%Rendering render = new Rendering();%>
-        
-        
-        <%=render.getHTML((double) session.getAttribute("price"), 
+
+        <%=render.getHTML((double) session.getAttribute("price"),
                 (BillOfMaterials) session.getAttribute("bom"))%>
-                
-                <a href="index.jsp">Home</a>
-        
+
+        <form name="Order" action="FrontController" method="POST">
+            <input type="hidden" name="command" value="Order">
+            <h2>Indtast dit navn:</h2>
+            <input type="text" name="name" value="">
+            <input type="button" name="order" value="Bestil Skur">
+        </form>
+
+        <a href="index.jsp">Home</a>
+
     </body>
 </html>
