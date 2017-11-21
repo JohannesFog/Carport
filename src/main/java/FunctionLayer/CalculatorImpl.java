@@ -46,6 +46,8 @@ public class CalculatorImpl implements Calculator {
     public BillOfMaterials bomCalculatorSkur(double length, double width, double height, double skurLength, double skurWidth) {
         BillOfMaterials totalBom = new BillOfMaterials();
             totalBom.mergeBom(calculateLøsholter(skurLength, skurWidth));
+            totalBom.mergeBom(calculateBeklædningSkur(height, skurLength, skurWidth));
+            
         return totalBom;
 
     }
@@ -263,6 +265,28 @@ public class CalculatorImpl implements Calculator {
         int indexGavl = (reglarWidth - 180) / 30;
         bom.addLineItem(new LineItem("45x95 Reglar ubh.", reglarWidth, antalGavl, "stk", "Løsholter i gavle af skur", price[indexGavl]));
         
+        return bom;
+    }
+
+    @Override
+    public BillOfMaterials calculateBeklædningSkur(double height, double skurLength, double skurWidth) {
+        BillOfMaterials bom = new BillOfMaterials();
+        double[] price = {14.50, 16.68, 18.76, 20.85, 25.03, 29.19};
+        int brætHeight = (int) height;
+        int index = 0;
+        if (brætHeight < 330) {
+            index = (brætHeight - 210)/30;
+        } else {
+            if (brætHeight%60 != 0) {
+                brætHeight += 30;
+            }
+            index = (brætHeight - 360)/60 + 4;
+        }
+        int beklædningLength = (int)skurLength;
+        int beklædningWidth = (int)skurWidth;
+        
+        int quantity = (beklædningLength/16)*4 + (beklædningWidth/16)*4;
+        bom.addLineItem(new LineItem("19x100 mm. trykimp. Bræt  ", brætHeight, quantity, "stk", "Beklædning af skur 1 på 2", price[index]));
         return bom;
     }
     

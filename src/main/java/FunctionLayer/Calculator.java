@@ -44,6 +44,7 @@ public interface Calculator {
     
     public BillOfMaterials calculateLøsholter(double skurLength, double skurWidth);
 
+    public BillOfMaterials calculateBeklædningSkur(double height, double skurLength, double skurWidth);
     
     
     
