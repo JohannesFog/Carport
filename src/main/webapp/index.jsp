@@ -26,10 +26,8 @@
                 %>
                 <option value="<%= b%>"><%= b%></option>
 
-                <%
-                        b += 30;
-                    }
-
+                <% 
+                        b += 30; }
                 %>
             </select><br>
 
@@ -41,12 +39,8 @@
                 <option value="<%= l%>"><%= l%></option>
 
                 <%
-                        l += 30;
-                    }
-
+                        l += 30; }
                 %>
-
-
             </select><br>
             
             <br>Højde i cm <br>
@@ -58,9 +52,7 @@
                 <option value="<%= h%>"><%= h%></option>
 
                 <%
-                        h += 30;
-                    }
-
+                        h += 30; }
                 %>
             </select><br>            
             
@@ -71,16 +63,38 @@
                 <option value="skråt">Skråt tag</option>
             </select><br>
             <br>Redskabsskur<br>
-            <select name="skur">
-                <option value="uden">Uden redskabsskur</option>
-                <option value="med">Med redskabsskur</option>
-            </select>
+            (NB! Der skal beregnes 15 cm tagudhæng på hver side af redskabsrummet)<br>
+            <br> Skurbredde i cm <br>
+            <select name="skurbredde">
+                <option value="0">Uden redskabsskur</option>
+                <%
+                    int sb = 210;
+                    for (int i = 0; i < 17; i++) {
+                %>
+                <option value="<%= sb%>"><%= sb%></option>
+
+                <% 
+                        sb += 30; }
+                %>
+            </select><br>
+
+            <br>Skurlængde i cm <br>
+            <select name="skurlaengde">
+                <option value="0">Uden redskabsskur</option>
+                <%                        
+                    int sl = 210;
+                    for (int i = 0; i < 17; i++) {
+                %>
+                <option value="<%= sl%>"><%= sl%></option>
+
+                <%
+                        sl += 30; }
+                %>
+            </select><br>
+
             <br><br>
             <input type="submit" value="Submit">
         </form>
-
-
-
 
 
         <% String error = (String) request.getAttribute("error");

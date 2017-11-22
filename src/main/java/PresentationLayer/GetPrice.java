@@ -37,11 +37,19 @@ public class GetPrice extends Command {
         session.setAttribute( "hoejde", height );
         String tagtype = request.getParameter( "tagtype" );
         session.setAttribute( "tagtype", tagtype );
-        String skur = request.getParameter( "skur" );
-        session.setAttribute( "skur", skur );
+        
+        String skurBredde = request.getParameter( "skurbredde" );
+        double skurWidth = Double.parseDouble(skurBredde);
+        session.setAttribute( "skurbredde", skurWidth );
+        
+        String skurLængde = request.getParameter( "skurlaengde" );
+        double skurLength = Double.parseDouble(skurLængde);
+        session.setAttribute( "skurlaengde", skurLength );
+        
+//        session.setAttribute( "skur", skur );
         
         Calculator calc = new CalculatorImpl();
-        BillOfMaterials bom = calc.bomCalculator(length, width, height,tagtype, skur);
+        BillOfMaterials bom = calc.bomCalculator(length, width, height, tagtype, skurLength, skurWidth);
         double price = calc.calculatePrice(bom);
         
         session.setAttribute( "price", price );

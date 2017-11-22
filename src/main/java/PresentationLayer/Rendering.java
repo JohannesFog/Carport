@@ -7,6 +7,8 @@ package PresentationLayer;
 
 import FunctionLayer.BillOfMaterials;
 import FunctionLayer.LineItem;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 /**
@@ -18,9 +20,11 @@ public class Rendering {
     
     
     public String getHTML(double price, BillOfMaterials bom) {
+        DecimalFormat df = new DecimalFormat("#");
+        df.setRoundingMode(RoundingMode.CEILING);
         String output = ""
                 + "<h1>Velkommen til Pricepage</h1>"
-                + "<p>"+ price + " kr."+"</p>";
+                + "<p>"+ df.format(price) + ",- kr."+"</p>";
         ArrayList<LineItem> items = bom.getBomList();
         for (LineItem li: items) {
             output = output + "<p>"+li.toString()+"</p>";

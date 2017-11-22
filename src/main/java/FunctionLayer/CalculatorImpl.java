@@ -16,20 +16,21 @@ public class CalculatorImpl implements Calculator {
         for (LineItem lineItem : list) {
             totalPrice += lineItem.getTotalPrice();
         }
+        
         return totalPrice;
     }
 
     @Override
-    public BillOfMaterials bomCalculator(double length, double width, double height, String tagtype, String skur) {
+    public BillOfMaterials bomCalculator(double length, double width, double height, String tagtype, double skurLength, double skurWidth) {
         BillOfMaterials totalBom = new BillOfMaterials();
 
         if (tagtype.equals("fladt") ) {
-                totalBom.mergeBom(bomCalculatorFladtTag(length, width, height));
+                totalBom.mergeBom(bomCalculatorFladtTag(length, width, height, skurLength, skurWidth));
         } else {
                 totalBom.mergeBom(bomCalculatorSkråtTag(length, width, height));
         }
-        if (skur.equals("med") ) {
-                totalBom.mergeBom(bomCalculatorSkur(length, width, height));
+        if (skurLength != 0 && skurWidth != 0) {
+                totalBom.mergeBom(bomCalculatorSkur(length, width, height, skurLength, skurWidth));
         }
      
         
@@ -42,18 +43,23 @@ public class CalculatorImpl implements Calculator {
     }
 
     @Override
-    public BillOfMaterials bomCalculatorSkur(double length, double width, double height) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public BillOfMaterials bomCalculatorSkur(double length, double width, double height, double skurLength, double skurWidth) {
+        BillOfMaterials totalBom = new BillOfMaterials();
+            totalBom.mergeBom(calculateLøsholter(skurLength, skurWidth));
+            totalBom.mergeBom(calculateBeklædningSkur(height, skurLength, skurWidth));
+            
+        return totalBom;
+
     }
 
     @Override
-    public BillOfMaterials bomCalculatorFladtTag(double length, double width, double height) {
+    public BillOfMaterials bomCalculatorFladtTag(double length, double width, double height, double skurLength, double skurWidth) {
         BillOfMaterials totalBom = new BillOfMaterials();
 
         totalBom.mergeBom(calculateStern(length, width));
         totalBom.mergeBom(calculateRemme(length));
         totalBom.mergeBom(calculateSpær(length, width));
-        totalBom.mergeBom(calculateStolper(length, width, height));
+        totalBom.mergeBom(calculateStolper(length, width, height, skurLength, skurWidth));
         totalBom.mergeBom(calculateTagplader(length, width));
         totalBom.mergeBom(calculateHulbånd(width));
         totalBom.mergeBom(calculateBeslag(length));
@@ -66,9 +72,19 @@ public class CalculatorImpl implements Calculator {
     }
 
     @Override
-    public BillOfMaterials calculateStolper(double length, double width, double height) {
+    public BillOfMaterials calculateStolper(double length, double width, double height, double skurLength, double skurWidth) {
         BillOfMaterials bom = new BillOfMaterials();
-        int quantity = (((int) length) / 200) * 2 + 2;
+        int quantity = (((int) length) / 240) * 2 + 2;
+        if (skurLength != 0 && skurWidth != 0) {
+            if (skurWidth > 400) {
+                quantity += 5;
+            } else {
+                quantity += 3;
+            }
+            if (skurWidth != width-30) {
+                quantity += 2;
+            }
+        }
         int newHeight = (int) height + 90;
         if (newHeight % 60 != 0) {
             newHeight += 30;
@@ -219,5 +235,64 @@ public class CalculatorImpl implements Calculator {
         bom.addLineItem(new LineItem("firkantskiver 40x40x11 mm.", 0, firkantskiver, "stk", "Til montering af rem på stolpers", 9.41));
         return bom;
     }
+
+    @Override
+    public BillOfMaterials calculateLøsholter(double skurLength, double skurWidth) {
+        BillOfMaterials bom = new BillOfMaterials();
+        double[] price = {80.91, 94.40, 107.88, 121.36, 134.85, 148.34, 161.83, 175.30, 188.79, 202.28, 215.76, 229.25, 242.73};
+        
+        int reglarLength = (int) skurLength;
+        int antalSide = 4;
+        if (reglarLength > 540) {
+            if (reglarLength%60 != 0) {
+                reglarLength += 30;
+            }
+            reglarLength = reglarLength/2;
+            antalSide = 8;
+        }
+        int indexSide = (reglarLength - 180) / 30;
+        bom.addLineItem(new LineItem("45x95 Reglar ubh.", reglarLength, antalSide, "stk", "Løsholter i siderne af skur", price[indexSide]));
+        
+        int reglarWidth = (int) skurWidth;
+        int antalGavl = 6;
+        if (reglarWidth > 540) {
+                        if (reglarWidth%60 != 0) {
+                reglarWidth += 30;
+            }
+            reglarWidth = reglarWidth/2;
+            antalGavl = 12;
+        }
+        int indexGavl = (reglarWidth - 180) / 30;
+        bom.addLineItem(new LineItem("45x95 Reglar ubh.", reglarWidth, antalGavl, "stk", "Løsholter i gavle af skur", price[indexGavl]));
+        
+        return bom;
+    }
+
+    @Override
+    public BillOfMaterials calculateBeklædningSkur(double height, double skurLength, double skurWidth) {
+        BillOfMaterials bom = new BillOfMaterials();
+        double[] price = {14.60, 16.68, 18.76, 20.85, 25.03, 29.19};
+        int brætHeight = (int) height;
+        int index = 0;
+        if (brætHeight < 330) {
+            index = (brætHeight - 210)/30;
+        } else {
+            if (brætHeight%60 != 0) {
+                brætHeight += 30;
+            }
+            index = (brætHeight - 360)/60 + 4;
+        }
+        int beklædningLength = (int)skurLength;
+        int beklædningWidth = (int)skurWidth;
+        
+        int quantity = (beklædningLength/16)*4 + (beklædningWidth/16)*4;
+        bom.addLineItem(new LineItem("19x100 mm. trykimp. Bræt", brætHeight, quantity, "stk", "Beklædning af skur 1 på 2", price[index]));
+// Kan ikke finde pris på 540 taglægte 
+//        bom.addLineItem(new LineItem("38x73 mm. taglægte T1", 540, 1, "stk", "Til z på bagside af dør", price[index]));
+        return bom;
+    }
+    
+    
+    
 
 }
