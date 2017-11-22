@@ -1,7 +1,7 @@
 <%-- 
-    Document   : index
-    Created on : Aug 22, 2017, 2:01:06 PM
-    Author     : kasper
+    Document   : fladttag
+    Created on : 22-11-2017, 13:33:12
+    Author     : lene_
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -9,20 +9,16 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Welcome page</title>
+        <title>Carport med fladt tag</title>
     </head>
     <body>
+        <h1>Fladt Tag</h1>
         
-        <h2>Vælg hvilken type carport du kunne tænke dig</h2>
-        
-        <a href="WEB-INF/fladttag.jsp">Carport med fladt tag</a><br>
-        <a href="WEB-INF/rejsttag.jsp">Carport med rejsning</a>
-        <%--
-
         <h2>Udfyld felterne</h2>
 
         <form name="GetPrice" action="FrontController" method="POST">
             <input type="hidden" name="command" value="GetPrice">
+            <input type="hidden" name="tagtype" value="fladt">
             <br> Bredde i cm <br>
             <select name="bredde">
                 <%
@@ -62,10 +58,9 @@
             </select><br>            
             
             
-            <br>Vælg tagtype<br>
-            <select name="tagtype">
-                <option value="fladt">Fladt tag</option>
-                <option value="skråt">Skråt tag</option>
+            <br>Vælg tagmateriale<br>
+            <select name="tagmateriale">
+                <option value="plasttrapezplader">Plasttrapezplader</option>
             </select><br>
             <br>Redskabsskur<br>
             (NB! Der skal beregnes 15 cm tagudhæng på hver side af redskabsrummet)<br>
@@ -106,7 +101,6 @@
                         if (error != null) {%>
         <H2>Error!</H2>
         <p><%= error%></p>
-        <%}%>            
-        --%>
+        <%}%>
     </body>
 </html>
