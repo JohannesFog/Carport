@@ -264,6 +264,12 @@ public class CalculatorImpl implements Calculator {
         }
         int indexGavl = (reglarWidth - 180) / 30;
         bom.addLineItem(new LineItem("45x95 Reglar ubh.", reglarWidth, antalGavl, "stk", "Løsholter i gavle af skur", price[indexGavl]));
+
+        int antalBeslag = (antalSide + antalGavl)*2; 
+        bom.addLineItem(new LineItem("Vinkelbeslag", 0, antalBeslag, "stk", "Til montering af løsholter", 20.95));
+        
+//        int beslagsSkruer = antalBeslag*8;
+//        int kasserBeslagsSkruer = beslagsSkruer/
         
         return bom;
     }
@@ -287,9 +293,18 @@ public class CalculatorImpl implements Calculator {
         
         int quantity = (beklædningLength/16)*4 + (beklædningWidth/16)*4;
         bom.addLineItem(new LineItem("19x100 mm. trykimp. Bræt", brætHeight, quantity, "stk", "Beklædning af skur 1 på 2", price[index]));
-// Kan ikke finde pris på 540 taglægte 
-//        bom.addLineItem(new LineItem("38x73 mm. taglægte T1", 540, 1, "stk", "Til z på bagside af dør", price[index]));
-        return bom;
+
+        bom.addLineItem(new LineItem("38x73 mm. taglægte T1", 510, 1, "stk", "Til z på bagside af dør", 38.50));
+
+        int skruerInderst = quantity/2*3;
+        int kasserInderst = skruerInderst/200+1;
+        bom.addLineItem(new LineItem("4,5 x 50 mm. Skruer Climate TX20 - 200 stk.", 0, kasserInderst, "stk", "Til montering af inderste bræt ved beklædning ", 129.0));
+
+        int skruerYderst = quantity/2*6;
+        int kasserYderst = skruerYderst/200+1;
+        bom.addLineItem(new LineItem("4,5 x 70 mm. Skruer Climate TX20 - 200 stk.", 0, kasserYderst, "stk", "Til montering af yderste bræt ved beklædning", 199.0));
+
+return bom;
     }
     
     
