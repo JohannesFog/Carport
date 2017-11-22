@@ -271,7 +271,7 @@ public class CalculatorImpl implements Calculator {
     @Override
     public BillOfMaterials calculateBeklædningSkur(double height, double skurLength, double skurWidth) {
         BillOfMaterials bom = new BillOfMaterials();
-        double[] price = {14.50, 16.68, 18.76, 20.85, 25.03, 29.19};
+        double[] price = {14.60, 16.68, 18.76, 20.85, 25.03, 29.19};
         int brætHeight = (int) height;
         int index = 0;
         if (brætHeight < 330) {
@@ -286,7 +286,9 @@ public class CalculatorImpl implements Calculator {
         int beklædningWidth = (int)skurWidth;
         
         int quantity = (beklædningLength/16)*4 + (beklædningWidth/16)*4;
-        bom.addLineItem(new LineItem("19x100 mm. trykimp. Bræt  ", brætHeight, quantity, "stk", "Beklædning af skur 1 på 2", price[index]));
+        bom.addLineItem(new LineItem("19x100 mm. trykimp. Bræt", brætHeight, quantity, "stk", "Beklædning af skur 1 på 2", price[index]));
+// Kan ikke finde pris på 540 taglægte 
+//        bom.addLineItem(new LineItem("38x73 mm. taglægte T1", 540, 1, "stk", "Til z på bagside af dør", price[index]));
         return bom;
     }
     
