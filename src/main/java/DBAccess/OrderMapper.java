@@ -22,16 +22,19 @@ public class OrderMapper {
     public static void createOrder(Order order) throws LoginSampleException {
         try{
             Connection con = Connector.connection();
-            String SQL = "INSERT INTO `orders`(`length`,`width`,`height`,`roof`,`shed`,`orderdate`,`u_name`) VALUES (?,?,?,?,?,?,?)";
+            String SQL = "INSERT INTO `orders`(`length`,`width`,`height`,`roof`,`roof_angle`,`shed_width`,`shed_length`,`orderdate`,`u_name`) "
+                    + "VALUES (?,?,?,?,?,?,?,?,?)";
             
             PreparedStatement ps = con.prepareStatement(SQL,Statement.RETURN_GENERATED_KEYS);
             ps.setDouble(1, order.getLength());
             ps.setDouble(2, order.getWidth());
             ps.setDouble(3, order.getHeight());
             ps.setString(4, order.getRoof());
-            ps.setString(5, order.getShed());
-            ps.setString(6, order.getOrderDate());
-            ps.setString(7, order.getuName());
+            ps.setDouble(5, order.getRoofAngle());
+            ps.setDouble(6, order.getShedWidth());
+            ps.setDouble(7,order.getShedLength());
+            ps.setString(8, order.getOrderDate());
+            ps.setString(9, order.getuName());
             ps.executeUpdate();
             
             ResultSet ids = ps.getGeneratedKeys();

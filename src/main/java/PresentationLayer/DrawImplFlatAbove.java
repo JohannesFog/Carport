@@ -335,7 +335,7 @@ LineItem{name=Hulbånd 1x20mm 10meter, length=0, quantity=2, unit=ruller, descri
     }
 
     
-    // main klasse til test.
+    // main klasse til test.s
     /*
     public static void main(String[] args) {
         System.out.println("start");
