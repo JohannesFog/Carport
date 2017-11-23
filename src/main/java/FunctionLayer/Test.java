@@ -5,6 +5,7 @@
  */
 package FunctionLayer;
 
+import PresentationLayer.Rendering;
 import java.util.ArrayList;
 
 /**
@@ -14,14 +15,10 @@ import java.util.ArrayList;
 public class Test {
     
      public static void main(String[] args) {
-        
-        CalculatorImpl calc = new CalculatorImpl();
 
-        double hyp = calc.calculateHypotenuse(400.0, 25.0);
-        int hypInt = (int) Math.ceil(hyp);
-        
-        System.out.println(hyp + " - " + hypInt);
-        
+         
+//        Calculator calc = new CalculatorImpl();
+
 //        BillOfMaterials bom = calc.bomCalculator(600.0, 510.0);
 //        
 //        

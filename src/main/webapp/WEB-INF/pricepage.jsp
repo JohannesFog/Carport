@@ -21,7 +21,7 @@
         <%Rendering render = new Rendering();%>
         <%RenderDrawing renderDrawing = new RenderDrawing();%>
 
-        <%=render.getHTML((double) session.getAttribute("price"),
+        <%=render.getNicerHTML((double) session.getAttribute("price"),
                 (BillOfMaterials) session.getAttribute("bom"))%>
 
         <form name="Order" action="FrontController" method="POST">
