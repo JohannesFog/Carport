@@ -46,8 +46,8 @@ public class GetPrice extends Command {
         BillOfMaterials bom = calc.bomCalculator(length, width, height,tagtype, skur);
         double price = calc.calculatePrice(bom);
         
-        DrawImplFlat draw = new DrawImplFlat();
-        String drawing = draw.tagFraOven(bom);
+        DrawImplFlat draw = new DrawImplFlat(bom, width, length); //DrawImplFlat skal tage en bom som argument
+        String drawing = draw.tagFraOven(900, 900);
         
         session.setAttribute( "price", price );
         session.setAttribute( "bom", bom );

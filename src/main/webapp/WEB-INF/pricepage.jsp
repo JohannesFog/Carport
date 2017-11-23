@@ -31,7 +31,7 @@
             <input type="button" name="order" value="Bestil Skur">
         </form>
         
-                <%= renderDrawing.createDrawing((String) session.getAttribute("drawing"))%>
+        <%= renderDrawing.createDrawing((String) session.getAttribute("drawing"))%>
                 
         <a href="index.jsp">Home</a>
 

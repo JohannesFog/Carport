@@ -11,6 +11,7 @@ package FunctionLayer;
  */
 public interface Draw {
     
+        
     //sætter to strenge sammen i et billede
     public String merge(String svgOutside, String svgInside);
     
@@ -19,15 +20,15 @@ public interface Draw {
     //public String add(String svg);
     
     // tag set fra overn    
-    public String tagFraOven(BillOfMaterials bom);
+    public String tagFraOven(int width, int height);
     
-    public String remme(String svg);
+    public String remme();
     
-    public String stolper(String svg);
+    public String stolper();
     
-    public String spaer(String svg);
+    public String spaer();
     
-    public String kryds(String svg);
+    public String kryds();
     
     
 }
