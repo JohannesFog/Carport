@@ -46,7 +46,7 @@ public interface Calculator {
     
     public BillOfMaterials calculateFirkantskiver(double length);
     
-    public BillOfMaterials calculateLøsholter(double skurLength, double skurWidth);
+    public BillOfMaterials calculateLøsholter(double width, double skurLength, double skurWidth);
 
     public BillOfMaterials calculateBeklædningSkur(double height, double skurLength, double skurWidth);
     
