@@ -38,7 +38,9 @@ public class DrawImplFlatAbove implements Draw{
     private double bottomRightStolpeNederstVenstre_Y = 0;
     
     public DrawImplFlatAbove(BillOfMaterials bom, double carportWidth, double carportLength) {
-        this.bom = bom;
+        BillOfMaterials localBom = new BillOfMaterials();
+        localBom.mergeBom(bom);
+        this.bom = localBom;
         this.carportWidth = carportWidth;
         this.carportLength = carportLength;
     }
@@ -72,6 +74,8 @@ public class DrawImplFlatAbove implements Draw{
     
     private void removeLineItemsFromBom(ArrayList<LineItem> items) {
         BillOfMaterials localBom = this.bom;
+        BillOfMaterials mynewBom = new BillOfMaterials();
+        
         ArrayList<LineItem> localList = localBom.getBomList();
         for (int i = 0; i < items.size(); i++) {
             int itemIndex = localList.indexOf(items.get(i));
@@ -79,7 +83,8 @@ public class DrawImplFlatAbove implements Draw{
                 localList.remove(itemIndex);
             }
         }
-        this.bom.setBomList(localList);
+        mynewBom.mergeBom(localBom);
+        this.bom = mynewBom;
     }
     
     @Override

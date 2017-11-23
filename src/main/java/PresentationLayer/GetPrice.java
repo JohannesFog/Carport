@@ -52,12 +52,22 @@ public class GetPrice extends Command {
         BillOfMaterials bom = calc.bomCalculator(length, width, height, tagtype, skurLength, skurWidth);
         double price = calc.calculatePrice(bom);
         
-        DrawImplFlatAbove drawFlatAbove = new DrawImplFlatAbove(bom, width, length); 
-        String drawingFlatAbove = drawFlatAbove.tegnTag(750, 750);
+        String draw = "";
+                
+        if (tagtype.equals("fladt")) {
+            DrawImplFlatAbove drawFlatAbove = new DrawImplFlatAbove(bom, width, length); 
+            String drawingFlatAbove = drawFlatAbove.tegnTag(750, 750);
+            DrawImplFlatSide drawFlatSide = new DrawImplFlatSide(bom, width, length, height);
+            String drawintFlatSide = drawFlatSide.tegnTag(750, 750);
+            draw = drawingFlatAbove + drawintFlatSide;
+        } else {
+            draw = "ingen support for skraat tag endnu";
+        }
         
         session.setAttribute( "price", price );
         session.setAttribute( "bom", bom );
-        session.setAttribute( "drawingFlatAbove", drawingFlatAbove );
+        session.setAttribute( "draw", draw );
+        
         return "pricepage";
     }
 

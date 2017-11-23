@@ -31,8 +31,8 @@
             <input type="submit" name="order" value="Bestil Carport">
         </form>
         
-        <%= renderDrawing.createDrawing((String) session.getAttribute("drawingFlatAbove"))%>
-                
+        <%= renderDrawing.createDrawing((String) session.getAttribute("draw"))%>
+        
         <a href="index.jsp">Home</a>
         
          <% String error = (String) request.getAttribute("error");
