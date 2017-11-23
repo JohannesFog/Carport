@@ -30,9 +30,10 @@
             <input type="text" name="name" value="">
             <input type="submit" name="order" value="Bestil Carport">
         </form>
+ 
+
+   
         
-        <%= renderDrawing.createDrawing((String) session.getAttribute("drawingFlatAbove"))%>
-                
         <a href="index.jsp">Home</a>
         
          <% String error = (String) request.getAttribute("error");

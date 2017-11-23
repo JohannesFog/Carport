@@ -58,13 +58,10 @@ public class GetPrice extends Command {
         Calculator calc = new CalculatorImpl();
         BillOfMaterials bom = calc.bomCalculator(length, width, height, type, material, angle, skurLength, skurWidth);
         double price = calc.calculatePrice(bom);
-    
-        DrawImplFlatAbove drawFlatAbove = new DrawImplFlatAbove(bom, width, length); 
-        String drawingFlatAbove = drawFlatAbove.tegnTag(750, 750);
-        
+
         session.setAttribute( "price", price );
         session.setAttribute( "bom", bom );
-        session.setAttribute( "drawingFlatAbove", drawingFlatAbove );
+
 
 
         return "pricepage";
