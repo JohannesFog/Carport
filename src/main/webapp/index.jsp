@@ -15,9 +15,17 @@
         
         <h2>Vælg hvilken type carport du kunne tænke dig</h2>
         
+        <form name="GetCarport" action="FrontController" method="POST">
+            <input type="hidden" name="command" value="GetCarport">
+            <input type="submit" name="cpType" value="Carport med fladt tag"><br>
+            <input type="submit" name="cpType" value="Carport med rejsning">
+        </form>
+        
+<%-- 
         <a href="WEB-INF/fladttag.jsp">Carport med fladt tag</a><br>
-        <a href="WEB-INF/rejsttag.jsp">Carport med rejsning</a>
-        <%--
+        <a href="/WEB-INF/rejsttag.jsp">Carport med rejsning</a>
+--%>
+<%--
 
         <h2>Udfyld felterne</h2>
 
