@@ -21,48 +21,47 @@ import javax.servlet.http.HttpSession;
  * @author Mikkel Lindstrøm <Mikkel.Lindstrøm>
  */
 public class GetPrice extends Command {
-   
+
     @Override
-    String execute( HttpServletRequest request, HttpServletResponse response ) throws LoginSampleException {
-        
+    String execute(HttpServletRequest request, HttpServletResponse response) throws LoginSampleException {
+
         HttpSession session = request.getSession();
-        String længde = request.getParameter( "laengde" );
+        String længde = request.getParameter("laengde");
         double length = Double.parseDouble(længde);
-        session.setAttribute( "laengde", length );
-        String bredde = request.getParameter( "bredde" );
+        session.setAttribute("laengde", length);
+        String bredde = request.getParameter("bredde");
         double width = Double.parseDouble(bredde);
-        session.setAttribute( "bredde", width );
-        String højde = request.getParameter( "hoejde" );
+        session.setAttribute("bredde", width);
+        String højde = request.getParameter("hoejde");
         double height = Double.parseDouble(højde);
-        session.setAttribute( "hoejde", height );
+        session.setAttribute("hoejde", height);
 
-        String type = request.getParameter( "tagtype" );
-        session.setAttribute( "tagtype", type );
-        String material = request.getParameter( "tagmateriale" );
-        session.setAttribute( "tagmateriale", material );
-        String vinkel = request.getParameter( "vinkel" );
-        double angle = Double.parseDouble(vinkel);
-        session.setAttribute( "vinkel", angle );
+        String type = request.getParameter("tagtype");
+        session.setAttribute("tagtype", type);
+        String material = request.getParameter("tagmateriale");
+        session.setAttribute("tagmateriale", material);
+        double angle = 0.0;
+        if (type.equals("skråt")) {
+            String vinkel = request.getParameter("vinkel");
+            angle = Double.parseDouble(vinkel);
+        } 
+        session.setAttribute("vinkel", angle);
 
-
-        
-        String skurBredde = request.getParameter( "skurbredde" );
+        String skurBredde = request.getParameter("skurbredde");
         double skurWidth = Double.parseDouble(skurBredde);
-        session.setAttribute( "skurbredde", skurWidth );
-        String skurLængde = request.getParameter( "skurlaengde" );
+        session.setAttribute("skurbredde", skurWidth);
+        String skurLængde = request.getParameter("skurlaengde");
         double skurLength = Double.parseDouble(skurLængde);
-        session.setAttribute( "skurlaengde", skurLength );
-        
+        session.setAttribute("skurlaengde", skurLength);
+
 //        session.setAttribute( "skur", skur );
-        
         Calculator calc = new CalculatorImpl();
         BillOfMaterials bom = calc.bomCalculator(length, width, height, type, material, angle, skurLength, skurWidth);
         double price = calc.calculatePrice(bom);
-        
-        session.setAttribute( "price", price );
-        session.setAttribute( "bom", bom );
+
+        session.setAttribute("price", price);
+        session.setAttribute("bom", bom);
         return "pricepage";
     }
 
 }
-

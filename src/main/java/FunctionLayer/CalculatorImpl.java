@@ -38,7 +38,7 @@ public class CalculatorImpl implements Calculator {
         return totalBom;
     }
 
-    private double calculateHypotenuse(double width, double angle) {
+    public double calculateHypotenuse(double width, double angle) {
         double angleInRadian = Math.toRadians(angle);
         double hypotenuse = (width/2) / Math.cos(angleInRadian);
         return hypotenuse;
@@ -134,7 +134,44 @@ public class CalculatorImpl implements Calculator {
     @Override
     public BillOfMaterials calculateTagMedSten(double length, double width, double hypotenuse) {
         BillOfMaterials bom = new BillOfMaterials();
+        int rest = ((int) Math.ceil(hypotenuse)) *10 - 380;
+        int antalLægterSide;
+        if (rest%307 == 0) {
+            antalLægterSide = rest/307+2;
+        } else {
+            antalLægterSide = rest/307+3;
+        }
         
+        int antalLægterTotal = antalLægterSide*2;
+        int antalStenOpad = antalLægterSide-1;
+        
+        int lægteLength;
+        if (length > 540) {
+          if (length % 60 != 0) {
+              length += 30;
+          }
+          lægteLength = (int) (length/2);
+          antalLægterTotal = antalLægterTotal*2;
+            
+        } else {
+            if (length < 300) {
+                lægteLength = 300;
+            } else {
+                lægteLength = (int) length;
+            }
+        }
+        
+        double[] priceLægte = {38.85, 42.74, 46.63, 50.50, 54.39, 58.28, 62.16, 66.05, 69.93};
+        int indexLægte = (lægteLength-300)/30;
+        
+        
+        if (length < 540) {
+            bom.addLineItem(new LineItem("38x73 mm. taglægte C18", lægteLength, antalLægterTotal, "stk", "til montering på spær, " + antalLægterSide + " rækker lægter på hver side", priceLægte[indexLægte]));
+            bom.addLineItem(new LineItem("38x73 mm. taglægte C18", lægteLength, 1, "stk", "toplægte til montering af rygsten lægges i toplægte holder", priceLægte[indexLægte]));
+        } else {
+            bom.addLineItem(new LineItem("38x73 mm. taglægte C18", lægteLength, antalLægterTotal, "stk", "til montering på spær, " + antalLægterSide + " rækker lægter på hver side - 2 lægter samles", priceLægte[indexLægte]));
+            bom.addLineItem(new LineItem("38x73 mm. taglægte C18", lægteLength, 2, "stk", "toplægte til montering af rygsten lægges i toplægte holder", priceLægte[indexLægte]));            
+        }     
         
         return bom;
     }
@@ -361,7 +398,7 @@ public class CalculatorImpl implements Calculator {
         int quantity = (beklædningLength / 16) * 4 + (beklædningWidth / 16) * 4;
         bom.addLineItem(new LineItem("19x100 mm. trykimp. Bræt", brætHeight, quantity, "stk", "Beklædning af skur 1 på 2", price[index]));
 
-        bom.addLineItem(new LineItem("38x73 mm. taglægte T1", 510, 1, "stk", "Til z på bagside af dør", 38.50));
+        bom.addLineItem(new LineItem("38x73 mm. taglægte T1", 540, 1, "stk", "Til z på bagside af dør", 69.93));
         bom.addLineItem(new LineItem("Stalddørsgreb 50x75", 0, 1, "stk", "Til dør i skur", 189.0));
         bom.addLineItem(new LineItem("T-hængsel 390 mm.", 0, 2, "stk", "Til dør i skur", 109.0));
 

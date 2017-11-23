@@ -17,8 +17,10 @@ public class Test {
         
         CalculatorImpl calc = new CalculatorImpl();
 
-        double hyp = calc.calculateHypotenuse(10.0, 25.0);
-         System.out.println(hyp);
+        double hyp = calc.calculateHypotenuse(400.0, 25.0);
+        int hypInt = (int) Math.ceil(hyp);
+        
+        System.out.println(hyp + " - " + hypInt);
         
 //        BillOfMaterials bom = calc.bomCalculator(600.0, 510.0);
 //        
