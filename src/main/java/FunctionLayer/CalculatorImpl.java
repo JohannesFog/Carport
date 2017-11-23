@@ -27,7 +27,7 @@ public class CalculatorImpl implements Calculator {
         if (tagtype.equals("fladt") ) {
                 totalBom.mergeBom(bomCalculatorFladtTag(length, width, height, skurLength, skurWidth));
         } else {
-                totalBom.mergeBom(bomCalculatorSkråtTag(length, width, height));
+                totalBom.mergeBom(bomCalculatorSkråtTag(length, width, height, skurLength, skurWidth));
         }
         if (skurLength != 0 && skurWidth != 0) {
                 totalBom.mergeBom(bomCalculatorSkur(length, width, height, skurLength, skurWidth));
@@ -38,8 +38,13 @@ public class CalculatorImpl implements Calculator {
     }
 
     @Override
-    public BillOfMaterials bomCalculatorSkråtTag(double length, double width, double height) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public BillOfMaterials bomCalculatorSkråtTag(double length, double width, double height, double skurLength, double skurWidth) {
+        BillOfMaterials totalBom = new BillOfMaterials();
+
+        totalBom.mergeBom(calculateRemme(length));
+        totalBom.mergeBom(calculateStolper(length, width, height, skurLength, skurWidth));
+
+        return totalBom;
     }
 
     @Override
@@ -47,18 +52,16 @@ public class CalculatorImpl implements Calculator {
         BillOfMaterials totalBom = new BillOfMaterials();
             totalBom.mergeBom(calculateLøsholter(skurLength, skurWidth));
             totalBom.mergeBom(calculateBeklædningSkur(height, skurLength, skurWidth));
-            
         return totalBom;
-
     }
 
     @Override
     public BillOfMaterials bomCalculatorFladtTag(double length, double width, double height, double skurLength, double skurWidth) {
         BillOfMaterials totalBom = new BillOfMaterials();
 
-        totalBom.mergeBom(calculateStern(length, width));
+        totalBom.mergeBom(calculateFladtStern(length, width));
         totalBom.mergeBom(calculateRemme(length));
-        totalBom.mergeBom(calculateSpær(length, width));
+        totalBom.mergeBom(calculateFladtSpær(length, width));
         totalBom.mergeBom(calculateStolper(length, width, height, skurLength, skurWidth));
         totalBom.mergeBom(calculateTagplader(length, width));
         totalBom.mergeBom(calculateHulbånd(width));
@@ -124,7 +127,7 @@ public class CalculatorImpl implements Calculator {
     }
 
     @Override
-    public BillOfMaterials calculateStern(double length, double width) {
+    public BillOfMaterials calculateFladtStern(double length, double width) {
         BillOfMaterials bom = new BillOfMaterials();
         bom.addLineItem(new LineItem("25x200mm trykimp. brædt", 360, 4, "stk", "Understern brædder til for og bag ende", 183.43));
         bom.addLineItem(new LineItem("25x200mm trykimp. brædt", 540, 4, "stk", "Understern brædder til siderne", 275.13));
@@ -139,7 +142,7 @@ public class CalculatorImpl implements Calculator {
     }
 
     @Override
-    public BillOfMaterials calculateSpær(double length, double width) {
+    public BillOfMaterials calculateFladtSpær(double length, double width) {
         BillOfMaterials bom = new BillOfMaterials();
         int quantity = (int) (Math.ceil(length / 55.0));
         int newWidth = (int) width;
@@ -178,7 +181,7 @@ public class CalculatorImpl implements Calculator {
         int brætLængdeTotal = 0;
         int skrueAntal = 0;
         int skruePakkerAntal = 0;
-        BillOfMaterials stern = calculateStern(length, width);
+        BillOfMaterials stern = calculateFladtStern(length, width);
         for (LineItem li : stern.getBomList()) {
             brætLængdeTotal += li.getLength();
         }
@@ -190,7 +193,6 @@ public class CalculatorImpl implements Calculator {
 
     @Override
     public BillOfMaterials calculateSkruerBeslag(double length, double width) {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         BillOfMaterials bom = new BillOfMaterials();
         int skruePakkerAntal = 0;
         BillOfMaterials hulbånd = calculateHulbånd(width);
@@ -213,7 +215,6 @@ public class CalculatorImpl implements Calculator {
 
     @Override
     public BillOfMaterials calculateBræddebolt(double length) {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         BillOfMaterials bom = new BillOfMaterials();
         int bræddebolte = 0;
         BillOfMaterials rem = calculateRemme(length);
@@ -268,9 +269,6 @@ public class CalculatorImpl implements Calculator {
         int antalBeslag = (antalSide + antalGavl)*2; 
         bom.addLineItem(new LineItem("Vinkelbeslag", 0, antalBeslag, "stk", "Til montering af løsholter", 20.95));
         
-//        int beslagsSkruer = antalBeslag*8;
-//        int kasserBeslagsSkruer = beslagsSkruer/
-        
         return bom;
     }
 
@@ -297,14 +295,18 @@ public class CalculatorImpl implements Calculator {
         bom.addLineItem(new LineItem("38x73 mm. taglægte T1", 510, 1, "stk", "Til z på bagside af dør", 38.50));
 
         int skruerInderst = quantity/2*3;
-        int kasserInderst = skruerInderst/200+1;
-        bom.addLineItem(new LineItem("4,5 x 50 mm. Skruer Climate TX20 - 200 stk.", 0, kasserInderst, "stk", "Til montering af inderste bræt ved beklædning ", 129.0));
+        int kasserInderst = skruerInderst/200+2;
+        bom.addLineItem(new LineItem("4,5 x 50 mm. Skruer Climate TX20 - 200 stk.", 0, kasserInderst, "kasser", "Til montering af inderste bræt ved beklædning ", 129.0));
 
         int skruerYderst = quantity/2*6;
-        int kasserYderst = skruerYderst/200+1;
-        bom.addLineItem(new LineItem("4,5 x 70 mm. Skruer Climate TX20 - 200 stk.", 0, kasserYderst, "stk", "Til montering af yderste bræt ved beklædning", 199.0));
+        int kasserYderst = skruerYderst/200+2;
+        bom.addLineItem(new LineItem("4,5 x 70 mm. Skruer Climate TX20 - 200 stk.", 0, kasserYderst, "kasser", "Til montering af yderste bræt ved beklædning", 199.0));
 
-return bom;
+        bom.addLineItem(new LineItem("Stalddørsgreb 50x75", 0, 1, "stk", "Til dør i skur", 189.0));
+        bom.addLineItem(new LineItem("T-hængsel 390 mm.", 0, 2, "stk", "Til dør i skur", 109.0));
+
+        
+        return bom;
     }
     
     

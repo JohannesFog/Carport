@@ -10,7 +10,7 @@ public interface Calculator {
     public BillOfMaterials bomCalculator(double length, double width, double height, 
                                             String tagtype, double skurLength, double skurWidth);
     
-    public BillOfMaterials bomCalculatorSkråtTag(double length, double width, double height);
+    public BillOfMaterials bomCalculatorSkråtTag(double length, double width, double height, double skurLength, double skurWidth);
     
     public BillOfMaterials bomCalculatorFladtTag(double length, double width, double height, double skurLength, double skurWidth);
     
@@ -26,9 +26,9 @@ public interface Calculator {
     public BillOfMaterials calculateRemme(double length); 
     
     //understern, overstern, vandbrædder
-    public BillOfMaterials calculateStern(double length, double width);
+    public BillOfMaterials calculateFladtStern(double length, double width);
     
-    public BillOfMaterials calculateSpær(double length, double width);
+    public BillOfMaterials calculateFladtSpær(double length, double width);
     
     public BillOfMaterials calculateHulbånd(double width);
      
