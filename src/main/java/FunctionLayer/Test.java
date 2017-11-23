@@ -20,7 +20,9 @@ public class Test {
         double hyp = calc.calculateHypotenuse(400.0, 25.0);
         int hypInt = (int) Math.ceil(hyp);
         
-        System.out.println(hyp + " - " + hypInt);
+        int testdata = (int) Math.ceil(100.0 / 28.5);
+        
+        System.out.println(testdata);
         
 //        BillOfMaterials bom = calc.bomCalculator(600.0, 510.0);
 //        
