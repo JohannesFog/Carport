@@ -4,6 +4,7 @@
     Author     : Mikkel Lindstrøm <Mikkel.Lindstrøm>
 --%>
 
+<%@page import="PresentationLayer.RenderDrawing"%>
 <%@page import="PresentationLayer.Rendering"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="FunctionLayer.LineItem"%>
@@ -18,6 +19,7 @@
     <body>
 
         <%Rendering render = new Rendering();%>
+        <%RenderDrawing renderDrawing = new RenderDrawing();%>
 
         <%=render.getHTML((double) session.getAttribute("price"),
                 (BillOfMaterials) session.getAttribute("bom"))%>
@@ -28,7 +30,9 @@
             <input type="text" name="name" value="">
             <input type="submit" name="order" value="Bestil Carport">
         </form>
-
+        
+        <%= renderDrawing.createDrawing((String) session.getAttribute("drawingFlatAbove"))%>
+                
         <a href="index.jsp">Home</a>
         
          <% String error = (String) request.getAttribute("error");
