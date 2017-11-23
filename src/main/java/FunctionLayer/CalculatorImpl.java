@@ -44,26 +44,32 @@ public class CalculatorImpl implements Calculator {
         return hypotenuse;
     }
 
+    public double calculateKatete(double width, double angle) {
+        double angleInRadian = Math.toRadians(angle);
+        double katete = (width / 2) * Math.tan(angleInRadian);
+        return katete;
+    }
+
     @Override
     public BillOfMaterials bomCalculatorSkråtTag(double length, double width, double height,
             String material, double angle, double skurLength, double skurWidth) {
         BillOfMaterials totalBom = new BillOfMaterials();
-
-        double hypotenuse = calculateHypotenuse(width, angle);
-
         totalBom.mergeBom(calculateRemme(length));
         totalBom.mergeBom(calculateStolper(length, width, height, skurLength, skurWidth));
         totalBom.mergeBom(calculateSkråtSpær(length, width));
         totalBom.mergeBom(calculateSkråtBeslag(length));
 
+        double hypotenuse = calculateHypotenuse(width, angle);
         switch (material) {
             case "betontagsten":
                 totalBom.mergeBom(calculateTagMedSten(length, width, hypotenuse));
                 break;
             default:
                 totalBom.mergeBom(calculateTagMedEternit(length, width, hypotenuse));
-
         }
+
+        double katete = calculateKatete(width, angle);
+        totalBom.mergeBom(calculateBeklædningGavl(width, katete));
 
         return totalBom;
     }
@@ -172,8 +178,6 @@ public class CalculatorImpl implements Calculator {
 
         bom.addLineItem(new LineItem("5,0 x 40 mm. beslagskruer 250 stk.", 0, 1, "stk", "Til montering af universalbeslag + toplægte", 199.0));
 
-        
-        
         int antalStenOpad = antalLægterSide - 1;
         int antalStenHenad = (int) Math.ceil(length / 20.7);
         int antalStenTotal = (int) Math.ceil(antalStenOpad * antalStenHenad * 2 * 1.05);
@@ -419,6 +423,40 @@ public class CalculatorImpl implements Calculator {
         int skruerYderst = quantity / 2 * 6;
         int kasserYderst = skruerYderst / 200 + 2;
         bom.addLineItem(new LineItem("4,5 x 70 mm. Skruer Climate TX20 - 200 stk.", 0, kasserYderst, "kasser", "Til montering af yderste bræt ved beklædning", 199.0));
+
+        return bom;
+    }
+
+    @Override
+    public BillOfMaterials calculateBeklædningGavl(double width, double katete) {
+        BillOfMaterials bom = new BillOfMaterials();
+        int rundOp = 30 - ((int) katete) % 30;
+        int gavlheight = (int) (katete + rundOp);
+        int faktor = 1;
+        int brætHeight = gavlheight;
+        if (gavlheight < 180) {
+            if (gavlheight == 60) {
+                brætHeight = 180;
+                faktor = 3;
+            } else {
+                brætHeight = gavlheight * 2;
+                faktor = 2;
+            }
+        }
+        int quantity = (((int) width / 16) * 2) / faktor;
+
+//        double[] price = {14.60, 16.68, 18.76, 20.85, 25.03, 29.19};
+//        int index = 0;
+//        if (brætHeight < 330) {
+//            index = (brætHeight - 180) / 30;
+//        } else {
+//            if (brætHeight % 60 != 0) {
+//                brætHeight += 30;
+//            }
+//            index = (brætHeight - 360) / 60 + 4;
+//        }
+
+        bom.addLineItem(new LineItem("19x100 mm. trykimp. Bræt", brætHeight, quantity, "stk", "Beklædning af gavle 1 på 2", 25.0));
 
         return bom;
     }

@@ -21,8 +21,12 @@ public class Test {
         int hypInt = (int) Math.ceil(hyp);
         
         int testdata = (int) Math.ceil(100.0 / 28.5);
+
+        double kat = calc.calculateKatete(240.0, 15.0);
+        int katInt = (int) Math.ceil(kat);
+
         
-        System.out.println(testdata);
+        System.out.println(kat + "-" + katInt);
         
 //        BillOfMaterials bom = calc.bomCalculator(600.0, 510.0);
 //        

@@ -40,11 +40,9 @@ public class GetPrice extends Command {
         session.setAttribute("tagtype", type);
         String material = request.getParameter("tagmateriale");
         session.setAttribute("tagmateriale", material);
-        double angle = 0.0;
-        if (type.equals("skråt")) {
-            String vinkel = request.getParameter("vinkel");
-            angle = Double.parseDouble(vinkel);
-        } 
+        String vinkel = request.getParameter("vinkel");
+        double angle = Double.parseDouble(vinkel);
+
         session.setAttribute("vinkel", angle);
 
         String skurBredde = request.getParameter("skurbredde");
