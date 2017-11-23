@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package FunctionLayer;
+package PresentationLayer;
 
-import PresentationLayer.Rendering;
+import FunctionLayer.*;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -51,7 +51,7 @@ public class DrawImplFlatAbove implements Draw{
         String test;
         for (int i = 0; i < wordNum; i++) {
             for (int k = 0; k < bom.getBomList().size(); k++) {
-                test = bom.getBomList().get(k).description;
+                test = bom.getBomList().get(k).getDescription();
                 if (test.contains(wordsToTestFor.get(i))) {
                     output.add(bom.getBomList().get(k));
                 }
@@ -79,7 +79,7 @@ public class DrawImplFlatAbove implements Draw{
                 localList.remove(itemIndex);
             }
         }
-        this.bom.bomList = localList;
+        this.bom.setBomList(localList);
     }
     
     @Override
@@ -114,7 +114,7 @@ LineItem{name=45x95mm spærtræ ubh., length=300, quantity=2, unit=stk, descript
         */
         
         //øverste rem.
-        String ØversteWidth = relevantItems.get(0).name.substring(0, 1);//4 from description: "45x95mm spærtræ..."
+        String ØversteWidth = relevantItems.get(0).getName().substring(0, 1);//4 from description: "45x95mm spærtræ..."
         String ØversteLength = Double.toString(this.carportLength); // user input.
         String ØversteLeft = "0";
         String ØversteDistToTop = "0";
@@ -124,7 +124,7 @@ LineItem{name=45x95mm spærtræ ubh., length=300, quantity=2, unit=stk, descript
                             ØversteLeft, ØversteDistToTop, ØversteWidth, ØversteLength);
         
         //nederste rem.
-        String NedersteWidth = relevantItems.get(0).name.substring(0, 1);//4 from description: "45x95mm spærtræ..."
+        String NedersteWidth = relevantItems.get(0).getName().substring(0, 1);//4 from description: "45x95mm spærtræ..."
         String NedersteLength = Double.toString(this.carportLength); // user input.
         String NedersteLeft = "0";
         String NedersteDistToTop = Double.toString(this.carportWidth-
@@ -156,8 +156,8 @@ LineItem{name=97x97mm trykimp. stolpe, length=300, quantity=4, unit=stk, descrip
         // alle afstande regnes i centimeter
         
         //øverste-venstre stolpe.
-        String ØversteVenstreWidth = relevantItems.get(0).name.substring(0, 1);//9 from description: "97x97mm trykimp. stolpe,..."
-        String ØversteVenstreLength = relevantItems.get(0).name.substring(3, 4);//9 from description: "97x97mm trykimp. stolpe,..."
+        String ØversteVenstreWidth = relevantItems.get(0).getName().substring(0, 1);//9 from description: "97x97mm trykimp. stolpe,..."
+        String ØversteVenstreLength = relevantItems.get(0).getName().substring(3, 4);//9 from description: "97x97mm trykimp. stolpe,..."
         String ØversteVenstreLeft = "0";
         String ØversteVenstreDistToTop = "0";
         this.topLeftStolpeNederstVenstre_X = Double.parseDouble(ØversteVenstreLeft);
@@ -172,8 +172,8 @@ LineItem{name=97x97mm trykimp. stolpe, length=300, quantity=4, unit=stk, descrip
                             ØversteVenstreLeft, ØversteVenstreDistToTop, ØversteVenstreWidth, ØversteVenstreLength);
         
         //øverste-højre stolpe.
-        String ØversteHøjreWidth = relevantItems.get(0).name.substring(0, 1);//9 from description: "97x97mm trykimp. stolpe,..."
-        String ØversteHøjreLength = relevantItems.get(0).name.substring(3, 4);//9 from description: "97x97mm trykimp. stolpe,..."
+        String ØversteHøjreWidth = relevantItems.get(0).getName().substring(0, 1);//9 from description: "97x97mm trykimp. stolpe,..."
+        String ØversteHøjreLength = relevantItems.get(0).getName().substring(3, 4);//9 from description: "97x97mm trykimp. stolpe,..."
         String ØversteHøjreLeft = Double.toString(this.carportLength-
                                     Integer.parseInt(ØversteHøjreLength));
         String ØversteHøjreDistToTop = "0";
@@ -189,8 +189,8 @@ LineItem{name=97x97mm trykimp. stolpe, length=300, quantity=4, unit=stk, descrip
                             ØversteHøjreLeft, ØversteHøjreDistToTop, ØversteHøjreWidth, ØversteHøjreLength);
         
         //nederste-venstre stolpe.
-        String NedersteVenstreWidth = relevantItems.get(0).name.substring(0, 1);//9 from description: "97x97mm trykimp. stolpe,..."
-        String NedersteVenstreLength = relevantItems.get(0).name.substring(3, 4);//9 from description: "97x97mm trykimp. stolpe,..."
+        String NedersteVenstreWidth = relevantItems.get(0).getName().substring(0, 1);//9 from description: "97x97mm trykimp. stolpe,..."
+        String NedersteVenstreLength = relevantItems.get(0).getName().substring(3, 4);//9 from description: "97x97mm trykimp. stolpe,..."
         String NedersteVenstreLeft = "0";
         String NedersteVenstreDistToTop = Double.toString(this.carportWidth-
                                     Integer.parseInt(NedersteVenstreWidth));
@@ -207,8 +207,8 @@ LineItem{name=97x97mm trykimp. stolpe, length=300, quantity=4, unit=stk, descrip
                             NedersteVenstreLeft, NedersteVenstreDistToTop, NedersteVenstreWidth, NedersteVenstreLength);
         
         //nederste-højre stolpe.
-        String NedersteHøjreWidth = relevantItems.get(0).name.substring(0, 1);//9 from description: "97x97mm trykimp. stolpe,..."
-        String NedersteHøjreLength = relevantItems.get(0).name.substring(3, 4);//9 from description: "97x97mm trykimp. stolpe,..."
+        String NedersteHøjreWidth = relevantItems.get(0).getName().substring(0, 1);//9 from description: "97x97mm trykimp. stolpe,..."
+        String NedersteHøjreLength = relevantItems.get(0).getName().substring(3, 4);//9 from description: "97x97mm trykimp. stolpe,..."
         String NedersteHøjreLeft = Double.toString(this.carportLength-
                                     Integer.parseInt(NedersteHøjreLength));
         String NedersteHøjreDistToTop = Double.toString(this.carportWidth-
@@ -245,14 +245,14 @@ LineItem{name=45x195mm spærtræ ubh., length=300, quantity=5, unit=stk, descrip
 
         */
         
-        String VenstreSpærWidth = relevantItems.get(0).name.substring(3, 5);//19 from description: "45x195mm spærtræ ubh...."
+        String VenstreSpærWidth = relevantItems.get(0).getName().substring(3, 5);//19 from description: "45x195mm spærtræ ubh...."
         String VenstreSpærLength = Double.toString(this.carportWidth); //user input 
         
         double portLaengde = this.carportLength;
         String VenstreSpærLeft = "0";//Double.toString(portLaengde -this.carportWidth);
         String VenstreSpærDistToTop = "0";//Integer.toString(Integer.parseInt(VenstreSpærWidth));
         
-        int antalBrædder = relevantItems.get(0).quantity; // antal brædder (normalt 5)
+        int antalBrædder = relevantItems.get(0).getQuantity(); // antal brædder (normalt 5)
         double tomLuft = this.carportLength - (antalBrædder * Integer.parseInt(VenstreSpærWidth));
         String AfstandMellemBraet = Double.toString(  tomLuft/((double) (antalBrædder-1)));
         

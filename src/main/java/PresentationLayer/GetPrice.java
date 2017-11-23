@@ -8,8 +8,6 @@ package PresentationLayer;
 import FunctionLayer.BillOfMaterials;
 import FunctionLayer.Calculator;
 import FunctionLayer.CalculatorImpl;
-import FunctionLayer.Draw;
-import FunctionLayer.DrawImplFlatAbove;
 import FunctionLayer.LogicFacade;
 import FunctionLayer.LoginSampleException;
 import FunctionLayer.User;

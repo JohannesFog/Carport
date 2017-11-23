@@ -29,6 +29,10 @@ public class BillOfMaterials {
     public ArrayList<LineItem> getBomList() {
         return bomList;
     }
+
+    public void setBomList(ArrayList<LineItem> bomList) {
+        this.bomList = bomList;
+    }
     
     
     
