@@ -15,20 +15,26 @@ public class Order {
     private double width;
     private double height;
     private String roof;
+    private double roofAngle;
     private String shed;
+    private String shedWidth;
+    private String shedLength;
     private String orderDate;
     private String uName;
 
-    public Order(double length, double width, double height, String roof, String shed, String orderDate, String uName) {
+    public Order(double length, double width, double height, String roof, double roofAngle, String shed, String shedWidth, String shedLength, String orderDate, String uName) {
         this.length = length;
         this.width = width;
         this.height = height;
         this.roof = roof;
+        this.roofAngle = roofAngle;
         this.shed = shed;
+        this.shedWidth = shedWidth;
+        this.shedLength = shedLength;
         this.orderDate = orderDate;
         this.uName = uName;
     }
-
+    
     public void setoId(int oId) {
         this.oId = oId;
     }
@@ -64,4 +70,17 @@ public class Order {
     public String getuName() {
         return uName;
     }  
+
+    public double getRoofAngle() {
+        return roofAngle;
+    }
+
+    public String getShedWidth() {
+        return shedWidth;
+    }
+
+    public String getShedLength() {
+        return shedLength;
+    }
+    
 }
