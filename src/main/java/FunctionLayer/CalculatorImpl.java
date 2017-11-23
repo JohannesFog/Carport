@@ -43,6 +43,8 @@ public class CalculatorImpl implements Calculator {
 
         totalBom.mergeBom(calculateRemme(length));
         totalBom.mergeBom(calculateStolper(length, width, height, skurLength, skurWidth));
+        totalBom.mergeBom(calculateSkråtSpær(length, width));
+        totalBom.mergeBom(calculateSkråtBeslag(length));
 
         return totalBom;
     }
@@ -65,7 +67,7 @@ public class CalculatorImpl implements Calculator {
         totalBom.mergeBom(calculateStolper(length, width, height, skurLength, skurWidth));
         totalBom.mergeBom(calculateTagplader(length, width));
         totalBom.mergeBom(calculateHulbånd(width));
-        totalBom.mergeBom(calculateBeslag(length));
+        totalBom.mergeBom(calculateFladtBeslag(length));
         totalBom.mergeBom(calculateSkruerStern(length, width));
         totalBom.mergeBom(calculateSkruerBeslag(length, width));
         totalBom.mergeBom(calculateBræddebolt(length));
@@ -159,6 +161,27 @@ public class CalculatorImpl implements Calculator {
     }
 
     @Override
+    public BillOfMaterials calculateSkråtSpær(double length, double width) {
+        BillOfMaterials bom = new BillOfMaterials();
+//        int spærLength = (int) length; 
+//        int quantity = (spærLength-65)/89 + 1;
+        int quantity = (int) (Math.ceil((length-65) / 89.0));
+
+//        int newWidth = (int) width;
+//        if (newWidth < 300) {
+//            newWidth = 300;
+//        }
+//        if (newWidth % 60 != 0) {
+//            newWidth += 30;
+//        }
+//        double[] price = {113.85, 136.63, 159.39, 182.16, 204.93, 287.7, 316.48, 345.24};
+//        int index = (newWidth - 300) / 60;
+        double price = 500.0 * quantity;
+        bom.addLineItem(new LineItem("Fædigskåret (byg-selv spær)", 0, 1, "sæt", "Byg-selv spær (skal samles) " + quantity + " stk.", price));
+        return bom;
+    }
+
+    @Override
     public BillOfMaterials calculateHulbånd(double width) {
         BillOfMaterials bom = new BillOfMaterials();
         bom.addLineItem(new LineItem("Hulbånd 1x20mm 10meter", 0, 2, "ruller", "Til vindkryds på spær", 189.00));
@@ -167,9 +190,18 @@ public class CalculatorImpl implements Calculator {
     }
 
     @Override
-    public BillOfMaterials calculateBeslag(double length) {
+    public BillOfMaterials calculateFladtBeslag(double length) {
         BillOfMaterials bom = new BillOfMaterials();
         int quantity = (int) (Math.ceil(length / 55.0));
+        bom.addLineItem(new LineItem("Universal 190mm højre", 0, quantity, "stk", "Til montering af spær på rem", 21.95));
+        bom.addLineItem(new LineItem("Universal 190mm venstre", 0, quantity, "stk", "Til montering af spær på rem", 21.95));
+        return bom;
+    }
+
+    @Override
+    public BillOfMaterials calculateSkråtBeslag(double length) {
+        BillOfMaterials bom = new BillOfMaterials();
+        int quantity = (int) (Math.ceil((length-65) / 89.0));
         bom.addLineItem(new LineItem("Universal 190mm højre", 0, quantity, "stk", "Til montering af spær på rem", 21.95));
         bom.addLineItem(new LineItem("Universal 190mm venstre", 0, quantity, "stk", "Til montering af spær på rem", 21.95));
         return bom;
@@ -196,7 +228,7 @@ public class CalculatorImpl implements Calculator {
         BillOfMaterials bom = new BillOfMaterials();
         int skruePakkerAntal = 0;
         BillOfMaterials hulbånd = calculateHulbånd(width);
-        BillOfMaterials beslag = calculateBeslag(length);
+        BillOfMaterials beslag = calculateFladtBeslag(length);
         int beslagStk = 0;
         int hilbåndStk = 0;
         for (LineItem li : beslag.getBomList()) {
@@ -293,6 +325,8 @@ public class CalculatorImpl implements Calculator {
         bom.addLineItem(new LineItem("19x100 mm. trykimp. Bræt", brætHeight, quantity, "stk", "Beklædning af skur 1 på 2", price[index]));
 
         bom.addLineItem(new LineItem("38x73 mm. taglægte T1", 510, 1, "stk", "Til z på bagside af dør", 38.50));
+        bom.addLineItem(new LineItem("Stalddørsgreb 50x75", 0, 1, "stk", "Til dør i skur", 189.0));
+        bom.addLineItem(new LineItem("T-hængsel 390 mm.", 0, 2, "stk", "Til dør i skur", 109.0));
 
         int skruerInderst = quantity/2*3;
         int kasserInderst = skruerInderst/200+2;
@@ -301,10 +335,6 @@ public class CalculatorImpl implements Calculator {
         int skruerYderst = quantity/2*6;
         int kasserYderst = skruerYderst/200+2;
         bom.addLineItem(new LineItem("4,5 x 70 mm. Skruer Climate TX20 - 200 stk.", 0, kasserYderst, "kasser", "Til montering af yderste bræt ved beklædning", 199.0));
-
-        bom.addLineItem(new LineItem("Stalddørsgreb 50x75", 0, 1, "stk", "Til dør i skur", 189.0));
-        bom.addLineItem(new LineItem("T-hængsel 390 mm.", 0, 2, "stk", "Til dør i skur", 109.0));
-
         
         return bom;
     }

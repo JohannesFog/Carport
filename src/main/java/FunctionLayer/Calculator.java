@@ -30,10 +30,14 @@ public interface Calculator {
     
     public BillOfMaterials calculateFladtSpær(double length, double width);
     
+    public BillOfMaterials calculateSkråtSpær(double length, double width);
+       
     public BillOfMaterials calculateHulbånd(double width);
      
-    public BillOfMaterials calculateBeslag(double length);
+    public BillOfMaterials calculateFladtBeslag(double length);
     
+    public BillOfMaterials calculateSkråtBeslag(double length);
+
     public BillOfMaterials calculateSkruerStern(double length, double width);
     
     public BillOfMaterials calculateSkruerBeslag(double length, double width);
