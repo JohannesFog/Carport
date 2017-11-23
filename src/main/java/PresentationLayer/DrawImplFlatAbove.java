@@ -336,6 +336,7 @@ LineItem{name=Hulbånd 1x20mm 10meter, length=0, quantity=2, unit=ruller, descri
 
     
     // main klasse til test.
+    /*
     public static void main(String[] args) {
         System.out.println("start");
         Calculator calc = new CalculatorImpl();
@@ -360,5 +361,5 @@ LineItem{name=Hulbånd 1x20mm 10meter, length=0, quantity=2, unit=ruller, descri
         
         System.out.println("end");
     }
-    
+    */
 }
