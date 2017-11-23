@@ -21,13 +21,15 @@ public class CalculatorImpl implements Calculator {
     }
 
     @Override
-    public BillOfMaterials bomCalculator(double length, double width, double height, String tagtype, double skurLength, double skurWidth) {
+    public BillOfMaterials bomCalculator(double length, double width, double height, 
+                            String type, String material, double angle, 
+                            double skurLength, double skurWidth) {
         BillOfMaterials totalBom = new BillOfMaterials();
 
-        if (tagtype.equals("fladt")) {
+        if (type.equals("fladt")) {
             totalBom.mergeBom(bomCalculatorFladtTag(length, width, height, skurLength, skurWidth));
         } else {
-            totalBom.mergeBom(bomCalculatorSkråtTag(length, width, height, skurLength, skurWidth));
+            totalBom.mergeBom(bomCalculatorSkråtTag(length, width, height, material, angle, skurLength, skurWidth));
         }
         if (skurLength != 0 && skurWidth != 0) {
             totalBom.mergeBom(bomCalculatorSkur(length, width, height, skurLength, skurWidth));
@@ -36,15 +38,34 @@ public class CalculatorImpl implements Calculator {
         return totalBom;
     }
 
+    private double calculateHypotenuse(double width, double angle) {
+        double angleInRadian = Math.toRadians(angle);
+        double hypotenuse = (width/2) / Math.cos(angleInRadian);
+        return hypotenuse;
+    }
+    
     @Override
-    public BillOfMaterials bomCalculatorSkråtTag(double length, double width, double height, double skurLength, double skurWidth) {
+    public BillOfMaterials bomCalculatorSkråtTag(double length, double width, double height, 
+                                                String material, double angle, double skurLength, double skurWidth) {
         BillOfMaterials totalBom = new BillOfMaterials();
-
+        
+        double hypotenuse = calculateHypotenuse(width, angle);
+        
         totalBom.mergeBom(calculateRemme(length));
         totalBom.mergeBom(calculateStolper(length, width, height, skurLength, skurWidth));
         totalBom.mergeBom(calculateSkråtSpær(length, width));
         totalBom.mergeBom(calculateSkråtBeslag(length));
 
+        switch (material) {
+            case "betontagsten" :
+                totalBom.mergeBom(calculateTagMedSten(length, width, hypotenuse));
+                break;
+            default :
+                totalBom.mergeBom(calculateTagMedEternit(length, width, hypotenuse));
+                
+        }
+        
+        
         return totalBom;
     }
 
@@ -107,6 +128,20 @@ public class CalculatorImpl implements Calculator {
         if (length > 600) {
             bom.addLineItem(new LineItem("Plastmo Ecolite blåtonet", 360, quantity, "stk", "Tagplader monteres på spær", 139.00));
         }
+        return bom;
+    }
+
+    @Override
+    public BillOfMaterials calculateTagMedSten(double length, double width, double hypotenuse) {
+        BillOfMaterials bom = new BillOfMaterials();
+        
+        
+        return bom;
+    }
+
+    @Override
+    public BillOfMaterials calculateTagMedEternit(double length, double width, double hypotenuse) {
+        BillOfMaterials bom = new BillOfMaterials();
         return bom;
     }
 

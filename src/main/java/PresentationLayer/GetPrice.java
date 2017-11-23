@@ -35,13 +35,20 @@ public class GetPrice extends Command {
         String højde = request.getParameter( "hoejde" );
         double height = Double.parseDouble(højde);
         session.setAttribute( "hoejde", height );
-        String tagtype = request.getParameter( "tagtype" );
-        session.setAttribute( "tagtype", tagtype );
+
+        String type = request.getParameter( "tagtype" );
+        session.setAttribute( "tagtype", type );
+        String material = request.getParameter( "tagmateriale" );
+        session.setAttribute( "tagmateriale", material );
+        String vinkel = request.getParameter( "vinkel" );
+        double angle = Double.parseDouble(vinkel);
+        session.setAttribute( "vinkel", angle );
+
+
         
         String skurBredde = request.getParameter( "skurbredde" );
         double skurWidth = Double.parseDouble(skurBredde);
         session.setAttribute( "skurbredde", skurWidth );
-        
         String skurLængde = request.getParameter( "skurlaengde" );
         double skurLength = Double.parseDouble(skurLængde);
         session.setAttribute( "skurlaengde", skurLength );
@@ -49,7 +56,7 @@ public class GetPrice extends Command {
 //        session.setAttribute( "skur", skur );
         
         Calculator calc = new CalculatorImpl();
-        BillOfMaterials bom = calc.bomCalculator(length, width, height, tagtype, skurLength, skurWidth);
+        BillOfMaterials bom = calc.bomCalculator(length, width, height, type, material, angle, skurLength, skurWidth);
         double price = calc.calculatePrice(bom);
         
         session.setAttribute( "price", price );
