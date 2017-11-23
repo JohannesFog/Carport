@@ -16,20 +16,18 @@ public class Order {
     private double height;
     private String roof;
     private double roofAngle;
-    private String shed;
     private double shedWidth;
     private double shedLength;
     private String orderDate;
     private String uName;
 
-    public Order(double length, double width, double height, String roof, double roofAngle, 
-            String shed, double shedWidth, double shedLength, String orderDate, String uName) {
+    public Order(double length, double width, double height, String roof, 
+            double roofAngle, double shedWidth, double shedLength, String orderDate, String uName) {
         this.length = length;
         this.width = width;
         this.height = height;
         this.roof = roof;
         this.roofAngle = roofAngle;
-        this.shed = shed;
         this.shedWidth = shedWidth;
         this.shedLength = shedLength;
         this.orderDate = orderDate;
@@ -58,10 +56,6 @@ public class Order {
 
     public String getRoof() {
         return roof;
-    }
-
-    public String getShed() {
-        return shed;
     }
 
     public String getOrderDate() {

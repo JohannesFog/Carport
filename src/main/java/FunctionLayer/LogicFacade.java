@@ -23,12 +23,12 @@ public class LogicFacade {
     }
     
     public static void createOrder(double length, double width, double height, 
-            String roof, double roofAngle, String shed,double shedWidth, double shedLength, String uName) throws LoginSampleException{
+            String roof, double roofAngle,double shedWidth, double shedLength, String uName) throws LoginSampleException{
       Date date = new Date();
       SimpleDateFormat sdrf = new SimpleDateFormat("yyyy-MM-dd");
       String dateString = sdrf.format(date);
       
-      Order order = new Order(length,width,height,roof,roofAngle,shed,shedWidth,shedLength,dateString,uName);
+      Order order = new Order(length,width,height,roof,roofAngle,shedWidth,shedLength,dateString,uName);
       OrderMapper.createOrder(order);
     }
 
