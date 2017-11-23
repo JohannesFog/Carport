@@ -8,9 +8,10 @@ public interface Calculator {
     
     //Starting point for calculating bill of materials, this method will call other calculating methods
     public BillOfMaterials bomCalculator(double length, double width, double height, 
-                                            String tagtype, double skurLength, double skurWidth);
+                                            String type, String material, double angle, 
+                                            double skurLength, double skurWidth);
     
-    public BillOfMaterials bomCalculatorSkråtTag(double length, double width, double height, double skurLength, double skurWidth);
+    public BillOfMaterials bomCalculatorSkråtTag(double length, double width, double height, String material, double angle, double skurLength, double skurWidth);
     
     public BillOfMaterials bomCalculatorFladtTag(double length, double width, double height, double skurLength, double skurWidth);
     
@@ -22,6 +23,10 @@ public interface Calculator {
     public BillOfMaterials calculateStolper(double length, double width, double height, double skurLength, double skurWidth);
     
     public BillOfMaterials calculateTagplader(double length, double width);
+
+    public BillOfMaterials calculateTagMedSten(double length, double width, double hypotenuse);
+
+    public BillOfMaterials calculateTagMedEternit(double length, double width, double hypotenuse);
     
     public BillOfMaterials calculateRemme(double length); 
     
@@ -46,7 +51,7 @@ public interface Calculator {
     
     public BillOfMaterials calculateFirkantskiver(double length);
     
-    public BillOfMaterials calculateLøsholter(double skurLength, double skurWidth);
+    public BillOfMaterials calculateLøsholter(double width, double skurLength, double skurWidth);
 
     public BillOfMaterials calculateBeklædningSkur(double height, double skurLength, double skurWidth);
     
