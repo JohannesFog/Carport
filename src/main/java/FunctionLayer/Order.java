@@ -17,12 +17,13 @@ public class Order {
     private String roof;
     private double roofAngle;
     private String shed;
-    private String shedWidth;
-    private String shedLength;
+    private double shedWidth;
+    private double shedLength;
     private String orderDate;
     private String uName;
 
-    public Order(double length, double width, double height, String roof, double roofAngle, String shed, String shedWidth, String shedLength, String orderDate, String uName) {
+    public Order(double length, double width, double height, String roof, double roofAngle, 
+            String shed, double shedWidth, double shedLength, String orderDate, String uName) {
         this.length = length;
         this.width = width;
         this.height = height;
@@ -75,11 +76,11 @@ public class Order {
         return roofAngle;
     }
 
-    public String getShedWidth() {
+    public double getShedWidth() {
         return shedWidth;
     }
 
-    public String getShedLength() {
+    public double getShedLength() {
         return shedLength;
     }
     
