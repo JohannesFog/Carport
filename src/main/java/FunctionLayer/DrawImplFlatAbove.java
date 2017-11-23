@@ -14,7 +14,7 @@ import java.util.Set;
  *
  * @author Christian
  */
-public class DrawImplFlat implements Draw{
+public class DrawImplFlatAbove implements Draw{
 
     private BillOfMaterials bom;
     private double carportWidth;
@@ -37,34 +37,12 @@ public class DrawImplFlat implements Draw{
     private double bottomRightStolpeNederstVenstre_X = 0;
     private double bottomRightStolpeNederstVenstre_Y = 0;
     
-    public DrawImplFlat(BillOfMaterials bom, double carportWidth, double carportLength) {//BillOfMaterials bom
+    public DrawImplFlatAbove(BillOfMaterials bom, double carportWidth, double carportLength) {
         this.bom = bom;
-        this.carportWidth = carportLength;
+        this.carportWidth = carportWidth;
         this.carportLength = carportLength;
     }
-    
-    @Override
-    public String merge(String svgOutside, String svgInside) {
-        String input = svgOutside;
-        String output = "";
-        output = input.substring(0,input.length() - 6);
-        output = output + svgInside;
-        output = output + "</SVG>";
-        return output;
-    }
-    
-    //public String add(String svg){
-     //    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    //}
-    /*
-    for (int k = 0; i < bom.getBomList().size(); k++) {
-                test = bom.getBomList().get(k).description;
-                if (test.contains(wordsToTestFor.get(i))) {
-                    output.add(bom.getBomList().get(k));
-                }
-            }
-    */
-    
+        
     private ArrayList<LineItem> relevantBomLines(ArrayList<String> wordsToTestFor, BillOfMaterials bom) {
         ArrayList<LineItem> output = new ArrayList<LineItem>();
         int wordNum = wordsToTestFor.size();
@@ -105,18 +83,15 @@ public class DrawImplFlat implements Draw{
     }
     
     @Override
-    public String tagFraOven(int width, int theight) {
-        String output = "<SVG width=\"900\" height=900>"
-                + "<rect x=\"000\" y=\"00\" height=\"900\" width=\"900\"\n" +
-"                    style=\"stroke:#000000; fill: #ffff00\"/>";
-                //+ "</SVG>";
-        
+    public String tegnTag(int width, int height) {
+        String output = String.format("<SVG width=\"%s\" height=%s> "
+                + "<rect x=\"000\" y=\"00\" height=\"%s\" width=\"%s\"\n "
+                + "style=\"stroke:#000000; fill: #ffff00\"/>", width, height, height, width);
+                
         output = output + spaer();
         output = output + remme();
         output = output + stolper();
         output = output + kryds();
-        //output = output + "<rect x=\"000\" y=\"40\" height=\"5\" width=\"565\""+      
-        //                    "style=\"stroke:#000000; fill: #ff0000\"/>";
         
         output = output + "</SVG>";
         
@@ -130,6 +105,13 @@ public class DrawImplFlat implements Draw{
         words.add("Remme");
         ArrayList<LineItem> relevantItems = relevantBomLines(words, this.bom);
         removeLineItemsFromBom(relevantItems);
+        
+        /*
+        Eksempel på LineItem:
+        remme()
+LineItem{name=45x95mm spærtræ ubh., length=300, quantity=2, unit=stk, description=Remme i sider, sadles ned i stolper}
+
+        */
         
         //øverste rem.
         String ØversteWidth = relevantItems.get(0).name.substring(0, 1);//4 from description: "45x95mm spærtræ..."
@@ -155,11 +137,7 @@ public class DrawImplFlat implements Draw{
                             NedersteLeft, NedersteDistToTop, NedersteWidth, NedersteLength);
         
         return output1 + output2;
-        /*
-        remme()
-LineItem{name=45x95mm spærtræ ubh., length=300, quantity=2, unit=stk, description=Remme i sider, sadles ned i stolper}
-
-        */
+        
     }
 
     @Override
@@ -168,6 +146,12 @@ LineItem{name=45x95mm spærtræ ubh., length=300, quantity=2, unit=stk, descript
         words.add("Stolper");
         ArrayList<LineItem> relevantItems = relevantBomLines(words, this.bom);
         removeLineItemsFromBom(relevantItems);
+        
+        /*
+        Eksempel på LineItem:
+        stolper()
+LineItem{name=97x97mm trykimp. stolpe, length=300, quantity=4, unit=stk, description=Stolper nedgraves 90cm i jord.}
+        */
         
         // alle afstande regnes i centimeter
         
@@ -244,10 +228,7 @@ LineItem{name=45x95mm spærtræ ubh., length=300, quantity=2, unit=stk, descript
         
         
         return output1+output2+output3+output4;
-        /*
-        stolper()
-LineItem{name=97x97mm trykimp. stolpe, length=300, quantity=4, unit=stk, description=Stolper nedgraves 90cm i jord.}
-        */
+        
     }
 
     @Override
@@ -257,18 +238,19 @@ LineItem{name=97x97mm trykimp. stolpe, length=300, quantity=4, unit=stk, descrip
         ArrayList<LineItem> relevantItems = relevantBomLines(words, this.bom);
         removeLineItemsFromBom(relevantItems);   
                 
+         /*
+        Eksempel på LineItem:
+        spaer()
+LineItem{name=45x195mm spærtræ ubh., length=300, quantity=5, unit=stk, description=Spær monteres på rem}
+
+        */
         
         String VenstreSpærWidth = relevantItems.get(0).name.substring(3, 5);//19 from description: "45x195mm spærtræ ubh...."
-        String VenstreSpærLength = Double.toString(this.carportWidth); //user input
+        String VenstreSpærLength = Double.toString(this.carportWidth); //user input 
         
         double portLaengde = this.carportLength;
-        String VenstreSpærLeft = Double.toString(portLaengde -
-                                    this.carportWidth);
+        String VenstreSpærLeft = "0";//Double.toString(portLaengde -this.carportWidth);
         String VenstreSpærDistToTop = "0";//Integer.toString(Integer.parseInt(VenstreSpærWidth));
-        
-        String output4 = String.format("<rect x=\"%s\" y=\"%s\" height=\"%s\" width=\"%s\""+      
-                            "style=\"stroke:#000000; fill: #ff0000\"/>", 
-                            VenstreSpærLeft, VenstreSpærDistToTop, VenstreSpærWidth, VenstreSpærLength);
         
         int antalBrædder = relevantItems.get(0).quantity; // antal brædder (normalt 5)
         double tomLuft = this.carportLength - (antalBrædder * Integer.parseInt(VenstreSpærWidth));
@@ -284,20 +266,17 @@ LineItem{name=97x97mm trykimp. stolpe, length=300, quantity=4, unit=stk, descrip
         String output = "";
         for (int i = 0; i < antalBrædder; i++) {
             double distToTop = 0; //////////////DIST TO Top SKAL RETTES !!
-            VenstreSpærDistToTop = Double.toString( 
+            //VenstreSpærDistToTop
+            VenstreSpærLeft = Double.toString( 
                                 (i*(Double.parseDouble(AfstandMellemBraet)+Double.parseDouble(VenstreSpærWidth))));
             output += String.format("<rect x=\"%s\" y=\"%s\" height=\"%s\" width=\"%s\""+      
                             "style=\"stroke:#000000; fill: #ff0000\"/>", 
                             VenstreSpærLeft, VenstreSpærDistToTop
-                            , VenstreSpærWidth, VenstreSpærLength);
+                            , VenstreSpærLength, VenstreSpærWidth);//VenstreSpærWidth
         }
         
         return output;
-        /*
-        spaer()
-LineItem{name=45x195mm spærtræ ubh., length=300, quantity=5, unit=stk, description=Spær monteres på rem}
-
-        */
+       
     }
 
     @Override
@@ -307,6 +286,12 @@ LineItem{name=45x195mm spærtræ ubh., length=300, quantity=5, unit=stk, descrip
         words.add("Vindkryds");
         ArrayList<LineItem> relevantItems = relevantBomLines(words, this.bom);
         removeLineItemsFromBom(relevantItems);
+        
+        /*
+        Eksempel på LineItem:
+        kryds()
+LineItem{name=Hulbånd 1x20mm 10meter, length=0, quantity=2, unit=ruller, description=Til vindkryds på spær}
+        */
         
         String output = "";
         
@@ -346,31 +331,16 @@ LineItem{name=45x195mm spærtræ ubh., length=300, quantity=5, unit=stk, descrip
                 + "stroke=\"black\" stroke-width=\"2\" stroke-dasharray=\"2, 5\"/>", 
                             x1, y1, x2, y2);
         
-        return output;
-        
-        // 
-        
-        /*
-        <line x1="42" y1="42" x2="562" y2="262" stroke="black" stroke-width="2" stroke-dasharray="2, 5"/>
-            <line x1="38" y1="38" x2="558" y2="258" stroke="black" stroke-width="2" stroke-dasharray="2, 5"/>
-            <line x1="41" y1="261" x2="561" y2="41" stroke="black" stroke-width="2" stroke-dasharray="2, 5"/>
-            <line x1="39" y1="259" x2="559" y2="39" stroke="black" stroke-width="2" stroke-dasharray="2, 5"/>
-        */
-        
-        /*
-        kryds()
-LineItem{name=Hulbånd 1x20mm 10meter, length=0, quantity=2, unit=ruller, description=Til vindkryds på spær}
-
-        */
+        return output;     
     }
 
     
-    
+    // main klasse til test.
     public static void main(String[] args) {
         System.out.println("start");
         Calculator calc = new CalculatorImpl();
         BillOfMaterials bom = calc.bomCalculator(240, 240, 210,"fladt", "uden");
-        DrawImplFlat draw = new DrawImplFlat(bom, 240, 240);
+        DrawImplFlatAbove draw = new DrawImplFlatAbove(bom, 240, 240);
         
         System.out.println("****************  første bom liste:");
         for (int k = 0; k < draw.bom.getBomList().size(); k++) {
@@ -391,48 +361,4 @@ LineItem{name=Hulbånd 1x20mm 10meter, length=0, quantity=2, unit=ruller, descri
         System.out.println("end");
     }
     
-    
-    /*
-    test: 2017-11-22 kl. 11.15
-    
-    //udskriv hver linje i relevantItems i hver metode
-        for(int i = 0; i < relevantItems.size(); i++) {
-            output = output + "\n" + relevantItems.get(i);
-        }
-        
-        return output+"\n";
-    */
-    
-    /*
-        test: 2017-11-22 kl. 9.00 
-    
-        Calculator calc = new CalculatorImpl();
-        BillOfMaterials bom = calc.bomCalculator(240, 240, 210,"fladt", "uden");
-        DrawImplFlat draw = new DrawImplFlat(bom);
-        //Rendering render = new Rendering();
-        //String result = render.getHTML(5000,bom);
-        //System.out.println(result);
-        ArrayList<String> words = new ArrayList<String>();
-        words.add("remme");
-        words.add("Remme");
-        ArrayList<LineItem> result = draw.relevantBomLines(words, bom);
-        //for (int i = 0; i < result.size(); i++) {
-        //    System.out.println(result.get(i));
-        //}
-        
-        System.out.println("************************");
-        for (int k = 0; k < draw.bom.getBomList().size(); k++) {
-            System.out.println(draw.bom.getBomList().get(k));
-        }
-        
-        draw.removeLineItemsFromBom(result);
-        System.out.println("************************");
-        for (int k = 0; k < draw.bom.getBomList().size(); k++) {
-            System.out.println(draw.bom.getBomList().get(k));
-        }
-        result = draw.relevantBomLines(words, bom);
-        //for (int m = 0; m < result.size(); m++) {
-        //    System.out.println(result.get(m));
-        //}
-    */
 }

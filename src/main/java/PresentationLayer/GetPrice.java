@@ -9,7 +9,7 @@ import FunctionLayer.BillOfMaterials;
 import FunctionLayer.Calculator;
 import FunctionLayer.CalculatorImpl;
 import FunctionLayer.Draw;
-import FunctionLayer.DrawImplFlat;
+import FunctionLayer.DrawImplFlatAbove;
 import FunctionLayer.LogicFacade;
 import FunctionLayer.LoginSampleException;
 import FunctionLayer.User;
@@ -46,12 +46,12 @@ public class GetPrice extends Command {
         BillOfMaterials bom = calc.bomCalculator(length, width, height,tagtype, skur);
         double price = calc.calculatePrice(bom);
         
-        DrawImplFlat draw = new DrawImplFlat(bom, width, length); //DrawImplFlat skal tage en bom som argument
-        String drawing = draw.tagFraOven(900, 900);
+        DrawImplFlatAbove drawFlatAbove = new DrawImplFlatAbove(bom, width, length); 
+        String drawingFlatAbove = drawFlatAbove.tegnTag(750, 750);
         
         session.setAttribute( "price", price );
         session.setAttribute( "bom", bom );
-        session.setAttribute( "drawing", drawing );
+        session.setAttribute( "drawingFlatAbove", drawingFlatAbove );
         return "pricepage";
     }
 
