@@ -163,11 +163,11 @@ LineItem{name=97x97mm trykimp. stolpe, length=300, quantity=4, unit=stk, descrip
         //øverste-venstre stolpe.
         String ØversteVenstreWidth = relevantItems.get(0).getName().substring(0, 1);//9 from description: "97x97mm trykimp. stolpe,..."
         String ØversteVenstreLength = relevantItems.get(0).getName().substring(3, 4);//9 from description: "97x97mm trykimp. stolpe,..."
-        String ØversteVenstreLeft = "0";
+        String ØversteVenstreLeft = "15";
         String ØversteVenstreDistToTop = "0";
         this.topLeftStolpeNederstVenstre_X = Double.parseDouble(ØversteVenstreLeft);
         this.topLeftStolpeNederstVenstre_Y = Double.parseDouble(ØversteVenstreWidth);
-        this.topLeftStolpeØverstHøjre_X = Double.parseDouble(ØversteVenstreLength);
+        this.topLeftStolpeØverstHøjre_X = Double.parseDouble(ØversteVenstreLength) + Double.parseDouble(ØversteVenstreLeft);
         this.topLeftStolpeØverstHøjre_Y = Double.parseDouble(ØversteVenstreDistToTop);
                                         
         
@@ -180,7 +180,7 @@ LineItem{name=97x97mm trykimp. stolpe, length=300, quantity=4, unit=stk, descrip
         String ØversteHøjreWidth = relevantItems.get(0).getName().substring(0, 1);//9 from description: "97x97mm trykimp. stolpe,..."
         String ØversteHøjreLength = relevantItems.get(0).getName().substring(3, 4);//9 from description: "97x97mm trykimp. stolpe,..."
         String ØversteHøjreLeft = Double.toString(this.carportLength-
-                                    Integer.parseInt(ØversteHøjreLength));
+                                    Integer.parseInt(ØversteHøjreLength)-15);
         String ØversteHøjreDistToTop = "0";
         this.topRightStolpeØverstVenstre_X = Double.parseDouble(ØversteHøjreLeft);
         this.topRightStolpeØverstVenstre_Y = Double.parseDouble(ØversteHøjreDistToTop);
@@ -196,7 +196,7 @@ LineItem{name=97x97mm trykimp. stolpe, length=300, quantity=4, unit=stk, descrip
         //nederste-venstre stolpe.
         String NedersteVenstreWidth = relevantItems.get(0).getName().substring(0, 1);//9 from description: "97x97mm trykimp. stolpe,..."
         String NedersteVenstreLength = relevantItems.get(0).getName().substring(3, 4);//9 from description: "97x97mm trykimp. stolpe,..."
-        String NedersteVenstreLeft = "0";
+        String NedersteVenstreLeft = "15";
         String NedersteVenstreDistToTop = Double.toString(this.carportWidth-
                                     Integer.parseInt(NedersteVenstreWidth));
         
@@ -215,7 +215,7 @@ LineItem{name=97x97mm trykimp. stolpe, length=300, quantity=4, unit=stk, descrip
         String NedersteHøjreWidth = relevantItems.get(0).getName().substring(0, 1);//9 from description: "97x97mm trykimp. stolpe,..."
         String NedersteHøjreLength = relevantItems.get(0).getName().substring(3, 4);//9 from description: "97x97mm trykimp. stolpe,..."
         String NedersteHøjreLeft = Double.toString(this.carportLength-
-                                    Integer.parseInt(NedersteHøjreLength));
+                                    Integer.parseInt(NedersteHøjreLength)-15);
         String NedersteHøjreDistToTop = Double.toString(this.carportWidth-
                                     Integer.parseInt(NedersteHøjreWidth));
         

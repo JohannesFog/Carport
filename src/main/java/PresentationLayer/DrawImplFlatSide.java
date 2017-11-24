@@ -164,14 +164,14 @@ LineItem{name=97x97mm trykimp. stolpe, length=300, quantity=4, unit=stk, descrip
         
         
         int antalBrædder = relevantItems.get(0).getQuantity(); // antal brædder (normalt 5)
-        double tomLuft = this.carportLength - (antalBrædder * Integer.parseInt(VenstreLength));
+        double tomLuft = this.carportLength - (antalBrædder * Integer.parseInt(VenstreLength)) - 30;
         String AfstandMellemBraet = Double.toString(  tomLuft/((double) (antalBrædder-1)));
         
         String output = "";
         for (int i = 0; i < antalBrædder; i++) {
             double distToTop = 0; //////////////DIST TO Top SKAL RETTES !!
             //VenstreSpærDistToTop
-            VenstreLeft = Double.toString( 
+            VenstreLeft = Double.toString( 15+
                                 (i*(Double.parseDouble(AfstandMellemBraet)+Double.parseDouble(VenstreLength))));
             output += String.format("<rect x=\"%s\" y=\"%s\" height=\"%s\" width=\"%s\""+      
                             "style=\"stroke:#000000; fill: #ff0000\"/>", 
