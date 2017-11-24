@@ -202,7 +202,7 @@ LineItem{name=97x97mm trykimp. stolpe, length=300, quantity=4, unit=stk, descrip
     public static void main(String[] args) {
         System.out.println("start");
         Calculator calc = new CalculatorImpl();
-        BillOfMaterials bom = calc.bomCalculator(240, 240, 210,"fladt", 0, 0);
+        BillOfMaterials bom = calc.bomCalculator(240, 240, 210,"fladt", "none", 0, 0, 0);
         DrawImplFlatSide draw = new DrawImplFlatSide(bom, 240, 240, 240);
         
         
