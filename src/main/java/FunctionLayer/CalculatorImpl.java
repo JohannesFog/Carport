@@ -53,13 +53,16 @@ public class CalculatorImpl implements Calculator {
     @Override
     public BillOfMaterials bomCalculatorSkråtTag(double length, double width, double height,
             String material, double angle, double skurLength, double skurWidth) {
+
+        double hypotenuse = calculateHypotenuse(width, angle);
+        double katete = calculateKatete(width, angle);
+
         BillOfMaterials totalBom = new BillOfMaterials();
         totalBom.mergeBom(calculateRemme(length));
         totalBom.mergeBom(calculateStolper(length, width, height, skurLength, skurWidth));
         totalBom.mergeBom(calculateSkråtSpær(length, width));
         totalBom.mergeBom(calculateSkråtBeslag(length));
 
-        double hypotenuse = calculateHypotenuse(width, angle);
         switch (material) {
             case "betontagsten":
                 totalBom.mergeBom(calculateTagMedSten(length, width, hypotenuse));
@@ -68,9 +71,9 @@ public class CalculatorImpl implements Calculator {
                 totalBom.mergeBom(calculateTagMedEternit(length, width, hypotenuse));
         }
 
-        double katete = calculateKatete(width, angle);
         totalBom.mergeBom(calculateBeklædningGavl(width, katete));
-
+        totalBom.mergeBom(calculateVindskeder(hypotenuse));
+        
         return totalBom;
     }
 
@@ -240,6 +243,53 @@ public class CalculatorImpl implements Calculator {
         return bom;
     }
 
+    @Override
+    public BillOfMaterials calculateSkråtStern(double length, double width) {
+        BillOfMaterials bom = new BillOfMaterials();
+
+        return bom;
+    }
+   
+    @Override
+    public BillOfMaterials calculateVindskeder(double hypotenuse) {
+        BillOfMaterials bom = new BillOfMaterials();
+        int rundOp = 60 - ((int) hypotenuse) % 60;
+        int vindskedeLength = (int) (hypotenuse + rundOp);
+        int quantity;
+        if (vindskedeLength<=300) {
+            quantity = 2;
+            vindskedeLength = vindskedeLength*2;
+        } else {
+            quantity = 4;
+        }
+        int indexVind = (vindskedeLength - 300) / 60;
+        double[] priceVind = {113.85, 136.63, 159.39, 182.16, 204.93, 227,70};
+
+ 
+        bom.addLineItem(new LineItem("25x150 mm. trykimp. Bræt", vindskedeLength, quantity, "stk", "Vindskeder på rejsning ", priceVind[indexVind]));
+        
+        int vandBrætLength = (int) vindskedeLength;
+        int quantityVand = quantity;
+        if (vandBrætLength>420) {
+           vandBrætLength = vandBrætLength/2;
+           quantityVand = quantityVand*2;
+        }
+
+        double[] priceVand = {14.60, 16.68, 18.76, 20.85, 25.03, 29.19};
+        int indexVand = 0;
+        if (vandBrætLength < 330) {
+            indexVand = (vandBrætLength - 210) / 30;
+        } else {
+            if (vandBrætLength % 60 != 0) {
+                vandBrætLength += 30;
+            }
+            indexVand = (vandBrætLength - 360) / 60 + 4;
+        }
+        bom.addLineItem(new LineItem("19x100 mm. trykimp. Bræt  ", vandBrætLength, quantityVand, "stk", "Vand bræt på vindskeder ", priceVand[indexVand]));
+        
+        return bom;
+    }
+    
     @Override
     public BillOfMaterials calculateFladtSpær(double length, double width) {
         BillOfMaterials bom = new BillOfMaterials();
@@ -445,16 +495,16 @@ public class CalculatorImpl implements Calculator {
         }
         int quantity = (((int) width / 16) * 2) / faktor;
 
-//        double[] price = {14.60, 16.68, 18.76, 20.85, 25.03, 29.19};
-//        int index = 0;
-//        if (brætHeight < 330) {
-//            index = (brætHeight - 180) / 30;
-//        } else {
-//            if (brætHeight % 60 != 0) {
-//                brætHeight += 30;
-//            }
-//            index = (brætHeight - 360) / 60 + 4;
-//        }
+        double[] price = {14.60, 16.68, 18.76, 20.85, 25.03, 29.19};
+        int index = 0;
+        if (brætHeight < 330) {
+            index = (brætHeight - 180) / 30;
+        } else {
+            if (brætHeight % 60 != 0) {
+                brætHeight += 30;
+            }
+            index = (brætHeight - 360) / 60 + 4;
+        }
 
         bom.addLineItem(new LineItem("19x100 mm. trykimp. Bræt", brætHeight, quantity, "stk", "Beklædning af gavle 1 på 2", 25.0));
 

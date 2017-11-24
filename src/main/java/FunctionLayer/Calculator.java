@@ -32,7 +32,11 @@ public interface Calculator {
     
     //understern, overstern, vandbrædder
     public BillOfMaterials calculateFladtStern(double length, double width);
+
+    public BillOfMaterials calculateSkråtStern(double length, double width);
     
+    public BillOfMaterials calculateVindskeder(double hypotenuse);
+
     public BillOfMaterials calculateFladtSpær(double length, double width);
     
     public BillOfMaterials calculateSkråtSpær(double length, double width);
