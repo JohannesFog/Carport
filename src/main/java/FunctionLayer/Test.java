@@ -16,22 +16,23 @@ public class Test {
     
      public static void main(String[] args) {
 
-         
-//        Calculator calc = new CalculatorImpl();
 
-//        BillOfMaterials bom = calc.bomCalculator(600.0, 510.0);
-//        
-//        
-//        
-//        ArrayList<LineItem> lines = bom.getBomList();
-//        
-//        for (LineItem item : lines){
-//            System.out.println(item.toString());
-//            
-//        }
-//        
-//        
-//        
+         
+       CalculatorImpl calc = new CalculatorImpl();
+
+
+        double hyp = calc.calculateHypotenuse(720.0, 45.0);
+        int hypInt = (int) Math.ceil(hyp);
+        
+        int testdata = (int) Math.ceil(100.0 / 28.5);
+
+        double kat = calc.calculateKatete(240.0, 15.0);
+        int katInt = (int) Math.ceil(kat);
+
+        
+        System.out.println(hyp + "-" + hypInt);
+        
+     
         
     }
     

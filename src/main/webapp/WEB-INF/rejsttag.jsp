@@ -18,7 +18,7 @@
 
         <form name="GetPrice" action="FrontController" method="POST">
             <input type="hidden" name="command" value="GetPrice">
-            <input type="hidden" name="tagtype" value="skråt">
+            <input type="hidden" name="tagtype" value="skraat">
             <br> Bredde i cm <br>
             <select name="bredde">
                 <%
