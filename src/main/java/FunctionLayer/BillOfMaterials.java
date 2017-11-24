@@ -30,9 +30,6 @@ public class BillOfMaterials {
         return bomList;
     }
 
-    public void setBomList(ArrayList<LineItem> bomList) {
-        this.bomList = bomList;
-    }
     
     
     

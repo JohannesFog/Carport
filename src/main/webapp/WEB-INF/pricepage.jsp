@@ -34,6 +34,8 @@
 
    
         
+        <%= renderDrawing.createDrawing((String) session.getAttribute("draw"))%>
+        
         <a href="index.jsp">Home</a>
         
          <% String error = (String) request.getAttribute("error");
