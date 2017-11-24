@@ -179,6 +179,28 @@ public class CalculatorImpl implements Calculator {
             bom.addLineItem(new LineItem("38x73 mm. taglægte C18", lægteLength, 2, "stk", "toplægte til montering af rygsten lægges i toplægte holder", priceLægte[indexLægte]));
         }
 
+        int antalLister = 2;
+        int listeLength;
+        if (length > 540) {
+            if (length % 60 != 0) {
+                length += 30;
+            }
+            listeLength = (int) (length / 2);
+            antalLister = antalLister * 2;
+
+        } else {
+            if (length < 300) {
+                listeLength = 300;
+            } else {
+                listeLength = (int) length;
+            }
+        }
+        
+        double[] priceListe = {23.85, 26.24, 28.63, 31.0, 33.39, 35.78, 38.16, 40.55, 42.93};
+        int indexListe = (lægteLength - 300) / 30;
+        bom.addLineItem(new LineItem("25x50 mm. trykimp. Bræt", listeLength, antalLister, "stk", "Til montering oven på tagfodslægte", priceListe[indexListe]));
+            
+        
         bom.addLineItem(new LineItem("5,0 x 40 mm. beslagskruer 250 stk.", 0, 1, "stk", "Til montering af universalbeslag + toplægte", 199.0));
 
         int antalStenOpad = antalLægterSide - 1;
@@ -202,7 +224,11 @@ public class CalculatorImpl implements Calculator {
         }
         bom.addLineItem(new LineItem("Tagstens bindere & nakkekroge 200 stk.", 0, antalBinderPakker, "stk", "Til montering af tagsten, alle ydersten + hver anden fastgøres", 779.0));
 
+        
+        
         return bom;
+        
+        
     }
 
     @Override
