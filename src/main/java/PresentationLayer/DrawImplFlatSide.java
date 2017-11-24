@@ -163,7 +163,7 @@ LineItem{name=97x97mm trykimp. stolpe, length=300, quantity=4, unit=stk, descrip
                                 Double.parseDouble(VenstreDistToTop)) ; 
         
         
-        int antalBrædder = relevantItems.get(0).getQuantity(); // antal brædder (normalt 5)
+        int antalBrædder = relevantItems.get(0).getQuantity()/2; // antal brædder (normalt 5)
         double tomLuft = this.carportLength - (antalBrædder * Integer.parseInt(VenstreLength)) - 30;
         String AfstandMellemBraet = Double.toString(  tomLuft/((double) (antalBrædder-1)));
         
