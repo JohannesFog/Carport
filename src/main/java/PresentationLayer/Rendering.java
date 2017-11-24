@@ -36,7 +36,7 @@ public class Rendering {
         df.setRoundingMode(RoundingMode.CEILING);
         StringBuilder sb = new StringBuilder();
         sb.append("<h1>Velkommen til Pricepage</h1>");
-        sb.append("<p>" + df.format(price) + ",- kr." + "</p>");
+        sb.append("<h3>" + df.format(price) + ",- kr." + "</h3>");
         ArrayList<LineItem> items = bom.getBomList();
         sb.append("<table>");
         sb.append("<tr><th>Navn</th><th>Længde</th><th>Antal</th><th>Enhed</th><th>Beskrivelse</th></tr>");
