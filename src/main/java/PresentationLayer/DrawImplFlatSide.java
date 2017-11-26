@@ -19,6 +19,7 @@ import java.util.Set;
  */
 public class DrawImplFlatSide implements Draw{
     
+    private double slope = 10.0 / 780.0;
     private BillOfMaterials bom;
     private double carportWidth;
     private double carportLength;
@@ -35,6 +36,7 @@ public class DrawImplFlatSide implements Draw{
         this.carportWidth = carportWidth;
         this.carportLength = carportLength;
         this.carportHeight = carportHeight;
+        
     }
     
     private ArrayList<LineItem> relevantBomLines(ArrayList<String> wordsToTestFor, BillOfMaterials bom) {
@@ -56,6 +58,7 @@ public class DrawImplFlatSide implements Draw{
         return output;
     }
     
+        
     private ArrayList<LineItem> removeDublicates(ArrayList<LineItem> items) {
         ArrayList<LineItem> output = items;
         Set setItems = new LinkedHashSet(output);
@@ -85,16 +88,47 @@ public class DrawImplFlatSide implements Draw{
                 + "<rect x=\"000\" y=\"00\" height=\"%s\" width=\"%s\"\n "
                 + "style=\"stroke:#000000; fill: #07beb8\"/>", width, height, height, width);
                 
-        
+        output = output + floor();
         output = output + overSternSide();
         output = output + underSternSide();
         output = output + stolper();
+        //output = output + rectangleTiltDownStraightSides("0", "0", "30", "700", slope);
         
         output = output + "</SVG>";
         
         return output;
     }
 
+    /*
+        double width = 50;
+        double slope = 0.012820513;
+        double height_decrease = (width/100)*slope;
+    */
+    public String rectangleTiltDownStraightSides(String topLeft_DistToLeft, 
+            String topLeft_DistToTop, 
+            String height,
+            String width, 
+            double slope) // eg (d)10 / (d)780 = 0,012820513
+            {
+        
+        
+        double topRight_x = Double.parseDouble(topLeft_DistToLeft)+Double.parseDouble(width);
+        double topRight_y = Double.parseDouble(topLeft_DistToTop)+
+                            (Double.parseDouble(width)*slope);
+        double downRight_x = topRight_x;
+        double downRight_y = topRight_y + Double.parseDouble(height);
+        
+        double downLeft_x = Double.parseDouble(topLeft_DistToLeft);
+        double downLeft_y = Double.parseDouble(topLeft_DistToTop) + Double.parseDouble(height);
+        
+        String mystr = String.format(
+        "<polygon points=\"%s,%s %s,%s %s,%s %s,%s\" style=\"stroke:#000000; fill: #ff0000\" />", 
+                topLeft_DistToLeft, topLeft_DistToTop, topRight_x, topRight_y, 
+                downRight_x, downRight_y, downLeft_x, downLeft_y);
+        
+        return mystr;
+    }
+    
     public String overSternSide() {
         ArrayList<String> words = new ArrayList<String>();
         words.add("Overstern brædder til siderne");
@@ -110,6 +144,13 @@ public class DrawImplFlatSide implements Draw{
         String output1 = String.format("<rect x=\"%s\" y=\"%s\" height=\"%s\" width=\"%s\""+      
                             "style=\"stroke:#000000; fill: #ff0000\"/>", 
                             ØversteLeft, ØversteDistToTop, ØversteHeight, ØversteLength);
+        //String rectangleTiltDownStraightSides(String topLeft_DistToLeft, 
+        //    String topLeft_DistToTop, 
+        //    String height,
+        //    String width, 
+        //    double slope) // eg (d)10 / (d)780 = 0,012820513
+        //    {
+        output1 = rectangleTiltDownStraightSides(ØversteLeft, ØversteDistToTop, ØversteHeight, ØversteLength, slope);
         
         return output1;
     }
@@ -130,6 +171,7 @@ public class DrawImplFlatSide implements Draw{
         String output2 = String.format("<rect x=\"%s\" y=\"%s\" height=\"%s\" width=\"%s\""+      
                             "style=\"stroke:#000000; fill: #ff0000\"/>", 
                             NedersteLeft, NedersteDistToTop, NedersteHeight, NedersteLength);
+        output2 = rectangleTiltDownStraightSides(NedersteLeft, NedersteDistToTop, NedersteHeight, NedersteLength, slope);
         
         
         return output2;
@@ -139,7 +181,17 @@ public class DrawImplFlatSide implements Draw{
     public String remme() {
         return "";
     }
-
+    
+    public String floor() {
+        String output2 = String.format("<rect x=\"%s\" y=\"%s\" height=\"%s\" width=\"%s\""+      
+                            "style=\"stroke:#000000; fill: #ff0000\"/>", 
+                            "0", this.carportHeight, "2", this.carportLength);
+        //output2 = rectangleTiltDownStraightSides(NedersteLeft, NedersteDistToTop, NedersteHeight, NedersteLength, slope);
+        
+        
+        return output2;
+    }
+    
     @Override
     public String stolper() {
         ArrayList<String> words = new ArrayList<String>();
@@ -173,10 +225,17 @@ LineItem{name=97x97mm trykimp. stolpe, length=300, quantity=4, unit=stk, descrip
             //VenstreSpærDistToTop
             VenstreLeft = Double.toString( 15+
                                 (i*(Double.parseDouble(AfstandMellemBraet)+Double.parseDouble(VenstreLength))));
+            
+            String VenstreDistToTopNew = Double.toString(Double.parseDouble(VenstreDistToTop)+
+                    (Double.parseDouble(VenstreLeft)*slope));
+            
+            String VenstreHeightNew = Double.toString(Double.parseDouble(VenstreHeight) - 
+                    (Double.parseDouble(VenstreLeft)*slope));
+                    
             output += String.format("<rect x=\"%s\" y=\"%s\" height=\"%s\" width=\"%s\""+      
                             "style=\"stroke:#000000; fill: #ff0000\"/>", 
-                            VenstreLeft, VenstreDistToTop
-                            , VenstreHeight, VenstreLength);//VenstreSpærWidth
+                            VenstreLeft, VenstreDistToTopNew
+                            , VenstreHeightNew, VenstreLength);//VenstreSpærWidth
         }
         
         return output;
@@ -212,6 +271,11 @@ LineItem{name=97x97mm trykimp. stolpe, length=300, quantity=4, unit=stk, descrip
         System.out.println(draw.stolper());
         System.out.println("Understern");
         System.out.println(draw.underSternSide());
+        
+        double width = 50;
+        double slope = 0.012820513;
+        double height_decrease = (width/100)*slope;
+        System.out.println(height_decrease);
         
         //output = output + overSternSide();
         //output = output + underSternSide();
