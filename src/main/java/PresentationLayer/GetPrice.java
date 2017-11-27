@@ -55,9 +55,9 @@ public class GetPrice extends Command {
         String draw = "";
                 
         if (tagtype.equals("fladt")) {
-            DrawImplFlatAbove drawFlatAbove = new DrawImplFlatAbove(bom, width, length); 
+            DrawImplFlatAbove drawFlatAbove = new DrawImplFlatAbove(bom, width, length, skurLength, skurWidth); 
             String drawingFlatAbove = drawFlatAbove.tegnTag(750, 750);
-            DrawImplFlatSide drawFlatSide = new DrawImplFlatSide(bom, width, length, height);
+            DrawImplFlatSide drawFlatSide = new DrawImplFlatSide(bom, length, height, skurLength, skurWidth);
             String drawintFlatSide = drawFlatSide.tegnTag(750, 750);
             draw = drawingFlatAbove + drawintFlatSide;
         } else {

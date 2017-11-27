@@ -19,9 +19,13 @@ import java.util.Set;
  */
 public class DrawImplFlatSide implements Draw{
     
+    private double skurLength;
+    private double skurWidth;
+    private double endeUdhæng = 15;
+    
     private double slope = 10.0 / 780.0;
     private BillOfMaterials bom;
-    private double carportWidth;
+    //private double //carportWidth;
     private double carportLength;
     private double carportHeight;
     
@@ -29,13 +33,17 @@ public class DrawImplFlatSide implements Draw{
     private double understernHeight;
     
     
-    public DrawImplFlatSide(BillOfMaterials bom, double carportWidth, double carportLength, double carportHeight) {
+    public DrawImplFlatSide(BillOfMaterials bom, double carportLength, double carportHeight,
+                            double skurLength, double skurWidth) {
         BillOfMaterials localBom = new BillOfMaterials();
         localBom.mergeBom(bom);
         this.bom = localBom;
-        this.carportWidth = carportWidth;
+        //this.carportWidth = carportWidth;
         this.carportLength = carportLength;
         this.carportHeight = carportHeight;
+        
+        this.skurLength = skurLength;
+        this.skurWidth = skurWidth;
         
     }
     
@@ -89,13 +97,19 @@ public class DrawImplFlatSide implements Draw{
                 + "style=\"stroke:#000000; fill: #07beb8\"/>", width, height, height, width);
                 
         output = output + floor();
+        
         output = output + overSternSide();
         output = output + underSternSide();
+        if (this.skurLength > 0 && this.skurWidth > 0) {
+            //output = output + "<p>"+skurLength + " " +skurWidth+"</p>";
+            output = output + skur();
+        }
         output = output + stolper();
         //output = output + rectangleTiltDownStraightSides("0", "0", "30", "700", slope);
         
-        output = output + "</SVG>";
         
+        
+        output = output + "</SVG>";
         return output;
     }
 
@@ -262,7 +276,7 @@ LineItem{name=97x97mm trykimp. stolpe, length=300, quantity=4, unit=stk, descrip
         System.out.println("start");
         Calculator calc = new CalculatorImpl();
         BillOfMaterials bom = calc.bomCalculator(240, 240, 210,"fladt", 0, 0);
-        DrawImplFlatSide draw = new DrawImplFlatSide(bom, 240, 240, 240);
+        DrawImplFlatSide draw = new DrawImplFlatSide(bom, 240, 240, 50, 50);
         
         
         System.out.println("****************  result: bom liste:");
@@ -271,6 +285,10 @@ LineItem{name=97x97mm trykimp. stolpe, length=300, quantity=4, unit=stk, descrip
         System.out.println(draw.stolper());
         System.out.println("Understern");
         System.out.println(draw.underSternSide());
+        System.out.println("*********************************************");
+        System.out.println("her er skur:");
+        System.out.println(draw.skur());
+        System.out.println("her slutter skur");
         
         double width = 50;
         double slope = 0.012820513;
@@ -284,4 +302,48 @@ LineItem{name=97x97mm trykimp. stolpe, length=300, quantity=4, unit=stk, descrip
         System.out.println("end");
     }
     
+    //******************************************************************
+    // ******************************************************************
+    //              Sepperat afsnit til skurmetoder.
+    //********************************************************************
+    //*******************************************************************
+    
+    public String skur() {
+        double Localskurlength = this.skurLength;
+        double LocalcarportLength = this.carportLength;
+        
+        //Man kan ikke have et skur der er længere end Carporten  - 2 * udhæng på enderne
+        if (this.skurLength > (carportLength - this.endeUdhæng - this.endeUdhæng)) {
+            Localskurlength = carportLength - this.endeUdhæng - this.endeUdhæng;
+        } else {
+            Localskurlength = this.skurLength;
+        }
+        
+        double skurTopRight_x = carportLength-this.endeUdhæng;
+        double skurTopRight_y = (skurTopRight_x*this.slope)+this.oversternHeight; //wrong this.carportHeight-(skurTopRight_x*this.slope);
+        
+        double skurBottomRight_x = skurTopRight_x;
+        double skurBottomRight_y = this.carportHeight;
+        
+        double skurTopLeft_x = carportLength-this.endeUdhæng - Localskurlength;
+        double skurTopLeft_y = (skurTopLeft_x*this.slope)+this.oversternHeight; //wrong this.carportHeight-(skurTopLeft_x*this.slope); 
+        
+        double skurBottomleft_x = skurTopLeft_x;
+        double skurBottomleft_y = this.carportHeight;
+        
+        
+        String output = String.format(
+        "<polygon points=\"%s,%s %s,%s %s,%s %s,%s\" style=\"stroke:#000000; fill: #099a0f\" />", 
+                skurTopLeft_x, 
+                skurTopLeft_y, //wrong
+                skurTopRight_x, 
+                skurTopRight_y, //wrong
+                skurBottomRight_x, 
+                skurBottomRight_y, 
+                skurBottomleft_x, 
+                skurBottomleft_y);
+        
+        
+        return output;  //"<p>"+skurLength + " " +skurWidth+"</p>";
+    }
 }
