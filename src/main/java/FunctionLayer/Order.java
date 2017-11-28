@@ -10,7 +10,9 @@ package FunctionLayer;
  * @author lene_
  */
 public class Order {
+
     private int oId;
+    private int phone;
     private double length;
     private double width;
     private double height;
@@ -19,21 +21,34 @@ public class Order {
     private double shedWidth;
     private double shedLength;
     private String orderDate;
-    private String uName;
+    private String status;
 
-    public Order(double length, double width, double height, String roof, 
-            double roofAngle, double shedWidth, double shedLength, String orderDate, String uName) {
+    public Order(double length, double width, double height, String roof,
+            double roofAngle, double shedWidth, double shedLength, String orderDate, int phone) {
         this.length = length;
         this.width = width;
         this.height = height;
-        this.roof = roof;
         this.roofAngle = roofAngle;
         this.shedWidth = shedWidth;
         this.shedLength = shedLength;
         this.orderDate = orderDate;
-        this.uName = uName;
+        this.phone = phone;
+        this.status = "unconfirmed";
     }
-    
+
+    public Order(double length, double width, double height, String roof,
+            double roofAngle, double shedWidth, double shedLength, String orderDate, int phone,String status) {
+        this.length = length;
+        this.width = width;
+        this.height = height;
+        this.roofAngle = roofAngle;
+        this.shedWidth = shedWidth;
+        this.shedLength = shedLength;
+        this.orderDate = orderDate;
+        this.phone = phone;
+        this.status = status;
+    }
+
     public void setoId(int oId) {
         this.oId = oId;
     }
@@ -62,9 +77,9 @@ public class Order {
         return orderDate;
     }
 
-    public String getuName() {
-        return uName;
-    }  
+    public void setStatus(String stat) {
+        this.status = stat;
+    }
 
     public double getRoofAngle() {
         return roofAngle;
@@ -77,5 +92,5 @@ public class Order {
     public double getShedLength() {
         return shedLength;
     }
-    
+
 }

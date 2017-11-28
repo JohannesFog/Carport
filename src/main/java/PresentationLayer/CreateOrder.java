@@ -34,10 +34,12 @@ public class CreateOrder extends Command {
         double shedWidth = (double) session.getAttribute("skurbredde");
         double shedLength = (double) session.getAttribute("skurlaengde");
         String name = request.getParameter("name");
+        String phonenr = request.getParameter("phone");
+        int phone = Integer.parseInt(phonenr);
         
         session.setAttribute("name",name);
         
-        LogicFacade.createOrder(length, width, height, roof, roofAngle, shedWidth, shedLength, name);
+        LogicFacade.createOrder(length, width, height, roof, roofAngle, shedWidth, shedLength, phone);
         
         return "confirmationpage";
     }
