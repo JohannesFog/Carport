@@ -15,6 +15,9 @@ create table `user`(
 insert into `user`(`name`,`address`,`zipcode`,`phonenumber`,`email`,`password`,`role`) 
 values ('Lars Larsen','Hveen Boulevard 8',2630,38383838,'lars@email.com','1234','employee');
 
+insert into `user`(`name`,`address`,`zipcode`,`phonenumber`,`email`,`password`,`role`) 
+values ('Jens Hansen','Sivsangervej 19',3080,49758900,'jens@mail.dk','5678','customer');
+
 create table `orders`(
 	`id` integer not null auto_increment,
     `length` double not null,
