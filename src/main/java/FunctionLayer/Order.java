@@ -93,4 +93,12 @@ public class Order {
         return shedLength;
     }
 
+    public int getPhone() {
+        return phone;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+    
 }
