@@ -12,7 +12,19 @@
         <title>Customer home page</title>
     </head>
     <body>
-        <h1>Hello <%=request.getParameter( "email" )%> </h1>
-        You are now logged in as a customer of our wonderful site.
+        <h1>Hello <%=request.getParameter("email")%> </h1>
+
+
+        <h2>Vælg hvilken type carport du kunne tænke dig</h2>
+
+        <form name="GetCarport" action="FrontController" method="POST">
+            <input type="hidden" name="command" value="GetCarport">
+            <input type="submit" name="cpType" value="Carport med fladt tag"><br><br>
+            <input type="submit" name="cpType" value="Carport med rejsning">
+        </form>
+
+
+
+
     </body>
 </html>
