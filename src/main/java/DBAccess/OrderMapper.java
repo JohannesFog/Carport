@@ -12,6 +12,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -41,6 +43,38 @@ public class OrderMapper {
             ids.next();
             int id = ids.getInt(1);
             order.setoId(id);
+        }catch(SQLException | ClassNotFoundException ex){
+            throw new LoginSampleException(ex.getMessage());
+        }
+    }
+    
+    public static ArrayList<Order> getAllOrders() throws LoginSampleException{
+        try{
+           ArrayList<Order> orders = new ArrayList<Order>();
+           Connection con = Connector.connection();
+           String SQL = "SELECT * FROM `orders`";
+           PreparedStatement ps = con.prepareStatement(SQL);
+           ResultSet rs = ps.executeQuery();
+           while(rs.next()){
+               int id = rs.getInt("id");
+               double length = rs.getDouble("length");
+               double width = rs.getDouble("width");
+               double height = rs.getDouble("height");
+               double roofAngle = rs.getDouble("roof_angle");
+               double shedWidth = rs.getDouble("shed_width");
+               double shedLength = rs.getDouble("shed_length");
+               String orderDate = rs.getString("orderdate");
+               int phone = rs.getInt("phonenumber");
+               String status = rs.getString("status");
+               
+               Order order = new Order(length, width, height, roofAngle, shedWidth, shedLength, orderDate, phone,status);
+               order.setoId(id);
+               orders.add(order);
+           }
+           if(orders.isEmpty()){
+               throw new LoginSampleException("There are no orders in the system");
+           }
+           return orders;
         }catch(SQLException | ClassNotFoundException ex){
             throw new LoginSampleException(ex.getMessage());
         }

@@ -23,7 +23,7 @@ public class Order {
     private String orderDate;
     private String status;
 
-    public Order(double length, double width, double height, String roof,
+    public Order(double length, double width, double height,
             double roofAngle, double shedWidth, double shedLength, String orderDate, int phone) {
         this.length = length;
         this.width = width;
@@ -36,7 +36,7 @@ public class Order {
         this.status = "unconfirmed";
     }
 
-    public Order(double length, double width, double height, String roof,
+    public Order(double length, double width, double height,
             double roofAngle, double shedWidth, double shedLength, String orderDate, int phone,String status) {
         this.length = length;
         this.width = width;
