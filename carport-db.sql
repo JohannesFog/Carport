@@ -27,12 +27,13 @@ create table `orders`(
     `shed_width` double,
     `shed_length` double,
     `orderdate` date,
-    `u_id` integer not null,
+    `phonenumber` integer not null,
     `status` enum ('confirmed','unconfirmed'),
-    primary key (`id`),
-    constraint `id` foreign key(`u_id`) references `user`(`id`) 
+    primary key (`id`)
 );
 
-insert into `orders`(`length`,`width`,`height`,`roof_angle`,`shed_width`,`shed_length`,`orderdate`,`u_id`,`status`) 
-values (600,300,210,0,270,150,'2017-11-28',1,'unconfirmed');
+insert into `orders`(`length`,`width`,`height`,`roof_angle`,`shed_width`,`shed_length`,`orderdate`,`phonenumber`,`status`) 
+values (600,300,210,0,270,150,'2017-11-28',40404040,'unconfirmed');
+
+
 

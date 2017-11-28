@@ -22,7 +22,7 @@ public class OrderMapper {
     public static void createOrder(Order order) throws LoginSampleException {
         try{
             Connection con = Connector.connection();
-            String SQL = "INSERT INTO `orders`(`length`,`width`,`height`,`roof_angle`,`shed_width`,`shed_length`,`orderdate`,`u_id`,`status`) "
+            String SQL = "INSERT INTO `orders`(`length`,`width`,`height`,`roof_angle`,`shed_width`,`shed_length`,`orderdate`,`phonenumber`,`status`) "
                     + "VALUES (?,?,?,?,?,?,?,?,?)";
             
             PreparedStatement ps = con.prepareStatement(SQL,Statement.RETURN_GENERATED_KEYS);
@@ -33,7 +33,7 @@ public class OrderMapper {
             ps.setDouble(5, order.getShedWidth());
             ps.setDouble(6, order.getShedLength());
             ps.setString(7,order.getOrderDate());
-            ps.setInt(8, order.getUId());
+            ps.setInt(8, order.getPhonenumber());
             ps.setString(9, order.getStatus());
             ps.executeUpdate();
             
