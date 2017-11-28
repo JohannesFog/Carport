@@ -3,6 +3,7 @@ package FunctionLayer;
 import DBAccess.OrderMapper;
 import DBAccess.UserMapper;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 
@@ -32,4 +33,8 @@ public class LogicFacade {
       OrderMapper.createOrder(order);
     }
 
+    public static ArrayList<Order> getAllOrdersEmp(){
+        return OrderMapper.getAllOrders();
+    }
+    
 }
