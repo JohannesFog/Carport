@@ -8,6 +8,7 @@ package PresentationLayer;
 import FunctionLayer.BillOfMaterials;
 import FunctionLayer.LineItem;
 import FunctionLayer.LogicFacade;
+import FunctionLayer.LoginSampleException;
 import FunctionLayer.Order;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
@@ -60,16 +61,17 @@ public class Rendering {
         return sb.toString();
     }
     
-     public String getOrderlistTable() {
+     public String getOrderlistTable() throws LoginSampleException {
         DecimalFormat df = new DecimalFormat("#");
         df.setRoundingMode(RoundingMode.CEILING);
         StringBuilder sb = new StringBuilder();
         sb.append("<h1>Velkommen til Orderlisten</h1>");
         ArrayList<Order> orders = LogicFacade.getAllOrdersEmp();
         sb.append("<table>");
-        sb.append("<tr><th>Telefon</th><th>Status</th><th>Dato</th>");
+        sb.append("<tr><th>Order ID</th><th>Telefon</th><th>Status</th><th>Dato</th>");
         for (Order o : orders) {
             sb.append("<tr>");
+            sb.append("<td>" + o.getoId() + "</td>");
             sb.append("<td>" + o.getPhone() + "</td>");
             sb.append("<td>" + o.getStatus() + "</td>"
                     + "<td>" + o.getOrderDate() + "</td>");

@@ -39,7 +39,7 @@ public class CreateOrder extends Command {
         
         session.setAttribute("name",name);
         
-        LogicFacade.createOrder(length, width, height, roof, roofAngle, shedWidth, shedLength, phone);
+        LogicFacade.createOrder(length, width, height, roofAngle, shedWidth, shedLength, phone);
         
         return "confirmationpage";
     }
