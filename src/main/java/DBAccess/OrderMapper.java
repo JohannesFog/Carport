@@ -33,7 +33,7 @@ public class OrderMapper {
             ps.setDouble(5, order.getShedWidth());
             ps.setDouble(6, order.getShedLength());
             ps.setString(7,order.getOrderDate());
-            ps.setInt(8, order.getPhonenumber());
+            ps.setInt(8, order.getPhone());
             ps.setString(9, order.getStatus());
             ps.executeUpdate();
             
