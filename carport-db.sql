@@ -1,20 +1,35 @@
 create schema carport;
+
+create table `user`(
+	`id` integer not null auto_increment,
+    `name` varchar(45) not null,
+    `address` varchar(45) not null,
+    `zipcode` integer not null,
+    `phonenumber` integer not null,
+    `email` varchar(45) not null,
+    `password` varchar(45) not null,
+    `role` enum('customer','employee') not null,
+    primary key (`id`)
+);
+
+insert into `user`(`name`,`address`,`zipcode`,`phonenumber`,`email`,`password`,`role`) 
+values ('Lars Larsen','Hveen Boulevard 8',2630,38383838,'lars@email.com','1234','employee');
+
 create table `orders`(
-	`o_id` integer not null auto_increment,
+	`id` integer not null auto_increment,
     `length` double not null,
     `width` double not null,
     `height` double not null,
-    `roof` enum('fladt','skråt') not null,
     `roof_angle` double,
     `shed_width` double,
     `shed_length` double,
     `orderdate` date,
-    `u_name` varchar(45) null,
-    primary key (`o_id`)
+    `u_id` integer not null,
+    `status` enum ('confirmed','unconfirmed'),
+    primary key (`id`),
+    constraint `id` foreign key(`u_id`) references `user`(`id`) 
 );
 
-insert into `orders`(`length`,`width`,`height`,`roof`,`roof_angle`,`shed_width`,`shed_length`,`orderdate`,`u_name`) 
-values (510,330,210,'fladt',0,0,0,'2017-11-21','Lars Larsen');
-
-drop table `orders`;
+insert into `orders`(`length`,`width`,`height`,`roof_angle`,`shed_width`,`shed_length`,`orderdate`,`u_id`,`status`) 
+values (600,300,210,0,270,150,'2017-11-28',1,'unconfirmed');
 
