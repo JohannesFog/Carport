@@ -33,14 +33,23 @@ public class CreateOrder extends Command {
         }
         double shedWidth = (double) session.getAttribute("skurbredde");
         double shedLength = (double) session.getAttribute("skurlaengde");
-        String name = request.getParameter("name");
-        String phonenr = request.getParameter("phone");
-        int phone = Integer.parseInt(phonenr);
         
-        session.setAttribute("name",name);
+        String role = (String) session.getAttribute("role");
         
-        LogicFacade.createOrder(length, width, height, roofAngle, shedWidth, shedLength, phone);
-        
+        if ( role == null || role.equals("employee") ){
+          String name = request.getParameter("name");
+          String adresse = request.getParameter("address");
+          String zip = request.getParameter("zip");
+          int tlf = Integer.parseInt(request.getParameter("tlf"));
+          String email = request.getParameter("email");
+          String notice = request.getParameter("notice");
+          
+          LogicFacade.createNewUserWithoutPassword(tlf, email, adresse, name, adresse, tlf, role);
+          LogicFacade.createOrder(length, width, height, roofAngle, shedWidth, shedLength, tlf); 
+        }else{
+            int tlf = Integer.parseInt(request.getParameter("tlf"));
+            LogicFacade.createOrder(length, width, height, roofAngle, shedWidth, shedLength, tlf);   
+        }
         return "confirmationpage";
     }
     

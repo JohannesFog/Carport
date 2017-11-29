@@ -48,7 +48,7 @@
             <form name="Order" action="FrontController" method="POST">
             <input type="hidden" name="command" value="Order">
             <h2>Indtast dit telefonnummer:</h2>
-            <input type="text" name="name" value="">
+            <input type="text" name="tlf" value="">
             <input type="submit" name="order" value="Bestil Carport">
             </form>
             <br>
