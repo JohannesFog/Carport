@@ -27,6 +27,19 @@ import java.util.Set;
  */
 public class DrawImplFlatAbove implements Draw{
     
+    public ArrayList<Double> stople3Test = new ArrayList<Double>();
+    public double stolpeOppeDouble;
+    public double stolpeNedeDouble;
+    public int stolpeOppeTest;
+    public int stolpeNedeTest;
+    public double afstandOeverstVenstre;
+    public double afstandNederstVenstre;
+    public double ratio;
+    
+    /*
+            String stolper3(int stolperOppe, int stolperNede, 
+            double afstandOeverstVenstre, double afstandNederstVenstre)
+            */
     private double skurLength;
     private double skurWidth;
     
@@ -64,6 +77,21 @@ public class DrawImplFlatAbove implements Draw{
                 
         this.skurLength = skurLength;
         this.skurWidth = skurWidth;
+        
+        //Man kan ikke have et skur der er længere end Carporten  - 2 * udhæng på enderne
+        if (this.skurLength > (carportLength - this.endeUdhæng - this.endeUdhæng)) {
+            //Localskurlength = carportLength - this.endeUdhæng - this.endeUdhæng;
+            this.skurLength = carportLength - this.endeUdhæng - this.endeUdhæng;
+        } //else {
+          //  Localskurlength = this.skurLength;
+        //}
+        //Man kan ikke have et skur der er bredere end Carporten  - 2 * udhæng på siderne
+        if (this.skurWidth > (this.carportWidth - this.sideUdhæng - this.sideUdhæng)) {
+            //LocalskurWidth = 
+            this.skurWidth = this.carportWidth - this.sideUdhæng - this.sideUdhæng;
+        } //else {
+         //   LocalskurWidth = this.skurWidth;
+        //}
     }
         
     private ArrayList<LineItem> relevantBomLines(ArrayList<String> wordsToTestFor, BillOfMaterials bom) {
@@ -133,10 +161,25 @@ public class DrawImplFlatAbove implements Draw{
         
         
         output = output + stolper();
-        
-        
+        output = output + stolper2();    
         output = output + "</SVG>";
         
+        //output = output + stolper2();
+        output = output + "<p>"+" start-Stolpe2: ";
+        
+        for (int i = 0; i < this.stople3Test.size(); i++) {
+            output = output + this.stople3Test.get(i) + "\n";
+        }
+        output = output +"elems: " + stople3Test.size() + "\n";
+        output = output +"stolperOppe: " + this.stolpeOppeTest+ "\n";
+        output = output +"stolperNede: " + this.stolpeNedeTest+ "\n";
+        output = output +"afstand oppe: " + this.afstandOeverstVenstre+ "\n";
+        output = output +"afstand nede: " + this.afstandNederstVenstre+ "\n";
+        output = output +"stolpeOppeDouble: " + this.stolpeOppeDouble + "\n";
+        output = output +"stolpeNedeDouble: " + this.stolpeNedeDouble + "\n";
+        output = output +"ratio: " + this.ratio + "\n";
+        
+        output = output +"</p>";
         return output;
     }
     
@@ -183,12 +226,234 @@ LineItem{name=45x95mm spærtræ ubh., length=300, quantity=2, unit=stk, descript
         
     }
 
+    public int stolperPaaSkur() {
+        
+        ArrayList<String> words = new ArrayList<String>();
+        words.add("Stolper");
+        ArrayList<LineItem> relevantItems = relevantBomLines(words, this.bom);
+        
+        // samlede antal stolper.
+        int quant = relevantItems.get(0).getQuantity();
+        // antal stolper sat på skuret:
+        boolean connected = false;
+        if (this.carportWidth == this.skurWidth+(2*this.sideUdhæng)) {
+            connected = true;
+        }
+        
+        int stolperPaaSkur = 0;
+        if (skurLength != 0 && skurWidth != 0) {
+            //stolperPaaSkur += 1;// stolper til de 2 hjørner længst til højre.
+            if (skurWidth > 400) {
+                stolperPaaSkur += 5;
+            } else {
+                stolperPaaSkur += 3;
+            }
+            if (connected == false) {
+                stolperPaaSkur += 2;
+            }
+            if (connected == false) {
+                stolperPaaSkur += 1;
+            }else {
+                stolperPaaSkur += 2;
+            }
+        }
+        
+        //int stolperIkkePaaSkur = quant-stolperPaaSkur;
+        return stolperPaaSkur;
+        
+        //return ""+relevantItems.get(0)
+        //        + "\n"+"hello stolper 2: " + quant + " " + connected;
+        
+    }
+    
+    
+    public String stolper2() {
+        ArrayList<String> words = new ArrayList<String>();
+        words.add("Stolper");
+        ArrayList<LineItem> relevantItems = relevantBomLines(words, this.bom);
+        
+        // samlede antal stolper.
+        int quant = relevantItems.get(0).getQuantity();
+        int stolperPaaSkur = stolperPaaSkur();
+        boolean connected = false;
+        if (this.carportWidth == this.skurWidth+(2*this.sideUdhæng)) {
+            connected = true;
+        }
+                
+        double afstandNederstVenstre = this.carportLength - (this.endeUdhæng*2) - this.skurLength;
+        
+        // beregn antallet af stolper tilbage. ++ beregn den procentvise forskel mellem
+        // afstanden i bunden og afstanden for oven, og fordel de resterende stolper derefter.
+        
+        double afstandOeverstVenstre = 0;
+        if (connected) {
+            afstandOeverstVenstre = afstandNederstVenstre;
+        } else {
+            afstandOeverstVenstre = this.carportLength - (this.endeUdhæng*2);
+        }
+        // **************************************************
+        // beregn herefter: forholdet mellem afstandOeverstvenstre og afstandnederstVenstre
+        double ratio;
+        if (afstandNederstVenstre == 0) {
+            afstandNederstVenstre = -1;
+        } 
+        ratio = (afstandOeverstVenstre)/afstandNederstVenstre;
+        //ratio is now a double, greate then or equal to 1.
+        // if ratio is positive, there is a difference between oeverst og nederst, and neither is 0
+        
+        
+        
+        // fra resterende: fjern stolper der SKAL placeres i de sidste hjørner.
+        int resterende  = quant - stolperPaaSkur;
+        
+        // af de resterende (stolper ikke på skur) vil nogle af stolperne 
+        // høre til i hjørnerne. 
+        if ( !connected) {
+            resterende = resterende - 1;
+            // da skuret ikke spænder hele carportens bredde, 
+            // vil 1 af de resterende stopler høre blive assignet til øverste højre hjørne.
+        }
+        if (afstandNederstVenstre > 0) {
+            resterende = resterende - 1;
+        }
+        if (afstandOeverstVenstre > 0) {
+            resterende = resterende - 1;
+        }
+        
+        //*******************************************************
+        // beregn fordelingen af resterende stolper, og placer dem ud.
+        // resterende stolper er antallet af stolper der ikke sidder på skuret, og ikke sidder i 
+        // de 4 hjørner
+        
+        double stolperØverst = 0;
+        double stolperNederst = 0;
+        this.ratio = ratio;
+        if (ratio <= 0) {
+            stolperNederst = 0;
+            stolperØverst = resterende;
+            if (afstandOeverstVenstre == 0) {
+                stolperØverst = 0;
+            }
+        } else {
+            stolperØverst = ((1/(ratio/100.0))/100) * ((double) resterende);
+            stolperNederst = ((double) resterende) - stolperØverst;//stolperNederst
+            //nu er stolperØverst en double der viser hvor mange stolper der "burde" være for oven,
+            // hvis man kunne have fraktioner af stolper.
+            // stolperNederst er antallet af stlper der "burde" være for neden
+        }
+        
+        //************************test
+        this.stolpeOppeDouble = stolperØverst;
+        this.stolpeNedeDouble = stolperNederst;
+        // nu burde stolpe øverst og stolpe neders være kommatal.
+        // Disse skal laves om til integers, ved afrunding.
+        int stolpeNedAfrund = 0;
+        int stolpeOpAfrund = 0;
+        if (stolperØverst % 1 != 0) {
+            stolpeNedAfrund = (int) stolperNederst;
+            stolpeOpAfrund = ((int) stolperØverst);
+            stolpeOpAfrund++;
+        } else {
+             stolpeNedAfrund = (int) stolperNederst;
+            stolpeOpAfrund = (int) stolperØverst;
+        }
+        
+        
+        
+        return stolper3(stolpeOpAfrund, stolpeNedAfrund, afstandOeverstVenstre, afstandNederstVenstre);
+                //test output;
+                /*
+                ""+ratio + " resterende: " + resterende
+                + " stolpNederst: " + stolperNederst + " stolpOeverst: " + stolperØverst + 
+                " stolpeNedAfrund: "+stolpeNedAfrund + " stolpeOpAfrund: " + stolpeOpAfrund;
+                */
+    }
+    
+    // denne metode tager to Integers "øverste stolpe" og "nederste stolpe".
+    // 
+    public String stolper3(int stolperOppe, int stolperNede, 
+            double afstandOeverstVenstre, double afstandNederstVenstre) {
+        this.stolpeOppeTest = stolperOppe;
+        this.stolpeNedeTest = stolperNede;
+        //this.afstandOeverstVenstre = afstandOeverstVenstre;
+        //this.afstandNederstVenstre = afstandNederstVenstre;
+        
+        
+        ArrayList<String> words = new ArrayList<String>();
+        words.add("Stolper");
+        ArrayList<LineItem> relevantItems = relevantBomLines(words, this.bom);
+        String ØversteVenstreLength = relevantItems.get(0).getName().substring(3, 4);//9 from description: "97x97mm trykimp. stolpe,..."
+        double stolpelength = Double.parseDouble(ØversteVenstreLength);
+        // 1: træk stolpelængden * 2 fra afstandOeverstVenstre og afstandNederstVenstre
+        // 2: find x-akse midterpunkterne til stolperne. (husk at der nu er mere mellemrum end der er stolper)
+        // 3: justér punkterne så de passer med left-siden.
+        // 4: læg punkterne in  i en arrayList.
+        // 5: brug listen til at skrive stolperne ud til en streng.
+        double ledigAfstandOeverstVenstre = afstandOeverstVenstre - (stolpelength*2);
+        double ledigAfstandNederstVenstre = afstandNederstVenstre - (stolpelength*2);
+        
+        this.afstandOeverstVenstre = ledigAfstandOeverstVenstre;
+        this.afstandNederstVenstre = ledigAfstandNederstVenstre;
+        
+        ArrayList<Double> stolpeLeftPunkterOeverst = new ArrayList<Double>();
+        double antalMellemrumOeverst = stolperOppe + 1;
+        double mellemrumStoerelseOeven = antalMellemrumOeverst / ledigAfstandOeverstVenstre;
+        double startPointOeven = this.endeUdhæng + stolpelength;
+        
+        double eachLeftPoint = 0;
+        for (int i = 0; i < stolperOppe; i++) {
+            i++;
+            eachLeftPoint = startPointOeven + (i*mellemrumStoerelseOeven);//dette giver midtpunktet
+            eachLeftPoint = eachLeftPoint - (stolpelength / 2.0); // dette giver left-punktet;
+            stolpeLeftPunkterOeverst.add(eachLeftPoint);
+        }
+        
+        //***********************************************************
+        this.stople3Test = stolpeLeftPunkterOeverst;
+        /*
+        this.stolpeNedeTest;
+        this.stolpeOppeTest;
+        this.afstandNederstVenstre;
+        this.afstandOeverstVenstre;
+        */
+        //***********************************************************
+        
+        String output = "";
+        for (int j = 0; j < stolpeLeftPunkterOeverst.size(); j++) {
+            String eachLeft = Double.toString(stolpeLeftPunkterOeverst.get(j));
+            ///////////////////////////////////////////////////////////////////////////////////////
+            ///////////////////////////////////////////////////////////////////////////////////////
+            String NedersteVenstreWidth = relevantItems.get(0).getName().substring(0, 1);//9 from description: "97x97mm trykimp. stolpe,..."
+            String NedersteVenstreLength = relevantItems.get(0).getName().substring(3, 4);//9 from description: "97x97mm trykimp. stolpe,..."
+            String NedersteVenstreLeft = eachLeft;//Double.toString(this.endeUdhæng);
+            String NedersteVenstreDistToTop = Double.toString(this.sideUdhæng);//Double.toString(this.carportWidth-
+                                        //Integer.parseInt(NedersteVenstreWidth) - this.sideUdhæng);
+
+            this.bottomLeftStolpeNederstHøjre_X = Double.parseDouble(NedersteVenstreLength)+
+                                                  Double.parseDouble(NedersteVenstreLeft);
+            this.bottomLeftStolpeNederstHøjre_Y = Double.parseDouble(NedersteVenstreDistToTop) +
+                                                  Double.parseDouble(NedersteVenstreWidth);
+            this.bottomLeftStolpeØverstVenstre_X = Double.parseDouble(NedersteVenstreLeft);;
+            this.bottomLeftStolpeØverstVenstre_Y = Double.parseDouble(NedersteVenstreDistToTop);
+
+            output += String.format("<rect x=\"%s\" y=\"%s\" height=\"%s\" width=\"%s\""+      
+                                "style=\"stroke:#000000; fill: #ff0000\"/>", 
+                                NedersteVenstreLeft, NedersteVenstreDistToTop, NedersteVenstreWidth, NedersteVenstreLength);
+
+            ///////////////////////////////////////////////////////////////////////////////////////
+            ////////////////////////////////////////////////////////////////////////////////////////
+        }
+        
+        return output;
+    }
+    
+    // denne omfatter kun 
     @Override
     public String stolper() {
         ArrayList<String> words = new ArrayList<String>();
         words.add("Stolper");
         ArrayList<LineItem> relevantItems = relevantBomLines(words, this.bom);
-        removeLineItemsFromBom(relevantItems);
+        //removeLineItemsFromBom(relevantItems);
         
         /*
         Eksempel på LineItem:
@@ -467,30 +732,19 @@ LineItem{name=Hulbånd 1x20mm 10meter, length=0, quantity=2, unit=ruller, descri
     // lav en beregning af dedikerede skurstolper (se tegning)
     
     public String skur() {
-        double Localskurlength = this.skurLength;
-        double LocalcarportLength = this.carportLength;
-        double LocalskurWidth = this.skurWidth;
+        //double Localskurlength = this.skurLength;
+        //double LocalcarportLength = this.carportLength;
+        //double LocalskurWidth = this.skurWidth;
         
-        //Man kan ikke have et skur der er længere end Carporten  - 2 * udhæng på enderne
-        if (this.skurLength > (carportLength - this.endeUdhæng - this.endeUdhæng)) {
-            Localskurlength = carportLength - this.endeUdhæng - this.endeUdhæng;
-        } else {
-            Localskurlength = this.skurLength;
-        }
-        //Man kan ikke have et skur der er bredere end Carporten  - 2 * udhæng på siderne
-        if (this.skurWidth > (this.carportWidth - this.sideUdhæng - this.sideUdhæng)) {
-            LocalskurWidth = this.carportWidth - this.sideUdhæng - this.sideUdhæng;
-        } else {
-            LocalskurWidth = this.skurWidth;
-        }
+        
         
         double skurTopRight_x = carportLength-this.endeUdhæng;
-        double skurTopRight_y = this.carportWidth-this.sideUdhæng-LocalskurWidth;
+        double skurTopRight_y = this.carportWidth-this.sideUdhæng-this.skurWidth;
         
         double skurBottomRight_x = skurTopRight_x;
         double skurBottomRight_y = this.carportWidth-this.sideUdhæng;
         
-        double skurTopLeft_x = carportLength-this.endeUdhæng - Localskurlength;
+        double skurTopLeft_x = carportLength-this.endeUdhæng - this.skurLength;
         double skurTopLeft_y = skurTopRight_y;
         
         double skurBottomleft_x = skurTopLeft_x;
@@ -556,42 +810,39 @@ LineItem{name=Hulbånd 1x20mm 10meter, length=0, quantity=2, unit=ruller, descri
                 String RightMiddleLength2 = relevantItems.get(0).getName().substring(3, 4);//9 from description: "97x97mm trykimp. stolpe,..."
                 String RightMiddleLeft2 = Double.toString(skurBottomRight_x - 
                                         Double.parseDouble(TopRightLength));
-                double twoThirdsSkurWidth = ((Double.parseDouble(RightMiddleWidth2) /3.0)*2)-
-                                                    ((LocalskurWidth) / 3.0);
+                double twoThirdsSkurWidth = ((this.skurWidth/3.0)*2.0) + 
+                                        (Double.parseDouble(RightMiddleWidth2)/2.0);
+                        //((Double.parseDouble(RightMiddleWidth2) /3.0)*2)-
+                          //                          ((LocalskurWidth) / 3.0);
                 String RightMiddleDistToTop2 = Double.toString(skurBottomRight_y -twoThirdsSkurWidth);
                 
                 output += String.format("<rect x=\"%s\" y=\"%s\" height=\"%s\" width=\"%s\""+      
                                     "style=\"stroke:#000000; fill: #ff0000\"/>", 
                                     RightMiddleLeft2, RightMiddleDistToTop2, RightMiddleWidth2, RightMiddleLength2);
                 
-                /*
-                String RightMiddleDistToTop2 = Double.toString(skurBottomRight_y -
-                                            (((Double.parseDouble(RightMiddleWidth2) /3.0)*2)-
-                                                    (LocalskurWidth) / 3.0));
-                */
-                
-                /*
-                // ekstra stolpe til skuret. Højre middte ned.
+                // ekstra stolpe til skuret. Højre middte op.
                 String RightMiddleWidth1 = relevantItems.get(0).getName().substring(0, 1);//9 from description: "97x97mm trykimp. stolpe,..."
                 String RightMiddleLength1 = relevantItems.get(0).getName().substring(3, 4);//9 from description: "97x97mm trykimp. stolpe,..."
                 String RightMiddleLeft1 = Double.toString(skurBottomRight_x - 
                                         Double.parseDouble(TopRightLength));
-                String RightMiddleDistToTop1 = Double.toString(skurBottomRight_y -
-                                            ((Double.parseDouble(RightMiddleWidth1) /3.0)-
-                                                    (LocalskurWidth) / 3.0));
-
+                double oneThirdSkurWidth = ((this.skurWidth/3.0)) + 
+                                        (Double.parseDouble(RightMiddleWidth2)/2.0);
+                        //((Double.parseDouble(RightMiddleWidth2) /3.0)*2)-
+                          //                          ((LocalskurWidth) / 3.0);
+                String RightMiddleDistToTop1 = Double.toString(skurBottomRight_y -oneThirdSkurWidth);
+                
                 output += String.format("<rect x=\"%s\" y=\"%s\" height=\"%s\" width=\"%s\""+      
                                     "style=\"stroke:#000000; fill: #ff0000\"/>", 
                                     RightMiddleLeft1, RightMiddleDistToTop1, RightMiddleWidth1, RightMiddleLength1);
-                */
+                
                 // ekstra stolpe til skuret. Venstre midte.
                 String LeftMiddleWidth = relevantItems.get(0).getName().substring(0, 1);//9 from description: "97x97mm trykimp. stolpe,..."
                 String LeftMiddleLength = relevantItems.get(0).getName().substring(3, 4);//9 from description: "97x97mm trykimp. stolpe,..."
-                String LeftMiddleLeft = Double.toString(skurBottomRight_x - Localskurlength);
+                String LeftMiddleLeft = Double.toString(skurBottomRight_x - this.skurLength);
                                         //Double.parseDouble(TopRightLength));
                 String LeftMiddleDistToTop = Double.toString(skurBottomRight_y -
                                             ((Double.parseDouble(LeftMiddleWidth)+
-                                                    LocalskurWidth) / 2.0));
+                                                    this.skurWidth) / 2.0));
 
                 output += String.format("<rect x=\"%s\" y=\"%s\" height=\"%s\" width=\"%s\""+      
                                     "style=\"stroke:#000000; fill: #ff0000\"/>", 
@@ -605,7 +856,7 @@ LineItem{name=Hulbånd 1x20mm 10meter, length=0, quantity=2, unit=ruller, descri
                                         Double.parseDouble(TopRightLength));
                 String RightMiddleDistToTop = Double.toString(skurBottomRight_y -
                                             ((Double.parseDouble(RightMiddleWidth)+
-                                                    LocalskurWidth) / 2.0));
+                                                    this.skurWidth) / 2.0));
 
                 output += String.format("<rect x=\"%s\" y=\"%s\" height=\"%s\" width=\"%s\""+      
                                     "style=\"stroke:#000000; fill: #ff0000\"/>", 
@@ -618,7 +869,7 @@ LineItem{name=Hulbånd 1x20mm 10meter, length=0, quantity=2, unit=ruller, descri
                 String TopMiddleWidth = relevantItems.get(0).getName().substring(0, 1);//9 from description: "97x97mm trykimp. stolpe,..."
                 String TopMiddleLength = relevantItems.get(0).getName().substring(3, 4);//9 from description: "97x97mm trykimp. stolpe,..."
                 String TopMiddleLeft = Double.toString(skurBottomRight_x - 
-                                        ((Double.parseDouble(TopRightLength)+Localskurlength) / 2.0));
+                                        ((Double.parseDouble(TopRightLength)+this.skurLength) / 2.0));
                 String TopMiddleDistToTop = Double.toString(skurTopLeft_y);
 
                 output += String.format("<rect x=\"%s\" y=\"%s\" height=\"%s\" width=\"%s\""+      
