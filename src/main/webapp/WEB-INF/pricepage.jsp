@@ -4,6 +4,7 @@
     Author     : Mikkel Lindstrøm <Mikkel.Lindstrøm>
 --%>
 
+<%@page import="FunctionLayer.User"%>
 <%@page import="PresentationLayer.RenderDrawing"%>
 <%@page import="PresentationLayer.Rendering"%>
 <%@page import="java.util.ArrayList"%>
@@ -24,22 +25,43 @@
         <%=render.getNicerHTML((double) session.getAttribute("price"),
                 (BillOfMaterials) session.getAttribute("bom"))%>
 
-        <form name="Order" action="FrontController" method="POST">
+        <% String role = (String) session.getAttribute("role"); %>
+        <% if (role == null || role.equals("employee")) { %>
+            <form name="Order" action="FrontController" method="POST">
             <input type="hidden" name="command" value="Order">
-            <h2>Indtast dit navn:</h2>
+            <h3>Navn:</h3>
+            <input type="text" name="name" value="">
+            <h3>Addresse:</h3>
+            <input type="text" name="address" value="">
+            <h3>Postnummer:</h3>
+            <input type="text" name="zip" value="">
+            <h3>Telefon:</h3>
+            <input type="text" name="tlf" value="">
+            <h3>Email</h3>
+            <input type="text" name="email" value="">
+            <h3>Bemærkninger</h3>
+            <input type="text" name="notice" value="">
+            <input type="submit" name="order" value="Send forespørgelse">
+            </form> 
+            <br>
+        <%} else {%>
+            <form name="Order" action="FrontController" method="POST">
+            <input type="hidden" name="command" value="Order">
+            <h2>Indtast dit telefonnummer:</h2>
             <input type="text" name="name" value="">
             <input type="submit" name="order" value="Bestil Carport">
-        </form>
- 
+            </form>
+            <br>
+        <%}%>
 
-   
-        
+
+
         <%= renderDrawing.createDrawing((String) session.getAttribute("draw"))%>
-        
+
         <a href="index.jsp">Home</a>
-        
-         <% String error = (String) request.getAttribute("error");
-                        if (error != null) {%>
+
+        <% String error = (String) request.getAttribute("error");
+            if (error != null) {%>
         <H2>Error!</H2>
         <p><%= error%></p>
         <%}%> 
