@@ -58,7 +58,7 @@ public class CalculatorImpl implements Calculator {
         double katete = calculateKatete(width, angle);
 
         BillOfMaterials totalBom = new BillOfMaterials();
-        totalBom.mergeBom(calculateRemme(length));
+        totalBom.mergeBom(calculateRemme(length - 60));
         totalBom.mergeBom(calculateStolper(length, width, height, skurLength, skurWidth));
         totalBom.mergeBom(calculateSkråtSpær(length, width));
         totalBom.mergeBom(calculateSkråtBeslag(length));
@@ -71,7 +71,10 @@ public class CalculatorImpl implements Calculator {
         }
         totalBom.mergeBom(calculateBeklædningGavl(width, katete));
         totalBom.mergeBom(calculateVindskeder(hypotenuse));
-        
+        totalBom.mergeBom(calculateSkråtStern(length));
+        totalBom.mergeBom(calculateBræddebolt(length - 60));
+        totalBom.mergeBom(calculateFirkantskiver(length - 60));
+
         return totalBom;
     }
 
@@ -95,7 +98,7 @@ public class CalculatorImpl implements Calculator {
         totalBom.mergeBom(calculateHulbånd(width));
         totalBom.mergeBom(calculateFladtBeslag(length));
         totalBom.mergeBom(calculateSkruerStern(length, width));
-        totalBom.mergeBom(calculateSkruerBeslag(length, width));
+        totalBom.mergeBom(calculateFladtSkruerBeslag(length, width));
         totalBom.mergeBom(calculateBræddebolt(length));
         totalBom.mergeBom(calculateFirkantskiver(length));
 
@@ -170,13 +173,13 @@ public class CalculatorImpl implements Calculator {
         int indexLægte = (lægteLength - 300) / 30;
 
         if (length < 540) {
-            bom.addLineItem(new LineItem("38x73 mm. taglægte C18", lægteLength, antalLægterTotal, "stk", "til montering på spær, " + antalLægterSide + " rækker lægter på hver side", priceLægte[indexLægte]));
-            bom.addLineItem(new LineItem("38x73 mm. taglægte C18", lægteLength, 1, "stk", "toplægte til montering af rygsten lægges i toplægte holder", priceLægte[indexLægte]));
+            bom.addLineItem(new LineItem("38x73 mm. taglægte C18", lægteLength, antalLægterTotal, "stk", "Til montering på spær, " + antalLægterSide + " rækker lægter på hver side", priceLægte[indexLægte]));
+            bom.addLineItem(new LineItem("38x73 mm. taglægte C18", lægteLength, 1, "stk", "Toplægte til montering af rygsten lægges i toplægte holder", priceLægte[indexLægte]));
         } else {
-            bom.addLineItem(new LineItem("38x73 mm. taglægte C18", lægteLength, antalLægterTotal, "stk", "til montering på spær, " + antalLægterSide + " rækker lægter på hver side - 2 lægter samles", priceLægte[indexLægte]));
-            bom.addLineItem(new LineItem("38x73 mm. taglægte C18", lægteLength, 2, "stk", "toplægte til montering af rygsten lægges i toplægte holder", priceLægte[indexLægte]));
+            bom.addLineItem(new LineItem("38x73 mm. taglægte C18", lægteLength, antalLægterTotal, "stk", "Til montering på spær, " + antalLægterSide + " rækker lægter på hver side - 2 lægter samles", priceLægte[indexLægte]));
+            bom.addLineItem(new LineItem("38x73 mm. taglægte C18", lægteLength, 2, "stk", "Toplægte til montering af rygsten lægges i toplægte holder", priceLægte[indexLægte]));
         }
-
+                
         int antalLister = 2;
         int listeLength;
         if (length > 540) {
@@ -193,12 +196,16 @@ public class CalculatorImpl implements Calculator {
                 listeLength = (int) length;
             }
         }
-        
+
         double[] priceListe = {23.85, 26.24, 28.63, 31.0, 33.39, 35.78, 38.16, 40.55, 42.93};
         int indexListe = (lægteLength - 300) / 30;
         bom.addLineItem(new LineItem("25x50 mm. trykimp. Bræt", listeLength, antalLister, "stk", "Til montering oven på tagfodslægte", priceListe[indexListe]));
-            
-        
+
+
+        int antalSpær = (int) (Math.ceil((length - 65) / 89.0));;
+        int antalSkruer = antalLægterSide * 2 * antalSpær * 2;
+        int antalPakkerSkruer = antalSkruer/100 + 1;
+        bom.addLineItem(new LineItem("5,0 x 100 mm. skruer 100 stk. ", 0, antalPakkerSkruer, "kasser", "Til taglægter", 179.0));
         bom.addLineItem(new LineItem("5,0 x 40 mm. beslagskruer 250 stk.", 0, 1, "stk", "Til montering af universalbeslag + toplægte", 199.0));
 
         int antalStenOpad = antalLægterSide - 1;
@@ -222,11 +229,8 @@ public class CalculatorImpl implements Calculator {
         }
         bom.addLineItem(new LineItem("Tagstens bindere & nakkekroge 200 stk.", 0, antalBinderPakker, "stk", "Til montering af tagsten, alle ydersten + hver anden fastgøres", 779.0));
 
-        
-        
         return bom;
-        
-        
+
     }
 
     @Override
@@ -268,35 +272,57 @@ public class CalculatorImpl implements Calculator {
     }
 
     @Override
-    public BillOfMaterials calculateSkråtStern(double length, double width) {
+    public BillOfMaterials calculateSkråtStern(double length) {
         BillOfMaterials bom = new BillOfMaterials();
+        int rundOp = 60 - ((int) length) % 60;
+        if (rundOp == 60) {
+            rundOp = 0;
+        }
+        int sternLength = (int) (length + rundOp);
+        int quantity = 2;
+        if (sternLength <= 300) {
+            quantity = 1;
+            sternLength = sternLength * 2;
+        } else {
+            if (sternLength > 600) {
+                sternLength = sternLength / 2;
+                quantity = 4;
+                if (sternLength % 60 != 0) {
+                    sternLength += 30;
+                }
+            }
+
+        }
+        int indexStern = (sternLength - 300) / 60;
+        double[] priceStern = {113.85, 136.63, 159.39, 182.16, 204.93, 227, 70};
+
+        bom.addLineItem(new LineItem("25x150 mm. trykimp. Bræt", sternLength, quantity, "stk", "Sternbrædder til siderne", priceStern[indexStern]));
 
         return bom;
     }
-   
+
     @Override
     public BillOfMaterials calculateVindskeder(double hypotenuse) {
         BillOfMaterials bom = new BillOfMaterials();
         int rundOp = 60 - ((int) hypotenuse) % 60;
         int vindskedeLength = (int) (hypotenuse + rundOp);
         int quantity;
-        if (vindskedeLength<=300) {
+        if (vindskedeLength <= 300) {
             quantity = 2;
-            vindskedeLength = vindskedeLength*2;
+            vindskedeLength = vindskedeLength * 2;
         } else {
             quantity = 4;
         }
         int indexVind = (vindskedeLength - 300) / 60;
-        double[] priceVind = {113.85, 136.63, 159.39, 182.16, 204.93, 227,70};
+        double[] priceVind = {113.85, 136.63, 159.39, 182.16, 204.93, 227, 70};
 
- 
         bom.addLineItem(new LineItem("25x150 mm. trykimp. Bræt", vindskedeLength, quantity, "stk", "Vindskeder på rejsning ", priceVind[indexVind]));
-        
+
         int vandBrætLength = (int) vindskedeLength;
         int quantityVand = quantity;
-        if (vandBrætLength>420) {
-           vandBrætLength = vandBrætLength/2;
-           quantityVand = quantityVand*2;
+        if (vandBrætLength > 420) {
+            vandBrætLength = vandBrætLength / 2;
+            quantityVand = quantityVand * 2;
         }
 
         double[] priceVand = {14.60, 16.68, 18.76, 20.85, 25.03, 29.19};
@@ -309,11 +335,11 @@ public class CalculatorImpl implements Calculator {
             }
             indexVand = (vandBrætLength - 360) / 60 + 4;
         }
-        bom.addLineItem(new LineItem("19x100 mm. trykimp. Bræt  ", vandBrætLength, quantityVand, "stk", "Vand bræt på vindskeder ", priceVand[indexVand]));
-        
+        bom.addLineItem(new LineItem("19x100 mm. trykimp. Bræt  ", vandBrætLength, quantityVand, "stk", "Vandbræt på vindskeder ", priceVand[indexVand]));
+
         return bom;
     }
-    
+
     @Override
     public BillOfMaterials calculateFladtSpær(double length, double width) {
         BillOfMaterials bom = new BillOfMaterials();
@@ -383,27 +409,26 @@ public class CalculatorImpl implements Calculator {
     }
 
     @Override
-    public BillOfMaterials calculateSkruerBeslag(double length, double width) {
+    public BillOfMaterials calculateFladtSkruerBeslag(double length, double width) {
         BillOfMaterials bom = new BillOfMaterials();
         int skruePakkerAntal = 0;
-        BillOfMaterials hulbånd = calculateHulbånd(width);
+
         BillOfMaterials beslag = calculateFladtBeslag(length);
         int beslagStk = 0;
-        int hilbåndStk = 0;
+
         for (LineItem li : beslag.getBomList()) {
             beslagStk += li.getQuantity();
         }
-        for (LineItem li : hulbånd.getBomList()) {
-            hilbåndStk += li.getQuantity();
-        }
-        //jeg regner med at der går 1 pakke til 30 stk. beslag (højre+venstre)
+
+//      jeg regner med at der går hvad der svarer til et beslag pakke pr. rulle hulbånd.
+        beslagStk += 2;
+
+//      jeg regner med at der går 1 pakke til 30 stk. beslag (højre+venstre)
         skruePakkerAntal += (beslagStk / 30) + 1;
-        // jeg regner med at der går 1 pakke pr. rulle hulbånd.
-        skruePakkerAntal += hilbåndStk;
         bom.addLineItem(new LineItem("4,0 x 50 mm. beslagskruer 250 stk.", 0, skruePakkerAntal, "pakker", "Til montering af universalbeslag + hulbånd", 239));
         return bom;
     }
-
+    
     @Override
     public BillOfMaterials calculateBræddebolt(double length) {
         BillOfMaterials bom = new BillOfMaterials();

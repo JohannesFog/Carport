@@ -29,11 +29,10 @@ public interface Calculator {
     public BillOfMaterials calculateTagMedEternit(double length, double width, double hypotenuse);
     
     public BillOfMaterials calculateRemme(double length); 
-    
-    //understern, overstern, vandbrædder
+ 
     public BillOfMaterials calculateFladtStern(double length, double width);
 
-    public BillOfMaterials calculateSkråtStern(double length, double width);
+    public BillOfMaterials calculateSkråtStern(double length);
     
     public BillOfMaterials calculateVindskeder(double hypotenuse);
 
@@ -49,8 +48,8 @@ public interface Calculator {
 
     public BillOfMaterials calculateSkruerStern(double length, double width);
     
-    public BillOfMaterials calculateSkruerBeslag(double length, double width);
-    
+    public BillOfMaterials calculateFladtSkruerBeslag(double length, double width);
+        
     public BillOfMaterials calculateBræddebolt(double length);
     
     public BillOfMaterials calculateFirkantskiver(double length);
