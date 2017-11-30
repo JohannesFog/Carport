@@ -62,7 +62,6 @@ public class CalculatorImpl implements Calculator {
         totalBom.mergeBom(calculateStolper(length, width, height, skurLength, skurWidth));
         totalBom.mergeBom(calculateSkråtSpær(length, width));
         totalBom.mergeBom(calculateSkråtBeslag(length));
-
         switch (material) {
             case "betontagsten":
                 totalBom.mergeBom(calculateTagMedSten(length, width, hypotenuse));
@@ -70,7 +69,6 @@ public class CalculatorImpl implements Calculator {
             default:
                 totalBom.mergeBom(calculateTagMedEternit(length, width, hypotenuse));
         }
-
         totalBom.mergeBom(calculateBeklædningGavl(width, katete));
         totalBom.mergeBom(calculateVindskeder(hypotenuse));
         
