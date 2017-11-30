@@ -7,7 +7,7 @@ create table `user`(
     `zipcode` integer not null,
     `phonenumber` integer not null,
     `email` varchar(45) not null,
-    `password` varchar(45) not null,
+    `password` varchar(45),
     `role` enum('customer','employee') not null,
     primary key (`id`)
 );
@@ -34,6 +34,8 @@ create table `orders`(
 
 insert into `orders`(`length`,`width`,`height`,`roof_angle`,`shed_width`,`shed_length`,`orderdate`,`phonenumber`,`status`) 
 values (600,300,210,0,270,150,'2017-11-28',40404040,'unconfirmed');
+
+drop table `user`;
 
 
 
