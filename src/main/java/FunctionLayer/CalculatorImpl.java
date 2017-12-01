@@ -108,7 +108,7 @@ public class CalculatorImpl implements Calculator {
     @Override
     public BillOfMaterials calculateStolper(double length, double width, double height, double skurLength, double skurWidth) {
         BillOfMaterials bom = new BillOfMaterials();
-        int quantity = (((int) length) / 240) * 2 + 2;
+        int quantity = ((((int) length) / 240)+1) * 2;
         if (skurLength != 0 && skurWidth != 0) {
             if (skurWidth > 400) {
                 quantity += 5;
