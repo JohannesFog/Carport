@@ -12,6 +12,7 @@ package PresentationLayer;
 public interface Draw {
      
     public String tegnTag(int width, int height);
+    public String tegnTag(int width, int height, String drawFlatAbove);
     
     public String remme();
     
