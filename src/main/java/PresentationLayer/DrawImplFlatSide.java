@@ -5,6 +5,7 @@
  */
 package PresentationLayer;
 
+import java.util.regex.*;  
 import FunctionLayer.BillOfMaterials;
 import FunctionLayer.Calculator;
 import FunctionLayer.CalculatorImpl;
@@ -21,11 +22,12 @@ public class DrawImplFlatSide implements Draw{
     
     private double skurLength;
     private double skurWidth;
+    private double sideUdhæng = 15;
     private double endeUdhæng = 15;
     
     private double slope = 10.0 / 780.0;
     private BillOfMaterials bom;
-    //private double //carportWidth;
+    private double carportWidth;
     private double carportLength;
     private double carportHeight;
     
@@ -33,8 +35,10 @@ public class DrawImplFlatSide implements Draw{
     private double understernHeight;
     
     
-    public DrawImplFlatSide(BillOfMaterials bom, double carportLength, double carportHeight,
+    public DrawImplFlatSide(BillOfMaterials bom, double carportWidth, double carportLength, double carportHeight,
                             double skurLength, double skurWidth) {
+        this.carportWidth = carportWidth;
+        
         BillOfMaterials localBom = new BillOfMaterials();
         localBom.mergeBom(bom);
         this.bom = localBom;
@@ -92,11 +96,18 @@ public class DrawImplFlatSide implements Draw{
     
     @Override
     public String tegnTag(int width, int height) {
+        return "";
+    }
+    
+    @Override
+    public String tegnTag(int width, int height, String drawFlatAbove) {
         String output = String.format("<SVG width=\"%s\" height=%s> "
                 + "<rect x=\"000\" y=\"00\" height=\"%s\" width=\"%s\"\n "
                 + "style=\"stroke:#000000; fill: #07beb8\"/>", width, height, height, width);
                 
         output = output + floor();
+        
+        output = output + stolper2Foroven();
         
         output = output + overSternSide();
         output = output + underSternSide();
@@ -104,7 +115,7 @@ public class DrawImplFlatSide implements Draw{
             //output = output + "<p>"+skurLength + " " +skurWidth+"</p>";
             output = output + skur();
         }
-        output = output + stolper();
+        output = output + stolper2Forneden(drawFlatAbove);
         //output = output + rectangleTiltDownStraightSides("0", "0", "30", "700", slope);
         
         
@@ -206,19 +217,147 @@ public class DrawImplFlatSide implements Draw{
         return output2;
     }
     
+    /*
+        Eksempel på LineItem:
+        stolper()
+LineItem{name=97x97mm trykimp. stolpe, length=300, quantity=4, unit=stk, description=Stolper nedgraves 90cm i jord.}
+        */
+    
+    public String stolper2Foroven() {
+        return "";
+    }
+    
+    public String stolper2Forneden(String DrawFlatAbove) {
+        String output = "";
+        
+        ArrayList<String> words = new ArrayList<String>();
+        words.add("Stolper");
+        ArrayList<LineItem> relevantItems = relevantBomLines(words, this.bom);
+        String ØversteVenstreLength = relevantItems.get(0).getName().substring(3, 4);//9 from description: "97x97mm trykimp. stolpe,..."
+        double stolpelength = Double.parseDouble(ØversteVenstreLength);
+        
+        
+        String port720720210210 = "<SVG width=\"750\" height=750> <rect x=\"000\" y=\"00\" height=\"750\" width=\"750\"\n" +
+                    " style=\"stroke:#000000; fill: #ffff00\"/>"
+                + "<rect x=\"0\" y=\"15.0\" height=\"4.5\" width=\"720.0\"style=\"stroke:#000000; fill: #ff0000\"/>"
+                + "<rect x=\"0\" y=\"700.5\" height=\"4.5\" width=\"720.0\"style=\"stroke:#000000; fill: #ff0000\"/>"
+                + "<polygon points=\"495.0,495.0 705.0,495.0 705.0,705.0 495.0,705.0\" style=\"stroke:#000000; fill: #099a0f\" />"
+                + "<rect x=\"495.0\" y=\"495.0\" height=\"9\" width=\"9\"style=\"stroke:#000000; fill: #ff0000\"/>"
+                + "<rect x=\"696.0\" y=\"495.0\" height=\"9\" width=\"9\"style=\"stroke:#000000; fill: #ff0000\"/>"
+                + "<rect x=\"495.0\" y=\"696.0\" height=\"9\" width=\"9\"style=\"stroke:#000000; fill: #ff0000\"/>"
+                + "<rect x=\"696.0\" y=\"595.5\" height=\"9\" width=\"9\"style=\"stroke:#000000; fill: #ff0000\"/>"
+                + "<rect x=\"595.5\" y=\"495.0\" height=\"9\" width=\"9\"style=\"stroke:#000000; fill: #ff0000\"/>"
+                + "<rect x=\"0.0\" y=\"0\" height=\"720.0\" width=\"4.5\"style=\"stroke:#000000; fill: #ff0000\"/>"
+                + "<rect x=\"55.03846153846154\" y=\"0\" height=\"720.0\" width=\"4.5\"style=\"stroke:#000000; fill: #ff0000\"/>"
+                + "<rect x=\"110.07692307692308\" y=\"0\" height=\"720.0\" width=\"4.5\"style=\"stroke:#000000; fill: #ff0000\"/>"
+                + "<rect x=\"165.1153846153846\" y=\"0\" height=\"720.0\" width=\"4.5\"style=\"stroke:#000000; fill: #ff0000\"/>"
+                + "<rect x=\"220.15384615384616\" y=\"0\" height=\"720.0\" width=\"4.5\"style=\"stroke:#000000; fill: #ff0000\"/>"
+                + "<rect x=\"275.1923076923077\" y=\"0\" height=\"720.0\" width=\"4.5\"style=\"stroke:#000000; fill: #ff0000\"/>"
+                + "<rect x=\"330.2307692307692\" y=\"0\" height=\"720.0\" width=\"4.5\"style=\"stroke:#000000; fill: #ff0000\"/>"
+                + "<rect x=\"385.2692307692308\" y=\"0\" height=\"720.0\" width=\"4.5\"style=\"stroke:#000000; fill: #ff0000\"/>"
+                + "<rect x=\"440.3076923076923\" y=\"0\" height=\"720.0\" width=\"4.5\"style=\"stroke:#000000; fill: #ff0000\"/>"
+                + "<rect x=\"495.34615384615387\" y=\"0\" height=\"720.0\" width=\"4.5\"style=\"stroke:#000000; fill: #ff0000\"/>"
+                + "<rect x=\"550.3846153846154\" y=\"0\" height=\"720.0\" width=\"4.5\"style=\"stroke:#000000; fill: #ff0000\"/>"
+                + "<rect x=\"605.4230769230769\" y=\"0\" height=\"720.0\" width=\"4.5\"style=\"stroke:#000000; fill: #ff0000\"/>"
+                + "<rect x=\"660.4615384615385\" y=\"0\" height=\"720.0\" width=\"4.5\"style=\"stroke:#000000; fill: #ff0000\"/>"
+                + "<rect x=\"715.5\" y=\"0\" height=\"720.0\" width=\"4.5\"style=\"stroke:#000000; fill: #ff0000\"/><line x1=\"17.0\" y1=\"15.0\" x2=\"707.0\" y2=\"705.0\" stroke=\"black\" stroke-width=\"2\" stroke-dasharray=\"2, 5\"/><line x1=\"15.0\" y1=\"15.0\" x2=\"705.0\" y2=\"705.0\" stroke=\"black\" stroke-width=\"2\" stroke-dasharray=\"2, 5\"/><line x1=\"15.0\" y1=\"705.0\" x2=\"705.0\" y2=\"15.0\" stroke=\"black\" stroke-width=\"2\" stroke-dasharray=\"2, 5\"/><line x1=\"17.0\" y1=\"705.0\" x2=\"707.0\" y2=\"15.0\" stroke=\"black\" stroke-width=\"2\" stroke-dasharray=\"2, 5\"/><rect x=\"15.0\" y=\"15.0\" height=\"9\" width=\"9\"style=\"stroke:#000000; fill: #ff0000\"/>"
+                + "<rect x=\"696.0\" y=\"15.0\" height=\"9\" width=\"9\"style=\"stroke:#000000; fill: #ff0000\"/><rect x=\"15.0\" y=\"696.0\" height=\"9\" width=\"9\"style=\"stroke:#000000; fill: #ff0000\"/><rect x=\"696.0\" y=\"696.0\" height=\"9\" width=\"9\"style=\"stroke:#000000; fill: #ff0000\"/><rect x=\"187.5\" y=\"15.0\" height=\"9\" width=\"9\"style=\"stroke:#000000; fill: #ff0000\"/><rect x=\"355.5\" y=\"15.0\" height=\"9\" width=\"9\"style=\"stroke:#000000; fill: #ff0000\"/><rect x=\"523.5\" y=\"15.0\" height=\"9\" width=\"9\"style=\"stroke:#000000; fill: #ff0000\"/><rect x=\"250.5\" y=\"696.0\" height=\"9\" width=\"9\"style=\"stroke:#000000; fill: #ff0000\"/></SVG>"
+                + "<p> start-Stolpe2: 187.5\n" +
+                    "355.5\n" +
+                    "523.5\n" +
+                    "elems: 3\n" +
+                    "stolperOppe: 3\n" +
+                    "stolperNede: 1\n" +
+                    "afstand oppe: 672.0\n" +
+                    "afstand nede: 462.0\n" +
+                    "stolpeOppeDouble: 2.358974358974359\n" +
+                    "stolpeNedeDouble: 1.641025641025641\n" +
+                    "ratio: 1.4375\n" +
+                    "stolpe3test: [187.5, 355.5, 523.5]\n" +
+                    "</p>";
+        
+        String localDrawAbove = port720720210210;
+        
+        /*
+        String output2 = String.format("<rect x=\"%s\" y=\"%s\" height=\"%s\" width=\"%s\""+      
+                            "style=\"stroke:#000000; fill: #ff0000\"/>", 
+                            NedersteLeft, NedersteDistToTop, NedersteWidth, NedersteLength);
+        */
+        
+        double distFromTop = this.carportWidth - this.sideUdhæng - stolpelength;
+        output = "";//"hello regex string: " + distFromTop;
+        
+        double dubLeft = this.endeUdhæng;
+        double dubRight = this.carportLength - this.endeUdhæng - stolpelength;
+        double dubSkur = dubRight + stolpelength - this.skurLength;
+        
+        double DLheight = this.carportHeight - (dubLeft * slope); 
+        double DRheight = this.carportHeight - (dubRight * slope); 
+        double DSheight = this.carportHeight - (dubSkur * slope); 
+        
+        String stolpeLeft = String.format("<rect x=\"%s\" y=\"%s\" height=\"%s\" width=\"%s\""+      
+                            "style=\"stroke:#000000; fill: #ff0000\"/>", 
+                            dubLeft, (dubLeft * slope), DLheight, stolpelength);
+        String stolpeRight = String.format("<rect x=\"%s\" y=\"%s\" height=\"%s\" width=\"%s\""+      
+                            "style=\"stroke:#000000; fill: #ff0000\"/>", 
+                            dubRight, (dubRight * slope), DRheight, stolpelength);
+        String stolpeSkur = String.format("<rect x=\"%s\" y=\"%s\" height=\"%s\" width=\"%s\""+      
+                            "style=\"stroke:#000000; fill: #ff0000\"/>", 
+                            dubSkur, (dubSkur * slope), DSheight, stolpelength);
+        output += stolpeLeft + stolpeRight + stolpeSkur;
+        
+        //String VenstreHeight = Double.toString(this.carportHeight - 
+        //                        Double.parseDouble(VenstreDistToTop)) ; 
+        //String VenstreDistToTop = Double.toString(this.oversternHeight);
+        
+        /*
+        List<String> allMatches = new ArrayList<String>();
+        Matcher m = Pattern.compile("your regular expression here")
+            .matcher(yourStringHere);
+        while (m.find()) {
+          allMatches.add(m.group());
+        }
+        */
+        
+        //double distFromSide = this.; lav en regex der leder efter y=\"15.0\" height=\"9\" width=\"9\"
+                                        // herefter får den de 10 tegn der står før det. 
+                                        // herefter leder man efter tal som man typecaster til en double.
+                                        // så har man left-x værdien
+        // regResult:
+        //String pattern = "y=\""+Double.toString(this.sideUdhæng)+
+        //        "\" height=\"9\" width=\"9\"";
+        
+        
+        
+        //ArrayList<String> allMatches = new ArrayList<String>();
+        //String pattern = "y=\"15.0\" height=\"9\" width=\"9\"";
+        //boolean isMatch = Pattern.("", "");//localDrawAbove
+        //output = Boolean.toString(isMatch);
+        
+        return output;
+    }
+    
+    /*
+            String NedersteVenstreWidth = relevantItems.get(0).getName().substring(0, 1);//9 from description: "97x97mm trykimp. stolpe,..."
+            String NedersteVenstreLength = relevantItems.get(0).getName().substring(3, 4);//9 from description: "97x97mm trykimp. stolpe,..."
+            String NedersteVenstreLeft = eachLeft;//Double.toString(this.endeUdhæng);
+            String NedersteVenstreDistToTop = Double.toString(this.carportWidth-
+                                    Integer.parseInt(NedersteVenstreWidth) - this.sideUdhæng);;//Double.toString(this.carportWidth-
+                                        //Integer.parseInt(NedersteVenstreWidth) - this.sideUdhæng);
+
+            output += String.format("<rect x=\"%s\" y=\"%s\" height=\"%s\" width=\"%s\""+      
+                                "style=\"stroke:#000000; fill: #ff0000\"/>", 
+                                NedersteVenstreLeft, NedersteVenstreDistToTop, NedersteVenstreWidth, NedersteVenstreLength);
+
+    */
+    
     @Override
     public String stolper() {
         ArrayList<String> words = new ArrayList<String>();
         words.add("Stolper");
         ArrayList<LineItem> relevantItems = relevantBomLines(words, this.bom);
         removeLineItemsFromBom(relevantItems);
-        
-        /*
-        Eksempel på LineItem:
-        stolper()
-LineItem{name=97x97mm trykimp. stolpe, length=300, quantity=4, unit=stk, description=Stolper nedgraves 90cm i jord.}
-        */
-        
+                
         // alle afstande regnes i centimeter
         
         //øverste-venstre stolpe.
@@ -252,6 +391,8 @@ LineItem{name=97x97mm trykimp. stolpe, length=300, quantity=4, unit=stk, descrip
                             , VenstreHeightNew, VenstreLength);//VenstreSpærWidth
         }
         
+        
+        
         return output;
         
         /*
@@ -262,6 +403,7 @@ LineItem{name=97x97mm trykimp. stolpe, length=300, quantity=4, unit=stk, descrip
         
     }
 
+    
     @Override
     public String spaer() {
         return "";
@@ -276,9 +418,9 @@ LineItem{name=97x97mm trykimp. stolpe, length=300, quantity=4, unit=stk, descrip
         System.out.println("start");
         Calculator calc = new CalculatorImpl();
         BillOfMaterials bom = calc.bomCalculator(240, 240, 210,"fladt", 0, 0);
-        DrawImplFlatSide draw = new DrawImplFlatSide(bom, 240, 240, 50, 50);
+        DrawImplFlatSide draw = new DrawImplFlatSide(bom, 240, 240, 240, 50, 50);
         
-        
+        /*
         System.out.println("****************  result: bom liste:");
         System.out.println("overstern");
         System.out.println(draw.overSternSide());
@@ -294,11 +436,11 @@ LineItem{name=97x97mm trykimp. stolpe, length=300, quantity=4, unit=stk, descrip
         double slope = 0.012820513;
         double height_decrease = (width/100)*slope;
         System.out.println(height_decrease);
-        
+        */
         //output = output + overSternSide();
         //output = output + underSternSide();
         //output = output + stolper();
-        
+        System.out.println(draw.stolper2Forneden(""));
         System.out.println("end");
     }
     

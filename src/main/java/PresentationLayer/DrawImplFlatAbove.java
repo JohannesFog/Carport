@@ -137,6 +137,11 @@ public class DrawImplFlatAbove implements Draw{
     }
     
     @Override
+    public String tegnTag(int width, int height, String DrawFlatAbove) {
+        return "";
+    }
+    
+    @Override
     public String tegnTag(int width, int height) {
         String output = String.format("<SVG width=\"%s\" height=%s> "
                 + "<rect x=\"000\" y=\"00\" height=\"%s\" width=\"%s\"\n "
@@ -164,6 +169,8 @@ public class DrawImplFlatAbove implements Draw{
         output = output + stolper2();    
         output = output + "</SVG>";
         
+        /*
+        //debugging stolper2()
         //output = output + stolper2();
         output = output + "<p>"+" start-Stolpe2: ";
         
@@ -178,8 +185,10 @@ public class DrawImplFlatAbove implements Draw{
         output = output +"stolpeOppeDouble: " + this.stolpeOppeDouble + "\n";
         output = output +"stolpeNedeDouble: " + this.stolpeNedeDouble + "\n";
         output = output +"ratio: " + this.ratio + "\n";
+        output = output +"stolpe3test: " + this.stople3Test.toString() + "\n";
         
         output = output +"</p>";
+        */
         return output;
     }
     
@@ -335,8 +344,10 @@ LineItem{name=45x95mm spærtræ ubh., length=300, quantity=2, unit=stk, descript
                 stolperØverst = 0;
             }
         } else {
-            stolperØverst = ((1/(ratio/100.0))/100) * ((double) resterende);
-            stolperNederst = ((double) resterende) - stolperØverst;//stolperNederst
+            stolperØverst = ratio/((ratio+1.0)/resterende);//4 * Math.abs((1.0/ratio)-1);
+            stolperNederst = 1/((ratio+1.0)/resterende);//4 * (1.0/ratio);//stolperNederst
+            //stolperØverst = ((1/(ratio/100.0))/100) * ((double) resterende);
+            //stolperNederst = ((double) resterende) - stolperØverst;//stolperNederst
             //nu er stolperØverst en double der viser hvor mange stolper der "burde" være for oven,
             // hvis man kunne have fraktioner af stolper.
             // stolperNederst er antallet af stlper der "burde" være for neden
@@ -397,12 +408,12 @@ LineItem{name=45x95mm spærtræ ubh., length=300, quantity=2, unit=stk, descript
         
         ArrayList<Double> stolpeLeftPunkterOeverst = new ArrayList<Double>();
         double antalMellemrumOeverst = stolperOppe + 1;
-        double mellemrumStoerelseOeven = antalMellemrumOeverst / ledigAfstandOeverstVenstre;
+        double mellemrumStoerelseOeven = ledigAfstandOeverstVenstre / antalMellemrumOeverst;
         double startPointOeven = this.endeUdhæng + stolpelength;
         
         double eachLeftPoint = 0;
-        for (int i = 0; i < stolperOppe; i++) {
-            i++;
+        for (int i = 1; i <= (stolperOppe); i++) {
+            //i++;
             eachLeftPoint = startPointOeven + (i*mellemrumStoerelseOeven);//dette giver midtpunktet
             eachLeftPoint = eachLeftPoint - (stolpelength / 2.0); // dette giver left-punktet;
             stolpeLeftPunkterOeverst.add(eachLeftPoint);
@@ -427,6 +438,48 @@ LineItem{name=45x95mm spærtræ ubh., length=300, quantity=2, unit=stk, descript
             String NedersteVenstreLength = relevantItems.get(0).getName().substring(3, 4);//9 from description: "97x97mm trykimp. stolpe,..."
             String NedersteVenstreLeft = eachLeft;//Double.toString(this.endeUdhæng);
             String NedersteVenstreDistToTop = Double.toString(this.sideUdhæng);//Double.toString(this.carportWidth-
+                                        //Integer.parseInt(NedersteVenstreWidth) - this.sideUdhæng);
+
+            this.bottomLeftStolpeNederstHøjre_X = Double.parseDouble(NedersteVenstreLength)+
+                                                  Double.parseDouble(NedersteVenstreLeft);
+            this.bottomLeftStolpeNederstHøjre_Y = Double.parseDouble(NedersteVenstreDistToTop) +
+                                                  Double.parseDouble(NedersteVenstreWidth);
+            this.bottomLeftStolpeØverstVenstre_X = Double.parseDouble(NedersteVenstreLeft);;
+            this.bottomLeftStolpeØverstVenstre_Y = Double.parseDouble(NedersteVenstreDistToTop);
+
+            output += String.format("<rect x=\"%s\" y=\"%s\" height=\"%s\" width=\"%s\""+      
+                                "style=\"stroke:#000000; fill: #ff0000\"/>", 
+                                NedersteVenstreLeft, NedersteVenstreDistToTop, NedersteVenstreWidth, NedersteVenstreLength);
+
+            ///////////////////////////////////////////////////////////////////////////////////////
+            ////////////////////////////////////////////////////////////////////////////////////////
+        }
+        
+        // her skrives ekstra stolperne nederst:
+        
+        double antalMellemrumNederst = stolperNede + 1;//afstandNederstVenstre
+        double mellemrumStoerelseNede = ledigAfstandNederstVenstre / antalMellemrumNederst;
+        double startPointNede = this.endeUdhæng + stolpelength;
+        ArrayList<Double> stolpeLeftPunkterNederst = new ArrayList<Double>();
+        
+        eachLeftPoint = 0;
+        for (int i = 1; i <= (stolperNede); i++) {/////////
+            //i++;
+            eachLeftPoint = startPointNede + (i*mellemrumStoerelseNede);//dette giver midtpunktet
+            eachLeftPoint = eachLeftPoint - (stolpelength / 2.0); // dette giver left-punktet;
+            stolpeLeftPunkterNederst.add(eachLeftPoint);
+        }
+        
+        //output = "";
+        for (int j = 0; j < stolpeLeftPunkterNederst.size(); j++) {
+            String eachLeft = Double.toString(stolpeLeftPunkterNederst.get(j));
+            ///////////////////////////////////////////////////////////////////////////////////////
+            ///////////////////////////////////////////////////////////////////////////////////////
+            String NedersteVenstreWidth = relevantItems.get(0).getName().substring(0, 1);//9 from description: "97x97mm trykimp. stolpe,..."
+            String NedersteVenstreLength = relevantItems.get(0).getName().substring(3, 4);//9 from description: "97x97mm trykimp. stolpe,..."
+            String NedersteVenstreLeft = eachLeft;//Double.toString(this.endeUdhæng);
+            String NedersteVenstreDistToTop = Double.toString(this.carportWidth-
+                                    Integer.parseInt(NedersteVenstreWidth) - this.sideUdhæng);;//Double.toString(this.carportWidth-
                                         //Integer.parseInt(NedersteVenstreWidth) - this.sideUdhæng);
 
             this.bottomLeftStolpeNederstHøjre_X = Double.parseDouble(NedersteVenstreLength)+
