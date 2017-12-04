@@ -5,7 +5,7 @@
  */
 package DBAccess;
 
-import FunctionLayer.LoginSampleException;
+import Exceptions.DataMapperException;
 import FunctionLayer.Order;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -21,7 +21,7 @@ import java.util.List;
  */
 public class OrderMapper {
 
-    public static void createOrder(Order order) throws LoginSampleException {
+    public static void createOrder(Order order) throws DataMapperException {
         try{
             Connection con = Connector.connection();
             String SQL = "INSERT INTO `orders`(`length`,`width`,`height`,`roof_angle`,`shed_width`,`shed_length`,`orderdate`,`phonenumber`,`status`) "
@@ -44,11 +44,11 @@ public class OrderMapper {
             int id = ids.getInt(1);
             order.setoId(id);
         }catch(SQLException | ClassNotFoundException ex){
-            throw new LoginSampleException(ex.getMessage());
+            throw new DataMapperException(ex.getMessage());
         }
     }
     
-    public static ArrayList<Order> getAllOrders() throws LoginSampleException{
+    public static ArrayList<Order> getAllOrders() throws DataMapperException{
         try{
            ArrayList<Order> orders = new ArrayList<Order>();
            Connection con = Connector.connection();
@@ -72,11 +72,11 @@ public class OrderMapper {
                orders.add(order);
            }
            if(orders.isEmpty()){
-               throw new LoginSampleException("There are no orders in the system");
+               throw new DataMapperException("There are no orders in the system");
            }
            return orders;
         }catch(SQLException | ClassNotFoundException ex){
-            throw new LoginSampleException(ex.getMessage());
+            throw new DataMapperException(ex.getMessage());
         }
     }
     

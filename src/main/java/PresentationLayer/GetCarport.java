@@ -5,7 +5,7 @@
  */
 package PresentationLayer;
 
-import FunctionLayer.LoginSampleException;
+import Exceptions.DataMapperException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -19,7 +19,7 @@ public class GetCarport extends Command {
     }
 
     @Override
-    String execute(HttpServletRequest request, HttpServletResponse response) throws LoginSampleException {
+    String execute(HttpServletRequest request, HttpServletResponse response) throws DataMapperException {
         String out = "";
         String in = request.getParameter("cpType");
         if(in.equals("Carport med fladt tag")){

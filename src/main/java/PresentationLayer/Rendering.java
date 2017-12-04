@@ -8,7 +8,7 @@ package PresentationLayer;
 import FunctionLayer.BillOfMaterials;
 import FunctionLayer.LineItem;
 import FunctionLayer.LogicFacade;
-import FunctionLayer.LoginSampleException;
+import Exceptions.DataMapperException;
 import FunctionLayer.Order;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
@@ -61,7 +61,7 @@ public class Rendering {
         return sb.toString();
     }
     
-     public String getOrderlistTable() throws LoginSampleException {
+     public String getOrderlistTable() throws DataMapperException {
         DecimalFormat df = new DecimalFormat("#");
         df.setRoundingMode(RoundingMode.CEILING);
         StringBuilder sb = new StringBuilder();

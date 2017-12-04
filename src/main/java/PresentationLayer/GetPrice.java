@@ -11,7 +11,7 @@ import FunctionLayer.BillOfMaterials;
 import FunctionLayer.Calculator;
 import FunctionLayer.CalculatorImpl;
 import FunctionLayer.LogicFacade;
-import FunctionLayer.LoginSampleException;
+import Exceptions.DataMapperException;
 import FunctionLayer.User;
 import static java.lang.Compiler.command;
 import java.util.logging.Level;
@@ -27,7 +27,7 @@ import javax.servlet.http.HttpSession;
 public class GetPrice extends Command {
 
     @Override
-    String execute(HttpServletRequest request, HttpServletResponse response) throws LoginSampleException {
+    String execute(HttpServletRequest request, HttpServletResponse response) throws DataMapperException {
 
         HttpSession session = request.getSession();
         String længde = request.getParameter("laengde");

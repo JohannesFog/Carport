@@ -1,5 +1,6 @@
 package FunctionLayer;
 
+import Exceptions.DataMapperException;
 import DBAccess.OrderMapper;
 import DBAccess.UserMapper;
 import java.text.SimpleDateFormat;
@@ -13,17 +14,17 @@ import java.util.Date;
  */
 public class LogicFacade {
 
-    public static User login( String email, String password ) throws LoginSampleException {
+    public static User login( String email, String password ) throws DataMapperException {
         return UserMapper.login( email, password );
     } 
 
-    public static User createUser(int phone, String email, String password, String name, String address, int zip, String role) throws LoginSampleException {
+    public static User createUser(int phone, String email, String password, String name, String address, int zip, String role) throws DataMapperException {
         User user = new User(phone,email,password,name,address,zip,role);
         UserMapper.createUser( user );
         return user;
     }
     
-     public static User createNewUserWithoutPassword(int phone, String email, String password, String name, String address, int zip,String role ) throws LoginSampleException {
+     public static User createNewUserWithoutPassword(int phone, String email, String password, String name, String address, int zip,String role ) throws DataMapperException {
         User user = new User(phone,email,null,name,address,zip,role);
         UserMapper.createUser( user );
         return user;
@@ -32,7 +33,7 @@ public class LogicFacade {
     
     
     public static void createOrder(double length, double width, double height, 
-           double roofAngle,double shedWidth, double shedLength, int phone) throws LoginSampleException{
+           double roofAngle,double shedWidth, double shedLength, int phone) throws DataMapperException{
       Date date = new Date();
       SimpleDateFormat sdrf = new SimpleDateFormat("yyyy-MM-dd");
       String dateString = sdrf.format(date);
@@ -41,7 +42,7 @@ public class LogicFacade {
       OrderMapper.createOrder(order);
     }
 
-    public static ArrayList<Order> getAllOrdersEmp() throws LoginSampleException{
+    public static ArrayList<Order> getAllOrdersEmp() throws DataMapperException{
         return OrderMapper.getAllOrders();
     }
     
