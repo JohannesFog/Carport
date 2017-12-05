@@ -1,6 +1,6 @@
 package FunctionLayer;
 
-import java.sql.Array;
+import Exceptions.DataMapperException;
 import java.util.ArrayList;
 
 /**
@@ -8,6 +8,12 @@ import java.util.ArrayList;
  * @author GertLehmann
  */
 public class CalculatorImpl implements Calculator {
+
+    String materiale;
+    double unitPrice;
+
+    double meterPrice;
+    double stkPrice;
 
     @Override
     public double calculatePrice(BillOfMaterials bom) {
@@ -23,7 +29,7 @@ public class CalculatorImpl implements Calculator {
     @Override
     public BillOfMaterials bomCalculator(double length, double width, double height,
             String type, String material, double angle,
-            double skurLength, double skurWidth) {
+            double skurLength, double skurWidth) throws DataMapperException {
         BillOfMaterials totalBom = new BillOfMaterials();
 
         if (type.equals("fladt")) {
@@ -52,7 +58,7 @@ public class CalculatorImpl implements Calculator {
 
     @Override
     public BillOfMaterials bomCalculatorSkråtTag(double length, double width, double height,
-            String material, double angle, double skurLength, double skurWidth) {
+            String material, double angle, double skurLength, double skurWidth) throws DataMapperException {
 
         double hypotenuse = calculateHypotenuse(width, angle);
         double katete = calculateKatete(width, angle);
@@ -79,7 +85,7 @@ public class CalculatorImpl implements Calculator {
     }
 
     @Override
-    public BillOfMaterials bomCalculatorSkur(double length, double width, double height, double skurLength, double skurWidth) {
+    public BillOfMaterials bomCalculatorSkur(double length, double width, double height, double skurLength, double skurWidth) throws DataMapperException {
         BillOfMaterials totalBom = new BillOfMaterials();
         totalBom.mergeBom(calculateLøsholter(width, skurLength, skurWidth));
         totalBom.mergeBom(calculateBeklædningSkur(height, skurLength, skurWidth));
@@ -87,7 +93,7 @@ public class CalculatorImpl implements Calculator {
     }
 
     @Override
-    public BillOfMaterials bomCalculatorFladtTag(double length, double width, double height, double skurLength, double skurWidth) {
+    public BillOfMaterials bomCalculatorFladtTag(double length, double width, double height, double skurLength, double skurWidth) throws DataMapperException {
         BillOfMaterials totalBom = new BillOfMaterials();
 
         totalBom.mergeBom(calculateFladtStern(length, width));
@@ -106,19 +112,16 @@ public class CalculatorImpl implements Calculator {
     }
 
     @Override
-    public BillOfMaterials calculateStolper(double length, double width, double height, double skurLength, double skurWidth) {
+    public BillOfMaterials calculateStolper(double length, double width, double height, double skurLength, double skurWidth) throws DataMapperException {
         BillOfMaterials bom = new BillOfMaterials();
-
-        int quantity = ((((int) length) / 240)+1) * 2;
-
+        int quantity = ((((int) length) / 240) + 1) * 2;
         if (skurLength != 0 && skurWidth != 0) {
             if (skurWidth > 400) {
                 quantity += 5;
             } else {
                 quantity += 3;
             }
-
-            if (skurWidth != width-30) {
+            if (skurWidth != width - 30) {
                 quantity += 1;
             }
         }
@@ -126,26 +129,30 @@ public class CalculatorImpl implements Calculator {
         if (newHeight % 60 != 0) {
             newHeight += 30;
         }
-        
-        double[] price = {83.85, 100.63, 117.39, 134.16};
-        int index = (newHeight - 300) / 60;
-        bom.addLineItem(new LineItem("97x97mm trykimp. stolpe", newHeight, quantity, "stk", "Stolper nedgraves 90cm i jord.", price[index]));
+        materiale = "97x97 mm. trykimp. stolpe";
+        meterPrice = LogicFacade.getPrice(materiale);
+        unitPrice = meterPrice * ((double) newHeight / 100);
+        bom.addLineItem(new LineItem(materiale, newHeight, quantity, "stk", "Stolper nedgraves 90cm i jord.", unitPrice));
         return bom;
     }
 
     @Override
-    public BillOfMaterials calculateTagplader(double length, double width) {
+    public BillOfMaterials calculateTagplader(double length, double width) throws DataMapperException {
         BillOfMaterials bom = new BillOfMaterials();
         int quantity = (int) Math.ceil(width / 100);
-        bom.addLineItem(new LineItem("Plastmo Ecolite blåtonet", 600, quantity, "stk", "Tagplader monteres på spær", 330.00));
+
+        materiale = "Plastmo Ecolite blåtonet";
+        unitPrice = LogicFacade.getPrice(materiale);
+        bom.addLineItem(new LineItem(materiale, 600, quantity, "stk", "Tagplader monteres på spær", unitPrice));
         if (length > 600) {
-            bom.addLineItem(new LineItem("Plastmo Ecolite blåtonet", 360, quantity, "stk", "Tagplader monteres på spær", 139.00));
+            double newUnitPrice = unitPrice * 600.0 / 360.0;
+            bom.addLineItem(new LineItem(materiale, 360, quantity, "stk", "Tagplader monteres på spær", newUnitPrice));
         }
         return bom;
     }
 
     @Override
-    public BillOfMaterials calculateTagMedSten(double length, double width, double hypotenuse) {
+    public BillOfMaterials calculateTagMedSten(double length, double width, double hypotenuse) throws DataMapperException {
         BillOfMaterials bom = new BillOfMaterials();
         int rest = ((int) Math.ceil(hypotenuse)) * 10 - 380;
         int antalLægterSide;
@@ -154,9 +161,7 @@ public class CalculatorImpl implements Calculator {
         } else {
             antalLægterSide = rest / 307 + 3;
         }
-
         int antalLægterTotal = antalLægterSide * 2;
-
         int lægteLength;
         if (length > 540) {
             if (length % 60 != 0) {
@@ -164,7 +169,6 @@ public class CalculatorImpl implements Calculator {
             }
             lægteLength = (int) (length / 2);
             antalLægterTotal = antalLægterTotal * 2;
-
         } else {
             if (length < 300) {
                 lægteLength = 300;
@@ -173,17 +177,18 @@ public class CalculatorImpl implements Calculator {
             }
         }
 
-        double[] priceLægte = {38.85, 42.74, 46.63, 50.50, 54.39, 58.28, 62.16, 66.05, 69.93};
-        int indexLægte = (lægteLength - 300) / 30;
+        materiale = "38x73 mm. taglægte C18";
+        meterPrice = LogicFacade.getPrice(materiale);
+        unitPrice = meterPrice * ((double) lægteLength / 100);
 
         if (length < 540) {
-            bom.addLineItem(new LineItem("38x73 mm. taglægte C18", lægteLength, antalLægterTotal, "stk", "Til montering på spær, " + antalLægterSide + " rækker lægter på hver side", priceLægte[indexLægte]));
-            bom.addLineItem(new LineItem("38x73 mm. taglægte C18", lægteLength, 1, "stk", "Toplægte til montering af rygsten lægges i toplægte holder", priceLægte[indexLægte]));
+            bom.addLineItem(new LineItem(materiale, lægteLength, antalLægterTotal, "stk", "Til montering på spær, " + antalLægterSide + " rækker lægter på hver side", unitPrice));
+            bom.addLineItem(new LineItem(materiale, lægteLength, 1, "stk", "Toplægte til montering af rygsten lægges i toplægte holder", unitPrice));
         } else {
-            bom.addLineItem(new LineItem("38x73 mm. taglægte C18", lægteLength, antalLægterTotal, "stk", "Til montering på spær, " + antalLægterSide + " rækker lægter på hver side - 2 lægter samles", priceLægte[indexLægte]));
-            bom.addLineItem(new LineItem("38x73 mm. taglægte C18", lægteLength, 2, "stk", "Toplægte til montering af rygsten lægges i toplægte holder", priceLægte[indexLægte]));
+            bom.addLineItem(new LineItem(materiale, lægteLength, antalLægterTotal, "stk", "Til montering på spær, " + antalLægterSide + " rækker lægter på hver side - 2 lægter samles", unitPrice));
+            bom.addLineItem(new LineItem(materiale, lægteLength, 2, "stk", "Toplægte til montering af rygsten lægges i toplægte holder", unitPrice));
         }
-                
+
         int antalLister = 2;
         int listeLength;
         if (length > 540) {
@@ -201,16 +206,22 @@ public class CalculatorImpl implements Calculator {
             }
         }
 
-        double[] priceListe = {23.85, 26.24, 28.63, 31.0, 33.39, 35.78, 38.16, 40.55, 42.93};
-        int indexListe = (lægteLength - 300) / 30;
-        bom.addLineItem(new LineItem("25x50 mm. trykimp. Bræt", listeLength, antalLister, "stk", "Til montering oven på tagfodslægte", priceListe[indexListe]));
-
+        materiale = "25x50 mm. trykimp. bræt";
+        meterPrice = LogicFacade.getPrice(materiale);
+        unitPrice = meterPrice * ((double) lægteLength / 100);
+        bom.addLineItem(new LineItem(materiale, listeLength, antalLister, "stk", "Til montering oven på tagfodslægte", unitPrice));
 
         int antalSpær = (int) (Math.ceil((length - 65) / 89.0));;
         int antalSkruer = antalLægterSide * 2 * antalSpær * 2;
-        int antalPakkerSkruer = antalSkruer/100 + 1;
-        bom.addLineItem(new LineItem("5,0 x 100 mm. skruer 100 stk. ", 0, antalPakkerSkruer, "kasser", "Til taglægter", 179.0));
-        bom.addLineItem(new LineItem("5,0 x 40 mm. beslagskruer 250 stk.", 0, 1, "stk", "Til montering af universalbeslag + toplægte", 199.0));
+        int antalPakkerSkruer = antalSkruer / 100 + 1;
+
+        materiale = "5,0 x 100 mm. skruer 100 stk.";
+        unitPrice = LogicFacade.getPrice(materiale);
+        bom.addLineItem(new LineItem(materiale, 0, antalPakkerSkruer, "kasser", "Til taglægter", unitPrice));
+
+        materiale = "5,0 x 40 mm. beslagskruer 250 stk.";
+        unitPrice = LogicFacade.getPrice(materiale);
+        bom.addLineItem(new LineItem(materiale, 0, 1, "stk", "Til montering af universalbeslag + toplægte", unitPrice));
 
         int antalStenOpad = antalLægterSide - 1;
         int antalStenHenad = (int) Math.ceil(length / 20.7);
@@ -218,12 +229,24 @@ public class CalculatorImpl implements Calculator {
         int rundOp = 50 - (antalStenTotal % 50);
         antalStenTotal += rundOp;
         int antalRygSten = (int) Math.ceil(length / 28.5);
-        bom.addLineItem(new LineItem("Vingetagsten Gl. Dansk", 0, antalStenTotal, "stk", "Monteres på taglægter " + antalStenOpad + " rækker af " + antalStenHenad + " sten på hver side af taget", 14.95));
-        bom.addLineItem(new LineItem("Rygsten Model Volstrup", 0, antalRygSten, "stk", "Monteres på toplægte med medfølgende beslag se tagstens vejledning", 89.95));
+
+        materiale = "Vingetagsten Gl. Dansk";
+        unitPrice = LogicFacade.getPrice(materiale);
+        bom.addLineItem(new LineItem(materiale, 0, antalStenTotal, "stk", "Monteres på taglægter " + antalStenOpad + " rækker af " + antalStenHenad + " sten på hver side af taget", unitPrice));
+
+        materiale = "5,0 x 100 mm. skruer 100 stk.";
+        unitPrice = LogicFacade.getPrice(materiale);
+        bom.addLineItem(new LineItem(materiale, 0, antalRygSten, "stk", "Monteres på toplægte med medfølgende beslag se tagstens vejledning", unitPrice));
 
         int antalToplægteHoldere = (int) (Math.ceil((length - 65) / 89.0));
-        bom.addLineItem(new LineItem("Toplægte holder", 0, antalToplægteHoldere, "stk", "Monteres på toppen af spæret (til toplægte)", 18.50));
-        bom.addLineItem(new LineItem("Rygstensbeslag", 0, antalRygSten, "stk", "Til montering af rygsten", 4.95));
+
+        materiale = "Toplægte holder";
+        unitPrice = LogicFacade.getPrice(materiale);
+        bom.addLineItem(new LineItem(materiale, 0, antalToplægteHoldere, "stk", "Monteres på toppen af spæret (til toplægte)", unitPrice));
+
+        materiale = "Rygstensbeslag";
+        unitPrice = LogicFacade.getPrice(materiale);
+        bom.addLineItem(new LineItem(materiale, 0, antalRygSten, "stk", "Til montering af rygsten", unitPrice));
 
         int antalBinderPakker;
         if (antalStenTotal % 200 == 0) {
@@ -231,52 +254,69 @@ public class CalculatorImpl implements Calculator {
         } else {
             antalBinderPakker = (antalStenTotal / 200) + 1;
         }
-        bom.addLineItem(new LineItem("Tagstens bindere & nakkekroge 200 stk.", 0, antalBinderPakker, "stk", "Til montering af tagsten, alle ydersten + hver anden fastgøres", 779.0));
+
+        materiale = "Tagstens bindere & nakkekroge 200 stk.";
+        unitPrice = LogicFacade.getPrice(materiale);
+        bom.addLineItem(new LineItem(materiale, 0, antalBinderPakker, "stk", "Til montering af tagsten, alle ydersten + hver anden fastgøres", unitPrice));
 
         return bom;
-
     }
 
     @Override
-    public BillOfMaterials calculateTagMedEternit(double length, double width, double hypotenuse) {
+    public BillOfMaterials calculateTagMedEternit(double length, double width, double hypotenuse) throws DataMapperException {
         BillOfMaterials bom = new BillOfMaterials();
         return bom;
     }
 
     @Override
-    public BillOfMaterials calculateRemme(double length) {
+    public BillOfMaterials calculateRemme(double length) throws DataMapperException {
         BillOfMaterials bom = new BillOfMaterials();
-        int newLength = (int) length;
-        if (newLength < 300) {
-            newLength = 300;
+        int remLength = (int) length;
+        if (remLength < 300) {
+            remLength = 300;
         }
-        if (newLength % 60 != 0) {
-            newLength += 30;
+        if (remLength % 60 != 0) {
+            remLength += 30;
         }
-        double[] price = {113.85, 136.63, 159.39, 182.16, 204.93, 287.7, 316.48, 345.24};
-        int index = (newLength - 300) / 60;
 
-        bom.addLineItem(new LineItem("45x95mm spærtræ ubh.", newLength, 2, "stk", "Remme i sider, sadles ned i stolper", price[index]));
+        materiale = "45x195 mm. spærtræ ubh.";
+        meterPrice = LogicFacade.getPrice(materiale);
+        unitPrice = meterPrice * ((double) remLength / 100);
+        bom.addLineItem(new LineItem(materiale, remLength, 2, "stk", "Remme i sider, sadles ned i stolper", unitPrice));
+
         return bom;
     }
 
     @Override
-    public BillOfMaterials calculateFladtStern(double length, double width) {
+    public BillOfMaterials calculateFladtStern(double length, double width) throws DataMapperException {
         BillOfMaterials bom = new BillOfMaterials();
-        bom.addLineItem(new LineItem("25x200mm trykimp. brædt", 360, 4, "stk", "Understern brædder til for og bag ende", 183.43));
-        bom.addLineItem(new LineItem("25x200mm trykimp. brædt", 540, 4, "stk", "Understern brædder til siderne", 275.13));
 
-        bom.addLineItem(new LineItem("25x125mm trykimp. brædt", 360, 2, "stk", "Overstern brædder til for enden", 107.83));
-        bom.addLineItem(new LineItem("25x125mm trykimp. brædt", 540, 4, "stk", "Overstern brædder til siderne", 161.73));
+        materiale = "25x200 mm. trykimp. bræt";
+        meterPrice = LogicFacade.getPrice(materiale);
+        unitPrice = meterPrice * 3.6;
+        bom.addLineItem(new LineItem(materiale, 360, 4, "stk", "Understern brædder til for og bag ende", unitPrice));
+        unitPrice = meterPrice * 5.4;
+        bom.addLineItem(new LineItem(materiale, 540, 4, "stk", "Understern brædder til siderne", unitPrice));
 
-        bom.addLineItem(new LineItem("19x100mm trykimp. brædt", 540, 4, "stk", "Vandbrædt på stern i sider", 69.95));
-        bom.addLineItem(new LineItem("19x100mm trykimp. brædt", 360, 2, "stk", "Vandbrædt på stern i for enden", 46.63));
+        materiale = "25x125 mm. trykimp. bræt";
+        meterPrice = LogicFacade.getPrice(materiale);
+        unitPrice = meterPrice * 3.6;
+        bom.addLineItem(new LineItem(materiale, 360, 2, "stk", "Overstern brædder til for enden", unitPrice));
+        unitPrice = meterPrice * 5.4;
+        bom.addLineItem(new LineItem(materiale, 540, 4, "stk", "Overstern brædder til siderne", unitPrice));
+
+        materiale = "19x100 mm. trykimp. bræt";
+        meterPrice = LogicFacade.getPrice(materiale);
+        unitPrice = meterPrice * 3.6;
+        bom.addLineItem(new LineItem(materiale, 540, 4, "stk", "Vandbrædt på stern i sider", unitPrice));
+        unitPrice = meterPrice * 5.4;
+        bom.addLineItem(new LineItem(materiale, 360, 2, "stk", "Vandbrædt på stern i for enden", unitPrice));
 
         return bom;
     }
 
     @Override
-    public BillOfMaterials calculateSkråtStern(double length) {
+    public BillOfMaterials calculateSkråtStern(double length) throws DataMapperException {
         BillOfMaterials bom = new BillOfMaterials();
         int rundOp = 60 - ((int) length) % 60;
         if (rundOp == 60) {
@@ -295,18 +335,18 @@ public class CalculatorImpl implements Calculator {
                     sternLength += 30;
                 }
             }
-
         }
-        int indexStern = (sternLength - 300) / 60;
-        double[] priceStern = {113.85, 136.63, 159.39, 182.16, 204.93, 227, 70};
 
-        bom.addLineItem(new LineItem("25x150 mm. trykimp. Bræt", sternLength, quantity, "stk", "Sternbrædder til siderne", priceStern[indexStern]));
+        materiale = "25x150 mm. trykimp. bræt";
+        meterPrice = LogicFacade.getPrice(materiale);
+        unitPrice = meterPrice * ((double) sternLength / 100);
+        bom.addLineItem(new LineItem(materiale, sternLength, quantity, "stk", "Sternbrædder til siderne", unitPrice));
 
         return bom;
     }
 
     @Override
-    public BillOfMaterials calculateVindskeder(double hypotenuse) {
+    public BillOfMaterials calculateVindskeder(double hypotenuse) throws DataMapperException {
         BillOfMaterials bom = new BillOfMaterials();
         int rundOp = 60 - ((int) hypotenuse) % 60;
         int vindskedeLength = (int) (hypotenuse + rundOp);
@@ -317,10 +357,11 @@ public class CalculatorImpl implements Calculator {
         } else {
             quantity = 4;
         }
-        int indexVind = (vindskedeLength - 300) / 60;
-        double[] priceVind = {113.85, 136.63, 159.39, 182.16, 204.93, 227, 70};
 
-        bom.addLineItem(new LineItem("25x150 mm. trykimp. Bræt", vindskedeLength, quantity, "stk", "Vindskeder på rejsning ", priceVind[indexVind]));
+        materiale = "25x150 mm. trykimp. bræt";
+        meterPrice = LogicFacade.getPrice(materiale);
+        unitPrice = meterPrice * ((double) vindskedeLength / 100);
+        bom.addLineItem(new LineItem(materiale, vindskedeLength, quantity, "stk", "Vindskeder på rejsning ", unitPrice));
 
         int vandBrætLength = (int) vindskedeLength;
         int quantityVand = quantity;
@@ -329,75 +370,89 @@ public class CalculatorImpl implements Calculator {
             quantityVand = quantityVand * 2;
         }
 
-        double[] priceVand = {14.60, 16.68, 18.76, 20.85, 25.03, 29.19};
-        int indexVand = 0;
-        if (vandBrætLength < 330) {
-            indexVand = (vandBrætLength - 210) / 30;
-        } else {
-            if (vandBrætLength % 60 != 0) {
-                vandBrætLength += 30;
-            }
-            indexVand = (vandBrætLength - 360) / 60 + 4;
-        }
-        bom.addLineItem(new LineItem("19x100 mm. trykimp. Bræt  ", vandBrætLength, quantityVand, "stk", "Vandbræt på vindskeder ", priceVand[indexVand]));
+        materiale = "19x100 mm. trykimp. bræt";
+        meterPrice = LogicFacade.getPrice(materiale);
+        unitPrice = meterPrice * ((double) vandBrætLength / 100);
+        bom.addLineItem(new LineItem(materiale, vandBrætLength, quantityVand, "stk", "Vandbræt på vindskeder ", unitPrice));
 
         return bom;
     }
 
     @Override
-    public BillOfMaterials calculateFladtSpær(double length, double width) {
+    public BillOfMaterials calculateFladtSpær(double length, double width) throws DataMapperException {
         BillOfMaterials bom = new BillOfMaterials();
         int quantity = (int) (Math.ceil(length / 55.0));
-        int newWidth = (int) width;
-        if (newWidth < 300) {
-            newWidth = 300;
+        int spærWidth = (int) width;
+        if (spærWidth < 300) {
+            spærWidth = 300;
         }
-        if (newWidth % 60 != 0) {
-            newWidth += 30;
+        if (spærWidth % 60 != 0) {
+            spærWidth += 30;
         }
-        double[] price = {113.85, 136.63, 159.39, 182.16, 204.93, 287.7, 316.48, 345.24};
-        int index = (newWidth - 300) / 60;
-        bom.addLineItem(new LineItem("45x195mm spærtræ ubh.", newWidth, quantity, "stk", "Spær monteres på rem", price[index]));
+
+        materiale = "45x195 mm. spærtræ ubh.";
+        meterPrice = LogicFacade.getPrice(materiale);
+        unitPrice = meterPrice * ((double) spærWidth / 100);
+        bom.addLineItem(new LineItem(materiale, spærWidth, quantity, "stk", "Spær monteres på rem", unitPrice));
         return bom;
     }
 
     @Override
-    public BillOfMaterials calculateSkråtSpær(double length, double width) {
+    public BillOfMaterials calculateSkråtSpær(double length, double width) throws DataMapperException {
         BillOfMaterials bom = new BillOfMaterials();
         int quantity = (int) (Math.ceil((length - 65) / 89.0));
-        double price = 500.0 * quantity;
-        bom.addLineItem(new LineItem("Fædigskåret (byg-selv spær)", 0, 1, "sæt", "Byg-selv spær (skal samles) " + quantity + " stk.", price));
+
+        materiale = "Færdigskåret (byg-selv spær)";
+        stkPrice = LogicFacade.getPrice(materiale);
+        unitPrice = stkPrice * quantity;
+        bom.addLineItem(new LineItem(materiale, 0, 1, "sæt", "Byg-selv spær (skal samles) " + quantity + " stk.", unitPrice));
+
         return bom;
     }
 
     @Override
-    public BillOfMaterials calculateHulbånd(double width) {
+    public BillOfMaterials calculateHulbånd(double width) throws DataMapperException {
         BillOfMaterials bom = new BillOfMaterials();
-        bom.addLineItem(new LineItem("Hulbånd 1x20mm 10meter", 0, 2, "ruller", "Til vindkryds på spær", 189.00));
+
+        materiale = "Hulbånd 1x20 mm. 10 meter";
+        unitPrice = LogicFacade.getPrice(materiale);
+        bom.addLineItem(new LineItem(materiale, 0, 2, "ruller", "Til vindkryds på spær", unitPrice));
 
         return bom;
     }
 
     @Override
-    public BillOfMaterials calculateFladtBeslag(double length) {
+    public BillOfMaterials calculateFladtBeslag(double length) throws DataMapperException {
         BillOfMaterials bom = new BillOfMaterials();
         int quantity = (int) (Math.ceil(length / 55.0));
-        bom.addLineItem(new LineItem("Universal 190mm højre", 0, quantity, "stk", "Til montering af spær på rem", 21.95));
-        bom.addLineItem(new LineItem("Universal 190mm venstre", 0, quantity, "stk", "Til montering af spær på rem", 21.95));
+
+        materiale = "Universal 190 mm. højre";
+        unitPrice = LogicFacade.getPrice(materiale);
+        bom.addLineItem(new LineItem(materiale, 0, quantity, "stk", "Til montering af spær på rem", unitPrice));
+
+        materiale = "Universal 190 mm. venstre";
+        unitPrice = LogicFacade.getPrice(materiale);
+        bom.addLineItem(new LineItem(materiale, 0, quantity, "stk", "Til montering af spær på rem", unitPrice));
         return bom;
     }
 
     @Override
-    public BillOfMaterials calculateSkråtBeslag(double length) {
+    public BillOfMaterials calculateSkråtBeslag(double length) throws DataMapperException {
         BillOfMaterials bom = new BillOfMaterials();
         int quantity = (int) (Math.ceil((length - 65) / 89.0));
-        bom.addLineItem(new LineItem("Universal 190mm højre", 0, quantity, "stk", "Til montering af spær på rem", 21.95));
-        bom.addLineItem(new LineItem("Universal 190mm venstre", 0, quantity, "stk", "Til montering af spær på rem", 21.95));
+
+        materiale = "Universal 190 mm. højre";
+        unitPrice = LogicFacade.getPrice(materiale);
+        bom.addLineItem(new LineItem(materiale, 0, quantity, "stk", "Til montering af spær på rem", unitPrice));
+        materiale = "Universal 190 mm. venstre";
+        unitPrice = LogicFacade.getPrice(materiale);
+        bom.addLineItem(new LineItem(materiale, 0, quantity, "stk", "Til montering af spær på rem", unitPrice));
+
         return bom;
     }
 
     @Override
-    public BillOfMaterials calculateSkruerStern(double length, double width) {
+    public BillOfMaterials calculateSkruerStern(double length, double width) throws DataMapperException {
         BillOfMaterials bom = new BillOfMaterials();
         int brætLængdeTotal = 0;
         int skrueAntal = 0;
@@ -408,12 +463,16 @@ public class CalculatorImpl implements Calculator {
         }
         skrueAntal = brætLængdeTotal / 25; // 1 skrue pr. 25 centimeter
         skruePakkerAntal = (skrueAntal / 200) + 1; // hvis antallet af skruer passer præcist, købes en ekstra pakke
-        bom.addLineItem(new LineItem("4,5 x 60 mm. skruer 200 stk.", 0, skruePakkerAntal, "pakker", "Til montering af stern & vandbrædt", 209));
+
+        materiale = "4,5 x 60 mm. skruer 200 stk.";
+        unitPrice = LogicFacade.getPrice(materiale);
+        bom.addLineItem(new LineItem(materiale, 0, skruePakkerAntal, "pakker", "Til montering af stern & vandbrædt", unitPrice));
+
         return bom;
     }
 
     @Override
-    public BillOfMaterials calculateFladtSkruerBeslag(double length, double width) {
+    public BillOfMaterials calculateFladtSkruerBeslag(double length, double width) throws DataMapperException {
         BillOfMaterials bom = new BillOfMaterials();
         int skruePakkerAntal = 0;
 
@@ -429,36 +488,48 @@ public class CalculatorImpl implements Calculator {
 
 //      jeg regner med at der går 1 pakke til 30 stk. beslag (højre+venstre)
         skruePakkerAntal += (beslagStk / 30) + 1;
-        bom.addLineItem(new LineItem("4,0 x 50 mm. beslagskruer 250 stk.", 0, skruePakkerAntal, "pakker", "Til montering af universalbeslag + hulbånd", 239));
+
+        materiale = "4,0 x 50 mm. beslagskruer 250 stk.";
+        unitPrice = LogicFacade.getPrice(materiale);
+        bom.addLineItem(new LineItem(materiale, 0, skruePakkerAntal, "pakker", "Til montering af universalbeslag + hulbånd", unitPrice));
+
         return bom;
     }
-    
+
     @Override
-    public BillOfMaterials calculateBræddebolt(double length) {
+    public BillOfMaterials calculateBræddebolt(double length) throws DataMapperException {
         BillOfMaterials bom = new BillOfMaterials();
         int bræddebolte = 0;
         BillOfMaterials rem = calculateRemme(length);
         for (LineItem li : rem.getBomList()) {
             bræddebolte += (li.getQuantity() * 9);//jeg regner med 9 stk, bræddebolte pr. rem.
         }
-        bom.addLineItem(new LineItem("bræddebolte 10*120 mm.", 0, bræddebolte, "stk", "Til montering af rem på stolper", 32.83));
+
+        materiale = "Bræddebolte 10*120 mm.";
+        unitPrice = LogicFacade.getPrice(materiale);
+        bom.addLineItem(new LineItem(materiale, 0, bræddebolte, "stk", "Til montering af rem på stolper", unitPrice));
+
         return bom;
     }
 
     @Override
-    public BillOfMaterials calculateFirkantskiver(double length) {
+    public BillOfMaterials calculateFirkantskiver(double length) throws DataMapperException {
         BillOfMaterials bom = new BillOfMaterials();
         int firkantskiver = 0;
         BillOfMaterials rem = calculateRemme(length);
         for (LineItem li : rem.getBomList()) {
             firkantskiver += (li.getQuantity() * 6);//jeg regner med 6 stk, firkantskiver pr. rem.
         }
-        bom.addLineItem(new LineItem("firkantskiver 40x40x11 mm.", 0, firkantskiver, "stk", "Til montering af rem på stolpers", 9.41));
+
+        materiale = "Firkantskiver 40x40x11 mm.";
+        unitPrice = LogicFacade.getPrice(materiale);
+        bom.addLineItem(new LineItem(materiale, 0, firkantskiver, "stk", "Til montering af rem på stolpers", unitPrice));
+
         return bom;
     }
 
     @Override
-    public BillOfMaterials calculateLøsholter(double width, double skurLength, double skurWidth) {
+    public BillOfMaterials calculateLøsholter(double width, double skurLength, double skurWidth) throws DataMapperException {
         BillOfMaterials bom = new BillOfMaterials();
         double[] price = {80.91, 94.40, 107.88, 121.36, 134.85, 148.34, 161.83, 175.30, 188.79, 202.28, 215.76, 229.25, 242.73};
 
@@ -474,8 +545,11 @@ public class CalculatorImpl implements Calculator {
             reglarLength = reglarLength / 2;
             antalSide = antalSide * 2;
         }
-        int indexSide = (reglarLength - 180) / 30;
-        bom.addLineItem(new LineItem("45x95 Reglar ubh.", reglarLength, antalSide, "stk", "Løsholter i siderne af skur", price[indexSide]));
+
+        materiale = "45x95 mm. reglar ubh.";
+        meterPrice = LogicFacade.getPrice(materiale);
+        unitPrice = meterPrice * ((double) reglarLength / 100);
+        bom.addLineItem(new LineItem(materiale, reglarLength, antalSide, "stk", "Løsholter i siderne af skur", unitPrice));
 
         int reglarWidth = (int) skurWidth;
         int antalGavl = 6;
@@ -486,52 +560,61 @@ public class CalculatorImpl implements Calculator {
             reglarWidth = reglarWidth / 2;
             antalGavl = 12;
         }
-        int indexGavl = (reglarWidth - 180) / 30;
-        bom.addLineItem(new LineItem("45x95 Reglar ubh.", reglarWidth, antalGavl, "stk", "Løsholter i gavle af skur", price[indexGavl]));
+
+        unitPrice = meterPrice * ((double) reglarWidth / 100);
+        bom.addLineItem(new LineItem(materiale, reglarWidth, antalGavl, "stk", "Løsholter i gavle af skur", unitPrice));
 
         int antalBeslag = (antalSide + antalGavl) * 2;
-        bom.addLineItem(new LineItem("Vinkelbeslag", 0, antalBeslag, "stk", "Til montering af løsholter", 20.95));
+        materiale = "Vinkelbeslag";
+        unitPrice = LogicFacade.getPrice(materiale);
+        bom.addLineItem(new LineItem(materiale, 0, antalBeslag, "stk", "Til montering af løsholter", unitPrice));
 
         return bom;
     }
 
     @Override
-    public BillOfMaterials calculateBeklædningSkur(double height, double skurLength, double skurWidth) {
+    public BillOfMaterials calculateBeklædningSkur(double height, double skurLength, double skurWidth) throws DataMapperException {
         BillOfMaterials bom = new BillOfMaterials();
-        double[] price = {14.60, 16.68, 18.76, 20.85, 25.03, 29.19};
         int brætHeight = (int) height;
-        int index = 0;
-        if (brætHeight < 330) {
-            index = (brætHeight - 210) / 30;
-        } else {
-            if (brætHeight % 60 != 0) {
-                brætHeight += 30;
-            }
-            index = (brætHeight - 360) / 60 + 4;
-        }
         int beklædningLength = (int) skurLength;
         int beklædningWidth = (int) skurWidth;
-
         int quantity = (beklædningLength / 16) * 4 + (beklædningWidth / 16) * 4;
-        bom.addLineItem(new LineItem("19x100 mm. trykimp. Bræt", brætHeight, quantity, "stk", "Beklædning af skur 1 på 2", price[index]));
 
-        bom.addLineItem(new LineItem("38x73 mm. taglægte T1", 540, 1, "stk", "Til z på bagside af dør", 69.93));
-        bom.addLineItem(new LineItem("Stalddørsgreb 50x75", 0, 1, "stk", "Til dør i skur", 189.0));
-        bom.addLineItem(new LineItem("T-hængsel 390 mm.", 0, 2, "stk", "Til dør i skur", 109.0));
+        materiale = "19x100 mm. trykimp. bræt";
+        meterPrice = LogicFacade.getPrice(materiale);
+        unitPrice = meterPrice * ((double) brætHeight / 100);
+        bom.addLineItem(new LineItem(materiale, brætHeight, quantity, "stk", "Beklædning af skur 1 på 2", unitPrice));
+
+        materiale = "38x73 mm. taglægte C18";
+        meterPrice = LogicFacade.getPrice(materiale);
+        unitPrice = meterPrice * 5.4;
+        bom.addLineItem(new LineItem(materiale, 540, 1, "stk", "Til z på bagside af dør", unitPrice));
+ 
+        materiale = "Stalddørsgreb 50x75 mm.";
+        unitPrice = LogicFacade.getPrice(materiale);        
+        bom.addLineItem(new LineItem(materiale, 0, 1, "stk", "Til dør i skur", unitPrice));
+ 
+        materiale = "T-hængsel 390 mm.";
+        unitPrice = LogicFacade.getPrice(materiale);        
+        bom.addLineItem(new LineItem(materiale, 0, 2, "stk", "Til dør i skur", unitPrice));
 
         int skruerInderst = quantity / 2 * 3;
         int kasserInderst = skruerInderst / 200 + 2;
-        bom.addLineItem(new LineItem("4,5 x 50 mm. Skruer Climate TX20 - 200 stk.", 0, kasserInderst, "kasser", "Til montering af inderste bræt ved beklædning ", 129.0));
+        materiale = "4,5 x 50 mm. Skruer Climate TX20 - 200 stk.";
+        unitPrice = LogicFacade.getPrice(materiale);        
+        bom.addLineItem(new LineItem(materiale, 0, kasserInderst, "kasser", "Til montering af inderste bræt ved beklædning ", unitPrice));
 
         int skruerYderst = quantity / 2 * 6;
         int kasserYderst = skruerYderst / 200 + 2;
-        bom.addLineItem(new LineItem("4,5 x 70 mm. Skruer Climate TX20 - 200 stk.", 0, kasserYderst, "kasser", "Til montering af yderste bræt ved beklædning", 199.0));
+        materiale = "4,5 x 70 mm. Skruer Climate TX20 - 200 stk.";
+        unitPrice = LogicFacade.getPrice(materiale);        
+        bom.addLineItem(new LineItem(materiale, 0, kasserYderst, "kasser", "Til montering af yderste bræt ved beklædning", unitPrice));
 
         return bom;
     }
 
     @Override
-    public BillOfMaterials calculateBeklædningGavl(double width, double katete) {
+    public BillOfMaterials calculateBeklædningGavl(double width, double katete) throws DataMapperException {
         BillOfMaterials bom = new BillOfMaterials();
         int rundOp = 30 - ((int) katete) % 30;
         int gavlheight = (int) (katete + rundOp);
@@ -548,18 +631,10 @@ public class CalculatorImpl implements Calculator {
         }
         int quantity = (((int) width / 16) * 2) / faktor;
 
-        double[] price = {14.60, 16.68, 18.76, 20.85, 25.03, 29.19};
-        int index = 0;
-        if (brætHeight < 330) {
-            index = (brætHeight - 180) / 30;
-        } else {
-            if (brætHeight % 60 != 0) {
-                brætHeight += 30;
-            }
-            index = (brætHeight - 360) / 60 + 4;
-        }
-
-        bom.addLineItem(new LineItem("19x100 mm. trykimp. Bræt", brætHeight, quantity, "stk", "Beklædning af gavle 1 på 2", 25.0));
+        materiale = "19x100 mm. trykimp. bræt";
+        meterPrice = LogicFacade.getPrice(materiale);
+        unitPrice = meterPrice * ((double) brætHeight / 100);
+        bom.addLineItem(new LineItem(materiale, brætHeight, quantity, "stk", "Beklædning af gavle 1 på 2", unitPrice));
 
         return bom;
     }
