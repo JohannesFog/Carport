@@ -43,12 +43,28 @@ public class OrderMapper {
             ids.next();
             int id = ids.getInt(1);
             order.setoId(id);
+            con.close();
         }catch(SQLException | ClassNotFoundException ex){
             throw new DataMapperException(ex.getMessage());
         }
     }
     
-    public static ArrayList<Order> getAllOrders() throws DataMapperException{
+        public static void confirmOrder(Order order) throws DataMapperException {
+        try{
+            Connection con = Connector.connection();
+            String SQL = "UPDATE orders SET status="+"confirmed"+" WHERE id=?";
+            PreparedStatement ps = con.prepareStatement(SQL);
+            ps.setInt(1, order.getoId());
+            ps.executeUpdate();
+            con.close();
+        }catch(SQLException | ClassNotFoundException ex){
+            throw new DataMapperException(ex.getMessage());
+        }
+        
+    }
+        
+        
+        public static ArrayList<Order> getAllOrders() throws DataMapperException{
         try{
            ArrayList<Order> orders = new ArrayList<Order>();
            Connection con = Connector.connection();
@@ -70,11 +86,46 @@ public class OrderMapper {
                Order order = new Order(length, width, height, roofAngle, shedWidth, shedLength, orderDate, phone,status);
                order.setoId(id);
                orders.add(order);
+               con.close();
            }
            if(orders.isEmpty()){
                throw new DataMapperException("There are no orders in the system");
            }
            return orders;
+        }catch(SQLException | ClassNotFoundException ex){
+            throw new DataMapperException(ex.getMessage());
+        }
+    }
+        
+    
+    
+    
+    
+    
+    public static Order getSingleOrder(int oid) throws DataMapperException{
+        try{
+           Order order = null;
+           Connection con = Connector.connection();
+           String SQL = "SELECT * FROM orders WHERE id=?";
+           PreparedStatement ps = con.prepareStatement(SQL);
+           ps.setInt(1, oid);
+           ResultSet rs = ps.executeQuery();
+           while(rs.next()){
+               int id = rs.getInt("id");
+               double length = rs.getDouble("length");
+               double width = rs.getDouble("width");
+               double height = rs.getDouble("height");
+               double roofAngle = rs.getDouble("roof_angle");
+               double shedWidth = rs.getDouble("shed_width");
+               double shedLength = rs.getDouble("shed_length");
+               String orderDate = rs.getString("orderdate");
+               int phone = rs.getInt("phonenumber");
+               String status = rs.getString("status");
+               
+               order = new Order(length, width, height, roofAngle, shedWidth, shedLength, orderDate, phone,status);
+               con.close();
+           }
+           return order;
         }catch(SQLException | ClassNotFoundException ex){
             throw new DataMapperException(ex.getMessage());
         }
