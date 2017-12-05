@@ -28,7 +28,7 @@ create table `orders`(
     `shed_length` double,
     `orderdate` date,
     `phonenumber` integer not null,
-    `status` enum ('confirmed','unconfirmed'),
+    `status` enum ('draft','unconfirmed','confirmed','paid'),
     primary key (`id`)
 );
 
