@@ -37,8 +37,9 @@ public class Order {
         this.status = "unconfirmed";
     }
 
-    public Order(double length, double width, double height,
+    public Order(int oId, double length, double width, double height,
             double roofAngle, double shedWidth, double shedLength, String orderDate, int phone,String status) {
+        this.oId = oId;
         this.length = length;
         this.width = width;
         this.height = height;

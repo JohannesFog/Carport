@@ -72,7 +72,7 @@ public class OrderMapper {
            PreparedStatement ps = con.prepareStatement(SQL);
            ResultSet rs = ps.executeQuery();
            while(rs.next()){
-               int id = rs.getInt("id");
+               int oId = rs.getInt("id");
                double length = rs.getDouble("length");
                double width = rs.getDouble("width");
                double height = rs.getDouble("height");
@@ -83,8 +83,8 @@ public class OrderMapper {
                int phone = rs.getInt("phonenumber");
                String status = rs.getString("status");
                
-               Order order = new Order(length, width, height, roofAngle, shedWidth, shedLength, orderDate, phone,status);
-               order.setoId(id);
+               Order order = new Order(oId,length, width, height, roofAngle, shedWidth, shedLength, orderDate, phone,status);
+               //order.setoId(id);
                orders.add(order);
            }
            if(orders.isEmpty()){
@@ -106,7 +106,7 @@ public class OrderMapper {
            ps.setInt(1, oid);
            ResultSet rs = ps.executeQuery();
            if (rs.next()){
-               int id = rs.getInt("id");
+               int oId = rs.getInt("id");
                double length = rs.getDouble("length");
                double width = rs.getDouble("width");
                double height = rs.getDouble("height");
@@ -117,7 +117,7 @@ public class OrderMapper {
                int phone = rs.getInt("phonenumber");
                String status = rs.getString("status");
                
-               order = new Order(length, width, height, roofAngle, shedWidth, shedLength, orderDate, phone,status);
+               order = new Order(oId,length, width, height, roofAngle, shedWidth, shedLength, orderDate, phone,status);
            }
            return order;
         }catch(SQLException | ClassNotFoundException ex){
