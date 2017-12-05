@@ -126,6 +126,7 @@ public class CalculatorImpl implements Calculator {
         if (newHeight % 60 != 0) {
             newHeight += 30;
         }
+        
         double[] price = {83.85, 100.63, 117.39, 134.16};
         int index = (newHeight - 300) / 60;
         bom.addLineItem(new LineItem("97x97mm trykimp. stolpe", newHeight, quantity, "stk", "Stolper nedgraves 90cm i jord.", price[index]));

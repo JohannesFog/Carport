@@ -35,6 +35,13 @@ create table `orders`(
 insert into `orders`(`length`,`width`,`height`,`roof_angle`,`shed_width`,`shed_length`,`orderdate`,`phonenumber`,`status`) 
 values (600,300,210,0,270,150,'2017-11-28',40404040,'unconfirmed');
 
+create table `materials`(
+	`id` integer not null auto_increment,
+    `name` varchar(45) not null,
+    `price` integer not null,
+    primary key (`id`)
+);
+
 drop table `user`;
 
 

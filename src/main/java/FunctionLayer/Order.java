@@ -23,6 +23,7 @@ public class Order {
     private String orderDate;
     private String status;
 
+        
     public Order(double length, double width, double height,
             double roofAngle, double shedWidth, double shedLength, String orderDate, int phone) {
         this.length = length;
