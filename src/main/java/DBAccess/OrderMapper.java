@@ -43,7 +43,6 @@ public class OrderMapper {
             ids.next();
             int id = ids.getInt(1);
             order.setoId(id);
-            con.close();
         }catch(SQLException | ClassNotFoundException ex){
             throw new DataMapperException(ex.getMessage());
         }
@@ -52,11 +51,12 @@ public class OrderMapper {
         public static void confirmOrder(Order order) throws DataMapperException {
         try{
             Connection con = Connector.connection();
-            String SQL = "UPDATE orders SET status="+"confirmed"+" WHERE id=?";
+            String status = "confirmed";
+            String SQL = "UPDATE orders SET status=? WHERE id=?";
             PreparedStatement ps = con.prepareStatement(SQL);
-            ps.setInt(1, order.getoId());
+            ps.setString(1, status);
+            ps.setInt(2, order.getoId());
             ps.executeUpdate();
-            con.close();
         }catch(SQLException | ClassNotFoundException ex){
             throw new DataMapperException(ex.getMessage());
         }
@@ -86,7 +86,6 @@ public class OrderMapper {
                Order order = new Order(length, width, height, roofAngle, shedWidth, shedLength, orderDate, phone,status);
                order.setoId(id);
                orders.add(order);
-               con.close();
            }
            if(orders.isEmpty()){
                throw new DataMapperException("There are no orders in the system");
@@ -98,10 +97,6 @@ public class OrderMapper {
     }
         
     
-    
-    
-    
-    
     public static Order getSingleOrder(int oid) throws DataMapperException{
         try{
            Order order = null;
@@ -110,7 +105,7 @@ public class OrderMapper {
            PreparedStatement ps = con.prepareStatement(SQL);
            ps.setInt(1, oid);
            ResultSet rs = ps.executeQuery();
-           while(rs.next()){
+           if (rs.next()){
                int id = rs.getInt("id");
                double length = rs.getDouble("length");
                double width = rs.getDouble("width");
@@ -123,7 +118,6 @@ public class OrderMapper {
                String status = rs.getString("status");
                
                order = new Order(length, width, height, roofAngle, shedWidth, shedLength, orderDate, phone,status);
-               con.close();
            }
            return order;
         }catch(SQLException | ClassNotFoundException ex){
