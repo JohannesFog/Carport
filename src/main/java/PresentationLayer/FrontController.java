@@ -36,6 +36,7 @@ public class FrontController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
         Conf.carportLogger.addHandler(new ConsoleHandler());
         if (Conf.PRODUCTION) {
             FileHandler fileHandler = new FileHandler(Conf.LOGFILEPATH);
