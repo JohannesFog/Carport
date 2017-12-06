@@ -140,8 +140,8 @@ public class Rendering {
          sb.append("<p>Status: " + order.getStatus() + "</p><br>");
          
          sb.append("<form action=" + "FrontController" + "method=" + "POST" + ">" 
-                   + "<input type=" + "hidden" + "name=" + "command" + " value=" + "GetConfirmOrder" + ">" 
-                   + "<input type=" + "submit" + " name=" + "confirmOrder" + " value=" + "Bekræft Ordre" + ">"
+                   + "<input type=\"hidden\" name=\"command\" value=\"GetConfirmOrder\">" 
+                   + "<input type=\"submit\"name=\"confirmOrder\" value=\"Bekræft Ordre\">"
                    + "</form>");
          return sb.toString();
      }
