@@ -27,6 +27,9 @@ public class GetConfirmOrder extends Command {
         int id = Integer.parseInt(oId);
        
         LogicFacade.doConfirmOrder(id);
+        Order order = LogicFacade.getOrderById(id);
+        HttpSession session = request.getSession();
+        session.setAttribute("order", order);
         
         return "odetailsemployee";
     }
