@@ -27,8 +27,6 @@ public interface Calculator {
     public BillOfMaterials calculateTagplader(double length, double width) throws DataMapperException;
 
     public BillOfMaterials calculateTagMedSten(double length, double width, double hypotenuse) throws DataMapperException;
-
-    public BillOfMaterials calculateTagMedEternit(double length, double width, double hypotenuse) throws DataMapperException;
     
     public BillOfMaterials calculateRemme(double length) throws DataMapperException; 
  

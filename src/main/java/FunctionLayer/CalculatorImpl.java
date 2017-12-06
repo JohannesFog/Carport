@@ -68,13 +68,7 @@ public class CalculatorImpl implements Calculator {
         totalBom.mergeBom(calculateStolper(length, width, height, skurLength, skurWidth));
         totalBom.mergeBom(calculateSkråtSpær(length, width));
         totalBom.mergeBom(calculateSkråtBeslag(length));
-        switch (material) {
-            case "betontagsten":
-                totalBom.mergeBom(calculateTagMedSten(length, width, hypotenuse));
-                break;
-            default:
-                totalBom.mergeBom(calculateTagMedEternit(length, width, hypotenuse));
-        }
+        totalBom.mergeBom(calculateTagMedSten(length, width, hypotenuse));
         totalBom.mergeBom(calculateBeklædningGavl(width, katete));
         totalBom.mergeBom(calculateVindskeder(hypotenuse));
         totalBom.mergeBom(calculateSkråtStern(length));
@@ -114,7 +108,7 @@ public class CalculatorImpl implements Calculator {
     @Override
     public BillOfMaterials calculateStolper(double length, double width, double height, double skurLength, double skurWidth) throws DataMapperException {
         BillOfMaterials bom = new BillOfMaterials();
-        int quantity = ((((int) length) / 240) + 1) * 2;
+        int quantity = ((((int) length - 30) / 240) + 1) * 2;
         if (skurLength != 0 && skurWidth != 0) {
             if (skurWidth > 400) {
                 quantity += 5;
@@ -262,11 +256,6 @@ public class CalculatorImpl implements Calculator {
         return bom;
     }
 
-    @Override
-    public BillOfMaterials calculateTagMedEternit(double length, double width, double hypotenuse) throws DataMapperException {
-        BillOfMaterials bom = new BillOfMaterials();
-        return bom;
-    }
 
     @Override
     public BillOfMaterials calculateRemme(double length) throws DataMapperException {

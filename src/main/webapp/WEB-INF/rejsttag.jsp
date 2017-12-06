@@ -61,7 +61,6 @@
             <br>Vælg tagmateriale<br>
             <select name="tagmateriale">
                 <option value="betontagsten">Betontagsten</option>
-                <option value="eternittag">Eternittag</option>
             </select><br>
             <br>Vælg taghældning<br>
             <select name="vinkel">
