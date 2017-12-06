@@ -51,8 +51,13 @@ public class LogicFacade {
         return MaterialMapper.getPrice(name);
     }
     
+
     public static void doConfirmOrder(Order order) throws DataMapperException{
         OrderMapper.confirmOrder(order);
+    }
+    
+    public static Order getOrderById(int id)throws DataMapperException{
+        return OrderMapper.getSingleOrder(id);
     }
     
 }
