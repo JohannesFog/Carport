@@ -165,8 +165,8 @@ public class DrawImplFlatAbove implements Draw{
         
         
         
-        output = output + stolper();
-        output = output + stolper2();    
+        //output = output + stolper();
+        //output = output + stolper2();    
         output = output + "</SVG>";
         
         /*
@@ -500,7 +500,48 @@ LineItem{name=45x95mm spærtræ ubh., length=300, quantity=2, unit=stk, descript
         return output;
     }
     
-    // denne omfatter kun 
+    //ØversteVenstreLeft, ØversteVenstreDistToTop, ØversteVenstreWidth, ØversteVenstreLength);
+    public String stolperDECEMBER() {
+        ArrayList<String> words = new ArrayList<String>();
+        words.add("Stolper");
+        ArrayList<LineItem> relevantItems = relevantBomLines(words, this.bom);
+        int quant = relevantItems.get(0).getQuantity();
+        
+        //1 + 2: brug skurlængde og bredde til at beregne afstand oeverst og nederst
+        double pladsForOven = stolperDECEMBER_nr_1pladsOven();
+        double pladsForNeden = stolperDECEMBER_nr_2pladsNeden();
+        
+        //3: 
+        
+        //her er alle de beregninger jeg har brug for ***************
+        String myport = "carportWidth: " + this.carportWidth + " carportLength: " + this.carportLength + "\n";
+        String udhaeng = "endeUdhaeng: " + this.endeUdhæng + " sideUdhaeng: " + this.sideUdhæng + "\n";
+        String myskur = "skurWidth: " + this.skurWidth + " this.skurLength: " + this.skurLength + "\n";
+        String output = "her er december: " + quant + " \n" +
+                myport + " "+ udhaeng+" " + myskur + "\n" +
+                "pladsForOven: " + pladsForOven + " pladsForNeden: " + pladsForNeden;      
+        
+        // beregninger slut *****************************************
+        
+        return output;
+    }
+    
+    //*****************************************
+    public Double stolperDECEMBER_nr_2pladsNeden() {
+       double normalDist = this.carportLength - (2 * this.endeUdhæng);
+       normalDist -= this.skurLength;     
+       return normalDist;
+    }
+    
+    public Double stolperDECEMBER_nr_1pladsOven() {
+       double normalDist = this.carportLength - (2 * this.endeUdhæng);
+       double skurPlads = this.carportWidth - (2 * this.sideUdhæng);
+       if (this.skurWidth >= skurPlads) {
+           normalDist -= this.skurLength;
+       }       
+       return normalDist;
+    }
+    
     @Override
     public String stolper() {
         ArrayList<String> words = new ArrayList<String>();
@@ -748,17 +789,27 @@ LineItem{name=Hulbånd 1x20mm 10meter, length=0, quantity=2, unit=ruller, descri
 
     
     // main klasse til test.s
-    /*
+    
     public static void main(String[] args) {
         System.out.println("start");
         Calculator calc = new CalculatorImpl();
-        BillOfMaterials bom = calc.bomCalculator(240, 240, 210,"fladt", "uden");
-        DrawImplFlatAbove draw = new DrawImplFlatAbove(bom, 240, 240);
+        
+        // BillOfMaterials bomCalculator(double length, double width, double height,
+        //    String type, String material, double angle,
+        //    double skurLength, double skurWidth)
+        
+        BillOfMaterials bom = calc.bomCalculator(510, 510, 210,"fladt", "uden", 0, 0, 0);
+        //public DrawImplFlatAbove(BillOfMaterials bom, double carportWidth, double carportLength, double skurLength, double skurWidth) {
+        DrawImplFlatAbove draw = new DrawImplFlatAbove(bom, 510, 510, 0, 0);
         
         System.out.println("****************  første bom liste:");
         for (int k = 0; k < draw.bom.getBomList().size(); k++) {
             System.out.println(draw.bom.getBomList().get(k));
         }
+        
+        System.out.println("*******************************************************");
+        System.out.println("Her er det antal stolper der bliver tegnet (ikke det der er beregnet)");
+        System.out.println("stolper: " + draw.stolperDECEMBER());
         
         System.out.println("****************  result: bom liste:");
         System.out.println(draw.remme());
@@ -773,7 +824,7 @@ LineItem{name=Hulbånd 1x20mm 10meter, length=0, quantity=2, unit=ruller, descri
         
         System.out.println("end");
     }
-    */
+    
     
     
     //******************************************************************
