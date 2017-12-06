@@ -7,6 +7,9 @@ package PresentationLayer;
 
 import FunctionLayer.LogicFacade;
 import Exceptions.DataMapperException;
+import FunctionLayer.Order;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -16,7 +19,8 @@ import javax.servlet.http.HttpSession;
  * @author lene_
  */
 public class CreateOrder extends Command {
-
+    
+    Order tempOrder;
     public CreateOrder() {
     }
 
@@ -36,6 +40,11 @@ public class CreateOrder extends Command {
         
         String role = (String) session.getAttribute("role");
         
+        Order tempOrder = null;
+        Date date = new Date();
+        SimpleDateFormat sdrf = new SimpleDateFormat("yyyy-MM-dd");
+        String dateString = sdrf.format(date);
+        
         if ( role == null || role.equals("employee") ){
           String name = request.getParameter("name");
           String adresse = request.getParameter("address");
@@ -45,10 +54,14 @@ public class CreateOrder extends Command {
           String notice = request.getParameter("notice");
           
           LogicFacade.createNewUserWithoutPassword(tlf, email, adresse, name, adresse, tlf, role);
-          LogicFacade.createOrder(length, width, height, roofAngle, shedWidth, shedLength, tlf); 
+          
+          tempOrder = new Order(length, width, height, roofAngle, shedWidth, shedLength, dateString, tlf);
+          LogicFacade.createOrder(tempOrder); 
+          
         }else{
             int tlf = Integer.parseInt(request.getParameter("tlf"));
-            LogicFacade.createOrder(length, width, height, roofAngle, shedWidth, shedLength, tlf);   
+            tempOrder = new Order(length, width, height, roofAngle, shedWidth, shedLength, dateString, tlf);
+            LogicFacade.createOrder(tempOrder);   
         }
         return "confirmationpage";
     }
