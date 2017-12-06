@@ -52,7 +52,7 @@ public class OrderMapper {
         try{
             Connection con = Connector.connection();
             String status = "confirmed";
-            String SQL = "UPDATE orders SET status='?' WHERE id=?";
+            String SQL = "UPDATE orders SET status=? WHERE id=?";
             PreparedStatement ps = con.prepareStatement(SQL);
             ps.setString(1, status);
             ps.setInt(2, order.getoId());
