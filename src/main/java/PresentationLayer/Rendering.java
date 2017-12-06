@@ -91,13 +91,33 @@ public class Rendering {
         sb.append("<h1>Velkommen til Orderlisten</h1>");
         ArrayList<Order> orders = LogicFacade.getAllOrdersEmp();
         sb.append("<table>");
-        sb.append("<tr><th>Order ID</th><th>Telefon</th><th>Status</th><th>Dato</th>");
+        sb.append("<tr><th>Ordre ID</th><th>Telefon</th><th>Dato</th><th>Status</th><th>Detaljer</th></tr>");
         for (Order o : orders) {
             sb.append("<tr>");
             sb.append("<td>" + o.getoId() + "</td>");
             sb.append("<td>" + o.getPhone() + "</td>");
-            sb.append("<td>" + o.getStatus() + "</td>"
-                    + "<td>" + o.getOrderDate() + "</td>");
+            sb.append("<td>" + o.getOrderDate() + "</td>");
+            
+            if(o.getStatus().equals("confirmed")){
+                sb.append("<td>" + "Bekræftet" + "</td>");
+            }else{
+                sb.append("<td>");
+               sb.append("<form name=\"confirm\" action=\"FrontController\" method=\"POST\">"
+                       + "<input type=\"hidden\" name=\"command\" value=\"confirmorder\">"
+                       + "<input type=\"hidden\" name=\"orderId\" value=\"" + o.getoId() + "\">"
+                       + "<input type=\"submit\" value=\"Bekræft ordre\""
+                       + "</form>");
+               sb.append("</td>");
+            }
+            
+            sb.append("<td>");
+            sb.append("<form name=\"confirm\" action=\"FrontController\" method=\"POST\">"
+                       + "<input type=\"hidden\" name=\"command\" value=\"getodetails\">"
+                       + "<input type=\"hidden\" name=\"orderId\" value=\"" + o.getoId() + "\">"
+                       + "<input type=\"submit\" value=\"Se Detaljer\""
+                       + "</form>");
+            sb.append("</td>");
+            
             sb.append("</tr>");
         }
         sb.append("</table>");
