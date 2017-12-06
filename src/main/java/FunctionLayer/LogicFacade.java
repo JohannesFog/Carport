@@ -52,8 +52,8 @@ public class LogicFacade {
     }
     
 
-    public static void doConfirmOrder(Order order) throws DataMapperException{
-        OrderMapper.confirmOrder(order);
+    public static void doConfirmOrder(int id) throws DataMapperException{
+        OrderMapper.confirmOrder(id);
     }
     
     public static Order getOrderById(int id)throws DataMapperException{

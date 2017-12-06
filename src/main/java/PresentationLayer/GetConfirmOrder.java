@@ -23,9 +23,10 @@ public class GetConfirmOrder extends Command {
 
     @Override
     String execute(HttpServletRequest request, HttpServletResponse response) throws DataMapperException {
-        HttpSession session = request.getSession();
-        Order order = (Order) session.getAttribute("order");
-        LogicFacade.doConfirmOrder(order);
+        String oId = request.getParameter("orderId");
+        int id = Integer.parseInt(oId);
+       
+        LogicFacade.doConfirmOrder(id);
         
         return "odetailsemployee";
     }

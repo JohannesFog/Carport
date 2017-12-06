@@ -48,14 +48,14 @@ public class OrderMapper {
         }
     }
     
-        public static void confirmOrder(Order order) throws DataMapperException {
+        public static void confirmOrder(int id) throws DataMapperException {
         try{
             Connection con = Connector.connection();
             String status = "confirmed";
             String SQL = "UPDATE orders SET status=? WHERE id=?";
             PreparedStatement ps = con.prepareStatement(SQL);
             ps.setString(1, status);
-            ps.setInt(2, order.getoId());
+            ps.setInt(2, id);
             ps.executeUpdate();
         }catch(SQLException | ClassNotFoundException ex){
             throw new DataMapperException(ex.getMessage());

@@ -100,16 +100,16 @@ public class Rendering {
             
             if(o.getStatus().equals("confirmed")){
                 sb.append("<td>" + "Bekræftet" + "</td>");
+            
+            }else{
+                sb.append("<td>");
+               sb.append("<form action=\"FrontController\" method=\"POST\">"
+                       + "<input type=\"hidden\" name=\"command\" value=\"GetConfirmOrder\">"
+                       + "<input type=\"hidden\" name=\"orderId\" value=\"" + o.getoId() + "\">"
+                       + "<input type=\"submit\" value=\"Bekræft ordre\""
+                       + "</form>");
+               sb.append("</td>");
             }
-//            }else{
-//                sb.append("<td>");
-//               sb.append("<form action=\"FrontController\" method=\"POST\">"
-//                       + "<input type=\"hidden\" name=\"command\" value=\"GetConfirmOrder\">"
-//                       + "<input type=\"hidden\" name=\"orderId\" value=\"" + o.getoId() + "\">"
-//                       + "<input type=\"submit\" value=\"Bekræft ordre\""
-//                       + "</form>");
-//               sb.append("</td>");
-//            }
             
             sb.append("<td>");
             sb.append("<form action=\"FrontController\" method=\"POST\">"
