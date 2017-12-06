@@ -5,6 +5,7 @@
  */
 package FunctionLayer;
 
+import Exceptions.DataMapperException;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -26,7 +27,7 @@ public class CalculatorImplTest {
 
    
     @Test
-    public void testCalculateStolperUdenSkurKortCarport() {
+    public void testCalculateStolperUdenSkurKortCarport() throws DataMapperException{
         double length = 240.0;
         double width = 240.0;
         double height = 300.0;
@@ -43,7 +44,7 @@ public class CalculatorImplTest {
     }
 
     @Test
-    public void testCalculateStolperUdenSkurLangCarport() {
+    public void testCalculateStolperUdenSkurLangCarport() throws DataMapperException{
         double length = 600.0;
         double width = 240.0;
         double height = 300.0;
@@ -60,7 +61,7 @@ public class CalculatorImplTest {
     }
     
     @Test
-    public void testCalculateStolperMedSkurSammeBreddeSomRemme() {
+    public void testCalculateStolperMedSkurSammeBreddeSomRemme() throws DataMapperException{
         double length = 600.0;
         double width = 360.0;
         double height = 300.0;
@@ -77,7 +78,7 @@ public class CalculatorImplTest {
     }
     
     @Test
-    public void testCalculateStolperMedSkurSmallereEndRemme() {
+    public void testCalculateStolperMedSkurSmallereEndRemme() throws DataMapperException{
         double length = 600.0;
         double width = 360.0;
         double height = 300.0;
