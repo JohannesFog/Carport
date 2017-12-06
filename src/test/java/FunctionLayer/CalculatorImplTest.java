@@ -45,7 +45,7 @@ public class CalculatorImplTest {
 
     @Test
     public void testCalculateStolperUdenSkurLangCarport() throws DataMapperException{
-        double length = 600.0;
+        double length = 720.0;
         double width = 240.0;
         double height = 300.0;
         double skurLength = 0.0;
