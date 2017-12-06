@@ -61,6 +61,29 @@ public class Rendering {
         return sb.toString();
     }
     
+    public String showBillOfMaterials(BillOfMaterials bom){
+        StringBuilder sb = new StringBuilder();
+        ArrayList<LineItem> items = bom.getBomList();
+        sb.append("<table>");
+        sb.append("<tr><th>Navn</th><th>Længde</th><th>Antal</th><th>Enhed</th><th>Beskrivelse</th></tr>");
+        for (LineItem li : items) {
+            sb.append("<tr>");
+            sb.append("<td>" + li.getName() + "</td>");
+            if (li.getLength() == 0) {
+                sb.append("<td></td>");
+            } else {
+                sb.append("<td>" + li.getLength() + "</td>");
+            }
+
+            sb.append("<td>" + li.getQuantity() + "</td><td>" + li.getUnit() + "</td>"
+                    + "<td>" + li.getDescription() + "</td>");
+            sb.append("</tr>");
+        }
+        sb.append("</table>");
+
+        return sb.toString();
+    }
+    
      public String getOrderlistTable() throws DataMapperException {
         DecimalFormat df = new DecimalFormat("#");
         df.setRoundingMode(RoundingMode.CEILING);
@@ -81,6 +104,22 @@ public class Rendering {
 
         return sb.toString();
     }
+     
+     public String showOrderDetails(Order order){
+         StringBuilder sb = new StringBuilder();
+         sb.append("<br><p>Id: " + order.getoId() + "</p><br>");
+         sb.append("<p>Længde: " + order.getLength() + "</p><br>");
+         sb.append("<p>Bredde: " + order.getWidth() + "</p><br>");
+         sb.append("<p>Højde: " + order.getHeight() + "</p><br>");
+         sb.append("<p>Taghældning: " + order.getRoofAngle() + "</p><br>");
+         sb.append("<p>Skurbredde: " + order.getShedWidth() + "</p><br>");
+         sb.append("<p>Skurlængde: " + order.getShedLength() + "</p><br>");
+         sb.append("<p>Ordredato: " + order.getOrderDate() + "</p><br>");
+         sb.append("<p>Telefonnummer: " + order.getPhone() + "</p><br>");
+         sb.append("<p>Status: " + order.getStatus() + "</p><br>");
+         
+         return sb.toString();
+     }
     
     
     
