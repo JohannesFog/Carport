@@ -51,5 +51,9 @@ public class LogicFacade {
         return MaterialMapper.getPrice(name);
     }
     
+    public static Order getOrderById(int id)throws DataMapperException{
+        return OrderMapper.getSingleOrder(id);
+    }
+    
 }
 
