@@ -109,6 +109,9 @@ public class CalculatorImpl implements Calculator {
     public BillOfMaterials calculateStolper(double length, double width, double height, double skurLength, double skurWidth) throws DataMapperException {
         BillOfMaterials bom = new BillOfMaterials();
         int quantity = ((((int) length - 30) / 240) + 1) * 2;
+        if (length < 270) {
+            quantity += 2;
+        }
         if (skurLength != 0 && skurWidth != 0) {
             if (skurWidth > 400) {
                 quantity += 5;
