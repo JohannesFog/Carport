@@ -152,8 +152,12 @@ public class Rendering {
          return sb.toString();
      }
     
-    
-    
+     public String showPrice(double price){
+         DecimalFormat df = new DecimalFormat("#");
+        df.setRoundingMode(RoundingMode.CEILING);
+        
+        return "<h3>Pris: " + df.format(price) + ",- kr." + "</h3>";
+     }   
     
     
 }

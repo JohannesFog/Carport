@@ -4,6 +4,7 @@
     Author     : lene_
 --%>
 
+<%@page import="FunctionLayer.LogicFacade"%>
 <%@page import="FunctionLayer.BillOfMaterials"%>
 <%@page import="PresentationLayer.Rendering"%>
 <%@page import="FunctionLayer.Order"%>
@@ -21,9 +22,10 @@
         <%=render.showOrderDetails(order)%>
         <br><br>
         Styklisten for den valgte ordre:<br>
-        <%BillOfMaterials bom = new BillOfMaterials();%>
+        <%BillOfMaterials bom = LogicFacade.getBillOfMaterials(order);%>
+        <%double price = LogicFacade.getPrice(bom);%>
         
-        <%-- TODO: Her skal kaldes en beregning af bom med udgangspunkt i ordren --%>
+        <%=render.showPrice(price)%>
         
         <%=render.showBillOfMaterials(bom)%>
         
