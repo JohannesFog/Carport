@@ -97,8 +97,34 @@ public class Rendering {
             sb.append("<tr>");
             sb.append("<td>" + o.getoId() + "</td>");
             sb.append("<td>" + o.getPhone() + "</td>");
-            sb.append("<td>" + o.getStatus() + "</td>"
-                    + "<td>" + o.getOrderDate() + "</td>");
+
+            sb.append("<td>" + o.getOrderDate() + "</td>");
+            
+            if(o.getStatus().equals("confirmed")){
+                sb.append("<td>" + "Bekræftet" + "</td>");
+            
+            }else{
+ 
+                
+               sb.append("<td>");
+               sb.append("<form action=\"FrontController\" method=\"POST\">"
+                       + "<input type=\"hidden\" name=\"command\" value=\"GetConfirmOrder\">"
+                       + "<input type=\"hidden\" name=\"from\" value=\"fromEmpList\">"
+                       + "<input type=\"hidden\" name=\"orderId\" value=\"" + o.getoId() + "\">"
+                       + "<input type=\"submit\" value=\"Bekræft ordre\">"
+                       + "</form>");
+               sb.append("</td>");
+            }
+            
+            sb.append("<td>");
+            sb.append("<form action=\"FrontController\" method=\"POST\">"
+                       + "<input type=\"hidden\" name=\"command\" value=\"GetODetails\">"
+                       + "<input type=\"hidden\" name=\"orderId\" value=\"" + o.getoId() + "\">"
+                       + "<input type=\"submit\" value=\"Se Detaljer\">"
+                       + "</form>");
+            sb.append("</td>");
+            
+
             sb.append("</tr>");
         }
         sb.append("</table>");
