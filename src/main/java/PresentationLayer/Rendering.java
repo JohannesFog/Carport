@@ -103,7 +103,7 @@ public class Rendering {
             
             }else{
                sb.append("<td>");
-               sb.append("<form action=\"FrontController\" method=\"GET\">"
+               sb.append("<form action=\"FrontController\" method=\"POST\">"
                        + "<input type=\"hidden\" name=\"command\" value=\"GetConfirmOrder\">"
                        + "<input type=\"hidden\" name=\"from\" value=\"fromEmpList\">"
                        + "<input type=\"hidden\" name=\"orderId\" value=\"" + o.getoId() + "\">"
@@ -113,7 +113,7 @@ public class Rendering {
             }
             
             sb.append("<td>");
-            sb.append("<form action=\"FrontController\" method=\"GET\">"
+            sb.append("<form action=\"FrontController\" method=\"POST\">"
                        + "<input type=\"hidden\" name=\"command\" value=\"GetODetails\">"
                        + "<input type=\"hidden\" name=\"orderId\" value=\"" + o.getoId() + "\">"
                        + "<input type=\"submit\" value=\"Se Detaljer\">"
@@ -141,11 +141,13 @@ public class Rendering {
          if (order.getStatus().equals("confirmed")){
              sb.append("<p>Status: Bekræftet </p><br>");
          }else{
-         sb.append("<form action=" + "FrontController" + "method=" + "POST" + ">" 
-                   + "<input type=\"hidden\" name=\"command\" value=\"GetConfirmOrder\">" 
-                   + "<input type=\"hidden\" name=\"from\" value=\"fromOdetails\">"
-                   + "<input type=\"submit\"name=\"confirmOrder\" value=\"Bekræft Ordre\">"
-                   + "</form>");
+             sb.append("<p>Status: Ubekræftet </p>");
+             sb.append("<form action=\"FrontController\" method=\"POST\">"
+                       + "<input type=\"hidden\" name=\"command\" value=\"GetConfirmOrder\">"
+                       + "<input type=\"hidden\" name=\"from\" value=\"fromOdetail\">"
+                       + "<input type=\"hidden\" name=\"orderId\" value=\"" + order.getoId() + "\">"
+                       + "<input type=\"submit\" value=\"Bekræft ordre\">"
+                       + "</form>");
          }
          return sb.toString();
      }
