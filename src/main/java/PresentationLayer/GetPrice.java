@@ -45,17 +45,6 @@ public class GetPrice extends Command {
         Order order = new Order(length,width,height,angle,skurWidth,skurLength,"draft");
         session.setAttribute("order",order);
         
-        //session
-//        session.setAttribute("laengde", length);
-//        session.setAttribute("bredde", width);
-//        session.setAttribute("hoejde", height);
-////      session.setAttribute("tagtype", type);
-//        session.setAttribute("tagmateriale", material);
-//        session.setAttribute("vinkel", angle);
-//        session.setAttribute("skurbredde", skurWidth);
-//        session.setAttribute("skurlaengde", skurLength);        
-//      session.setAttribute( "skur", skur );
-        
         Calculator calc = new CalculatorImpl();
         BillOfMaterials bom = calc.bomCalculator(length, width, height, type, material, angle, skurLength, skurWidth);
         double price = calc.calculatePrice(bom);
