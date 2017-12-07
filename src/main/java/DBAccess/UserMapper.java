@@ -43,7 +43,7 @@ public class UserMapper {
     public static User login( String email, String password ) throws DataMapperException {
         try {
             Connection con = Connector.connection();
-            String SQL = "SELECT `id`, `name`, `adress`, `zipcode`, `phonenumber`, `role` FROM user "
+            String SQL = "SELECT `id`, `name`, `address`, `zipcode`, `phonenumber`, `role` FROM user "
                     + "WHERE email=? AND password=?";
             PreparedStatement ps = con.prepareStatement( SQL );
             ps.setString( 1, email );
@@ -52,7 +52,7 @@ public class UserMapper {
             if ( rs.next() ) {
                 int id = rs.getInt( "id" );
                 String name = rs.getString( "name" );
-                String address = rs.getString( "adress" );
+                String address = rs.getString( "address" );
                 int zip = rs.getInt( "zipcode" );
                 int phone = rs.getInt( "phonenumber" );
                 String role = rs.getString( "role" );
