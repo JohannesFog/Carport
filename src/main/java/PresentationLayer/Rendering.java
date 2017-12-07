@@ -102,6 +102,9 @@ public class Rendering {
                 sb.append("<td>" + "Bekræftet" + "</td>");
             
             }else{
+                
+                //Dette er noget shit
+                
                sb.append("<td>");
                sb.append("<form action=\"FrontController\" method=\"POST\">"
                        + "<input type=\"hidden\" name=\"command\" value=\"GetConfirmOrder\">"
