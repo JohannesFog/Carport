@@ -36,6 +36,17 @@ public class Order {
         this.phone = phone;
         this.status = "unconfirmed";
     }
+    
+       public Order(double length, double width, double height,
+            double roofAngle, double shedWidth, double shedLength, String status) {
+        this.length = length;
+        this.width = width;
+        this.height = height;
+        this.roofAngle = roofAngle;
+        this.shedWidth = shedWidth;
+        this.shedLength = shedLength;
+        this.status = status;
+    }
 
     public Order(double length, double width, double height,
             double roofAngle, double shedWidth, double shedLength, String orderDate, int phone,String status) {
@@ -101,5 +112,15 @@ public class Order {
     public String getStatus() {
         return status;
     }
+
+    public void setPhone(int phone) {
+        this.phone = phone;
+    }
+
+    public void setOrderDate(String orderDate) {
+        this.orderDate = orderDate;
+    }
+    
+    
     
 }
