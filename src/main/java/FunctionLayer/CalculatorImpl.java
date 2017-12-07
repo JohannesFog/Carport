@@ -27,15 +27,26 @@ public class CalculatorImpl implements Calculator {
     }
 
     @Override
-    public BillOfMaterials bomCalculator(double length, double width, double height,
-            String type, String material, double angle,
-            double skurLength, double skurWidth) throws DataMapperException {
+
+    public BillOfMaterials bomCalculator(Order order) throws DataMapperException {
+        
+        //double length, double width, double height,
+        //    String type, String material, double angle,
+        //    double skurLength, double skurWidth
+        
+        double length = order.getLength();
+        double width = order.getWidth();
+        double height = order.getHeight();
+        double angle = order.getRoofAngle();
+        double skurLength = order.getShedLength();
+        double skurWidth = order.getShedWidth();
+        
         BillOfMaterials totalBom = new BillOfMaterials();
 
-        if (type.equals("fladt")) {
+        if (angle == 0) {
             totalBom.mergeBom(bomCalculatorFladtTag(length, width, height, skurLength, skurWidth));
         } else {
-            totalBom.mergeBom(bomCalculatorSkråtTag(length, width, height, material, angle, skurLength, skurWidth));
+            totalBom.mergeBom(bomCalculatorSkråtTag(length, width, height, angle, skurLength, skurWidth));
         }
         if (skurLength != 0 && skurWidth != 0) {
             totalBom.mergeBom(bomCalculatorSkur(length, width, height, skurLength, skurWidth));
@@ -58,7 +69,8 @@ public class CalculatorImpl implements Calculator {
 
     @Override
     public BillOfMaterials bomCalculatorSkråtTag(double length, double width, double height,
-            String material, double angle, double skurLength, double skurWidth) throws DataMapperException {
+            double angle, double skurLength, double skurWidth) throws DataMapperException {
+
 
         double hypotenuse = calculateHypotenuse(width, angle);
         double katete = calculateKatete(width, angle);
@@ -68,7 +80,9 @@ public class CalculatorImpl implements Calculator {
         totalBom.mergeBom(calculateStolper(length, width, height, skurLength, skurWidth));
         totalBom.mergeBom(calculateSkråtSpær(length, width));
         totalBom.mergeBom(calculateSkråtBeslag(length));
+
         totalBom.mergeBom(calculateTagMedSten(length, width, hypotenuse));
+
         totalBom.mergeBom(calculateBeklædningGavl(width, katete));
         totalBom.mergeBom(calculateVindskeder(hypotenuse));
         totalBom.mergeBom(calculateSkråtStern(length));
@@ -262,6 +276,7 @@ public class CalculatorImpl implements Calculator {
 
     @Override
     public BillOfMaterials calculateRemme(double length) throws DataMapperException {
+
         BillOfMaterials bom = new BillOfMaterials();
         int remLength = (int) length;
         if (remLength < 300) {

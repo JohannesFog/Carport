@@ -13,7 +13,7 @@ public class User {
         this.name = name;
         this.address = address;
         this.zip = zip; 
-        this.role = "customer";
+        this.role = role;
     }
     
     public User ( String email, String password , String role){

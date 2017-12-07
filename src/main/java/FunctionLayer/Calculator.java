@@ -9,12 +9,11 @@ import Exceptions.DataMapperException;
 public interface Calculator {
     
     //Starting point for calculating bill of materials, this method will call other calculating methods
-    public BillOfMaterials bomCalculator(double length, double width, double height, 
-                                            String type, String material, double angle, 
-                                            double skurLength, double skurWidth) throws DataMapperException;
+
+    public BillOfMaterials bomCalculator(Order order) throws DataMapperException;
     
-    public BillOfMaterials bomCalculatorSkråtTag(double length, double width, double height, String material, double angle, double skurLength, double skurWidth) throws DataMapperException;
-    
+    public BillOfMaterials bomCalculatorSkråtTag(double length, double width, double height, double angle, double skurLength, double skurWidth) throws DataMapperException;
+
     public BillOfMaterials bomCalculatorFladtTag(double length, double width, double height, double skurLength, double skurWidth) throws DataMapperException;
     
     public BillOfMaterials bomCalculatorSkur(double length, double width, double height, double skurLength, double skurWidth) throws DataMapperException;
@@ -27,7 +26,7 @@ public interface Calculator {
     public BillOfMaterials calculateTagplader(double length, double width) throws DataMapperException;
 
     public BillOfMaterials calculateTagMedSten(double length, double width, double hypotenuse) throws DataMapperException;
-    
+
     public BillOfMaterials calculateRemme(double length) throws DataMapperException; 
  
     public BillOfMaterials calculateFladtStern(double length, double width) throws DataMapperException;

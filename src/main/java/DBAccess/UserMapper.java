@@ -43,16 +43,20 @@ public class UserMapper {
     public static User login( String email, String password ) throws DataMapperException {
         try {
             Connection con = Connector.connection();
-            String SQL = "SELECT `id`, `role` FROM user "
+            String SQL = "SELECT `id`, `name`, `address`, `zipcode`, `phonenumber`, `role` FROM user "
                     + "WHERE email=? AND password=?";
             PreparedStatement ps = con.prepareStatement( SQL );
             ps.setString( 1, email );
             ps.setString( 2, password );
             ResultSet rs = ps.executeQuery();
             if ( rs.next() ) {
-                String role = rs.getString( "role" );
                 int id = rs.getInt( "id" );
-                User user = new User( email, password, role );
+                String name = rs.getString( "name" );
+                String address = rs.getString( "address" );
+                int zip = rs.getInt( "zipcode" );
+                int phone = rs.getInt( "phonenumber" );
+                String role = rs.getString( "role" );
+                User user = new User(phone, email, password, name, address, zip , role);
                 user.setId( id );
                 return user;
             } else {

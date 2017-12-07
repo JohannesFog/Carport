@@ -31,8 +31,10 @@ public class LogicFacade {
         return user;
     }
     
-    
-    
+    public static void createOrder(Order order) throws DataMapperException{
+        OrderMapper.createOrder(order);
+    }
+    /*
     public static void createOrder(double length, double width, double height, 
            double roofAngle,double shedWidth, double shedLength, int phone) throws DataMapperException{
       Date date = new Date();
@@ -42,7 +44,7 @@ public class LogicFacade {
       Order order = new Order(length,width,height,roofAngle,shedWidth,shedLength,dateString,phone);
       OrderMapper.createOrder(order);
     }
-
+    */
     public static ArrayList<Order> getAllOrdersEmp() throws DataMapperException{
         return OrderMapper.getAllOrders();
     }
@@ -54,6 +56,15 @@ public class LogicFacade {
     public static ArrayList<Order> getAllOrdersUser(User user) throws DataMapperException {
        ArrayList<Order> order = OrderMapper.getAllUserOrders(user);
        return order;
+    }
+    
+
+    public static void doConfirmOrder(int id) throws DataMapperException{
+        OrderMapper.confirmOrder(id);
+    }
+    
+    public static Order getOrderById(int id)throws DataMapperException{
+        return OrderMapper.getSingleOrder(id);
     }
     
 }
