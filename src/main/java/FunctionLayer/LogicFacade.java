@@ -1,5 +1,6 @@
 package FunctionLayer;
 
+import DBAccess.Connector;
 import DBAccess.MaterialMapper;
 import Exceptions.DataMapperException;
 import DBAccess.OrderMapper;
@@ -50,6 +51,7 @@ public class LogicFacade {
     }
     
     public static double getPrice(String name) throws DataMapperException{
+        
         return MaterialMapper.getPrice(name);
     }
     

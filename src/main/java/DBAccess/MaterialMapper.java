@@ -1,12 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package DBAccess;
 
 import Exceptions.DataMapperException;
-import FunctionLayer.User;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -28,8 +23,9 @@ public class MaterialMapper {
  * @throws DataMapperException if no material is found with the specific name
  * or if a general SQL error occurs.
  */    
+
         public static double getPrice( String name) throws DataMapperException {
-        try {
+            try {
             Connection con = Connector.connection();
             String SQL = "SELECT `price` FROM materials "
                     + "WHERE name=?";
