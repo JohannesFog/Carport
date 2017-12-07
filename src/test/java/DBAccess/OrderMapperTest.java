@@ -5,11 +5,12 @@
  */
 package DBAccess;
 
-import Exceptions.DataMapperException;
+import FunctionLayer.Order;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -18,7 +19,7 @@ import static org.junit.Assert.*;
  *
  * @author GertLehmann
  */
-public class MaterialMapperTest {
+public class OrderMapperTest {
 
     private static Connection testConnection;
     private static String USER = "testuser";
@@ -26,7 +27,7 @@ public class MaterialMapperTest {
     private static String DBNAME = "carportTest";
     private static String HOST = "207.154.247.212";
 
-    public MaterialMapperTest() {
+    public OrderMapperTest() {
     }
 
     @Before
@@ -43,9 +44,9 @@ public class MaterialMapperTest {
             }
             // reset test database
             try (Statement stmt = testConnection.createStatement()) {
-                stmt.execute("drop table if exists materials");
-                stmt.execute("create table materials like materialsTest");
-                stmt.execute("insert into materials select * from materialsTest");
+                stmt.execute("drop table if exists orders");
+                stmt.execute("create table orders like ordersTest");
+                stmt.execute("insert into orders select * from ordersTest");
             }
 
         } catch (ClassNotFoundException | SQLException ex) {
@@ -54,17 +55,38 @@ public class MaterialMapperTest {
         }
     }
 
-    @Test
-    public void testGetPrice() throws Exception {
-        String name = "19x100 mm. trykimp. bræt";
-        double expResult = 6.95;
-        double result = MaterialMapper.getPrice(name);
-        assertEquals(expResult, result, 0.0);
-    }
-
-    @Test(expected = DataMapperException.class)
-    public void testGetPriceNoMatch() throws Exception {
-        MaterialMapper.getPrice("Placebo");
-    }
-
+//    @Test
+//    public void testCreateOrder() throws Exception {
+//        System.out.println("createOrder");
+//        Order order = null;
+//        OrderMapper.createOrder(order);
+//        fail("The test case is a prototype.");
+//    }
+//
+//    @Test
+//    public void testConfirmOrder() throws Exception {
+//        System.out.println("confirmOrder");
+//        Order order = null;
+//        OrderMapper.confirmOrder(order);
+//        fail("The test case is a prototype.");
+//    }
+//
+//    @Test
+//    public void testGetAllOrders() throws Exception {
+//        System.out.println("getAllOrders");
+//        ArrayList<Order> expResult = null;
+//        ArrayList<Order> result = OrderMapper.getAllOrders();
+//        assertEquals(expResult, result);
+//        fail("The test case is a prototype.");
+//    }
+//
+//    @Test
+//    public void testGetSingleOrder() throws Exception {
+//        System.out.println("getSingleOrder");
+//        int oid = 0;
+//        Order expResult = null;
+//        Order result = OrderMapper.getSingleOrder(oid);
+//        assertEquals(expResult, result);
+//        fail("The test case is a prototype.");
+//    }
 }
