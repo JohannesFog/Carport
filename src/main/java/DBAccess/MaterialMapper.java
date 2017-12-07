@@ -6,7 +6,6 @@
 package DBAccess;
 
 import Exceptions.DataMapperException;
-import FunctionLayer.User;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -17,9 +16,8 @@ import java.sql.SQLException;
  * @author GertLehmann
  */
 public class MaterialMapper {
-    
         public static double getPrice( String name) throws DataMapperException {
-        try {
+            try {
             Connection con = Connector.connection();
             String SQL = "SELECT `price` FROM materials "
                     + "WHERE name=?";

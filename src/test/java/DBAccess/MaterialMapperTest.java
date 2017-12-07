@@ -34,8 +34,8 @@ public void setUp() {
     try {
         // awoid making a new connection for each test
         if ( testConnection == null ) {
-            String url = String.format( "jdbc:mysql://%s:3306/%s", HOST, DBNAME );
-            Class.forName( "com.mysql.jdbc.Driver" );
+                String url = String.format( "jdbc:mysql://%s:3306/%s", HOST, DBNAME );
+                Class.forName( "com.mysql.jdbc.Driver" );
 
             testConnection = DriverManager.getConnection( url, USER, USERPW );
             // Make mappers use test 
@@ -61,11 +61,19 @@ public void setUp() {
         double result = MaterialMapper.getPrice(name);
         assertEquals(expResult, result, 0.0);
     }
+//
+//    @Test (expected = DataMapperException.class)
+//    public void testGetPriceNoMatch() throws Exception {       
+//        MaterialMapper.getPrice("Placebo");      
+//    }
 
-    @Test (expected = DataMapperException.class)
-    public void testGetPriceNoMatch() throws Exception {       
-        MaterialMapper.getPrice("Placebo");      
-    }
+//    @Test
+//    public void testXX() throws Exception {
+//        String name = "testmateriale";
+//        double expResult = 10.95;
+//        double result = MaterialMapper.getPrice(name);
+//        assertEquals(expResult, result, 0.0);
+//    }
 
     
     
