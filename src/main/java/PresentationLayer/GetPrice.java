@@ -12,6 +12,7 @@ import FunctionLayer.Calculator;
 import FunctionLayer.CalculatorImpl;
 import FunctionLayer.LogicFacade;
 import Exceptions.DataMapperException;
+import FunctionLayer.Order;
 import FunctionLayer.User;
 import static java.lang.Compiler.command;
 import java.util.logging.Level;
@@ -30,35 +31,22 @@ public class GetPrice extends Command {
     String execute(HttpServletRequest request, HttpServletResponse response) throws DataMapperException {
 
         HttpSession session = request.getSession();
-        String længde = request.getParameter("laengde");
-        double length = Double.parseDouble(længde);
-        session.setAttribute("laengde", length);
-        String bredde = request.getParameter("bredde");
-        double width = Double.parseDouble(bredde);
-        session.setAttribute("bredde", width);
-        String højde = request.getParameter("hoejde");
-        double height = Double.parseDouble(højde);
-        session.setAttribute("hoejde", height);
-
+        
+        //request
+        double length = Double.parseDouble(request.getParameter("laengde"));
+        double width = Double.parseDouble(request.getParameter("bredde"));
+        double height = Double.parseDouble(request.getParameter("hoejde"));
         String type = request.getParameter("tagtype");
-        session.setAttribute("tagtype", type);
         String material = request.getParameter("tagmateriale");
-        session.setAttribute("tagmateriale", material);
-        String vinkel = request.getParameter("vinkel");
-        double angle = Double.parseDouble(vinkel);
-
-        session.setAttribute("vinkel", angle);
-
-        String skurBredde = request.getParameter("skurbredde");
-        double skurWidth = Double.parseDouble(skurBredde);
-        session.setAttribute("skurbredde", skurWidth);
-        String skurLængde = request.getParameter("skurlaengde");
-        double skurLength = Double.parseDouble(skurLængde);
-        session.setAttribute("skurlaengde", skurLength);
-
-//        session.setAttribute( "skur", skur );
+        double angle = Double.parseDouble(request.getParameter("vinkel"));
+        double skurWidth = Double.parseDouble(request.getParameter("skurbredde"));
+        double skurLength = Double.parseDouble(request.getParameter("skurlaengde"));
+        
+        Order order = new Order(length,width,height,angle,skurWidth,skurLength,"draft");
+        session.setAttribute("order",order);
+        
         Calculator calc = new CalculatorImpl();
-        BillOfMaterials bom = calc.bomCalculator(length, width, height, type, material, angle, skurLength, skurWidth);
+        BillOfMaterials bom = calc.bomCalculator(order);
         double price = calc.calculatePrice(bom);
         
         String draw = "";
