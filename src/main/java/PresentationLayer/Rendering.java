@@ -103,7 +103,6 @@ public class Rendering {
             
             }else{
                 
-                //Dette er noget shit
                 
                sb.append("<td>");
                sb.append("<form action=\"FrontController\" method=\"POST\">"
