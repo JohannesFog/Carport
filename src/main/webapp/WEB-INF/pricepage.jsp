@@ -25,7 +25,8 @@
         <%=render.getNicerHTML((double) session.getAttribute("price"),
                 (BillOfMaterials) session.getAttribute("bom"))%>
 
-        <% String role = (String) session.getAttribute("role"); %>
+        <%  User user = (User) session.getAttribute("user");
+            String role = user.getRole();  %>
         <% if (role == null || role.equals("employee")) { %>
             <form name="Order" action="FrontController" method="POST">
             <input type="hidden" name="command" value="Order">
