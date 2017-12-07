@@ -45,9 +45,9 @@ public class GetPrice extends Command {
         Order order = new Order(length,width,height,angle,skurWidth,skurLength,"draft");
         session.setAttribute("order",order);
         
-        Calculator calc = new CalculatorImpl();
-        BillOfMaterials bom = calc.bomCalculator(order);
-        double price = calc.calculatePrice(bom);
+        
+        BillOfMaterials bom = LogicFacade.getBillOfMaterials(order);
+        double price = LogicFacade.getPrice(bom);
         
         String draw = "";
                 
