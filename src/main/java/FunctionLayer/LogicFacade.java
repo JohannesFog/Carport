@@ -50,6 +50,11 @@ public class LogicFacade {
     public static double getPrice(String name) throws DataMapperException{
         return MaterialMapper.getPrice(name);
     }
+
+    public static ArrayList<Order> getAllOrdersUser(User user) throws DataMapperException {
+       ArrayList<Order> order = OrderMapper.getAllUserOrders(user);
+       return order;
+    }
     
 }
 

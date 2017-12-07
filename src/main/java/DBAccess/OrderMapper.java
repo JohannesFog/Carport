@@ -7,6 +7,7 @@ package DBAccess;
 
 import Exceptions.DataMapperException;
 import FunctionLayer.Order;
+import FunctionLayer.User;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -127,6 +128,37 @@ public class OrderMapper {
         }catch(SQLException | ClassNotFoundException ex){
             throw new DataMapperException(ex.getMessage());
         }
+    }
+
+    public static ArrayList<Order> getAllUserOrders(User user) throws DataMapperException {
+         try{
+           Order order = null;
+           ArrayList<Order> orders = new ArrayList<Order>();
+           Connection con = Connector.connection();
+           String SQL = "SELECT * FROM orders WHERE phonenumber=?";
+           PreparedStatement ps = con.prepareStatement(SQL);
+           ps.setInt(1, user.getPhone());
+           ResultSet rs = ps.executeQuery();
+           while (rs.next()){
+               int oId = rs.getInt("id");
+               double length = rs.getDouble("length");
+               double width = rs.getDouble("width");
+               double height = rs.getDouble("height");
+               double roofAngle = rs.getDouble("roof_angle");
+               double shedWidth = rs.getDouble("shed_width");
+               double shedLength = rs.getDouble("shed_length");
+               String orderDate = rs.getString("orderdate");
+               int phone = rs.getInt("phonenumber");
+               String status = rs.getString("status");
+               
+               order = new Order(oId,length, width, height, roofAngle, shedWidth, shedLength, orderDate, phone,status);
+               orders.add(order);
+           }
+           return orders;
+        }catch(SQLException | ClassNotFoundException ex){
+            throw new DataMapperException(ex.getMessage());
+        }
+
     }
     
 }
