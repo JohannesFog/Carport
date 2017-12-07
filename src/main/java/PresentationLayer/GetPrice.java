@@ -46,7 +46,7 @@ public class GetPrice extends Command {
         session.setAttribute("order",order);
         
         Calculator calc = new CalculatorImpl();
-        BillOfMaterials bom = calc.bomCalculator(length, width, height, type, material, angle, skurLength, skurWidth);
+        BillOfMaterials bom = calc.bomCalculator(order);
         double price = calc.calculatePrice(bom);
         
         String draw = "";
