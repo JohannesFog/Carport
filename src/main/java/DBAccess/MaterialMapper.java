@@ -13,11 +13,21 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
- *
- * @author GertLehmann
+ * 
+ * The purpose of MaterialMapper is to obtain material prices
+ * from the database and return this to the logic layer.
+ * 
+ * @author Gert Lehmann Madsen
  */
 public class MaterialMapper {
     
+/**
+ * This method is used to get prices from the material database.
+ * @param name is the name of the material for which a price is wanted
+ * @return the price for this material
+ * @throws DataMapperException if no material is found with the specific name
+ * or if a general SQL error occurs.
+ */    
         public static double getPrice( String name) throws DataMapperException {
         try {
             Connection con = Connector.connection();

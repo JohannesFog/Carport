@@ -17,8 +17,12 @@ import java.util.List;
 
 /**
  *
- * @author lene_
+ * The purpose of OrderMapper is to transfer the order information from the
+ * database to an order object or the other way around.
+ *
+ * @author lene
  */
+
 public class OrderMapper {
 
     public static void createOrder(Order order) throws DataMapperException {

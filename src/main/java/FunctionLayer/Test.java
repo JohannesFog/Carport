@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 /**
  *
- * @author Mikkel Lindstrøm <Mikkel.Lindstrøm>
+ * @author Mikkel Lindstrøm
  */
 public class Test {
     
