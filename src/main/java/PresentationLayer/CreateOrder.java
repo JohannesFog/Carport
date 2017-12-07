@@ -64,11 +64,13 @@ public class CreateOrder extends Command {
           LogicFacade.createNewUserWithoutPassword(tlf, email, adresse, name, adresse, tlf, role);
           
           //tempOrder = new Order(length, width, height, roofAngle, shedWidth, shedLength, dateString, tlf);
+          order.setPhone(tlf);
           LogicFacade.createOrder(order); 
           
         }else{
             int tlf = Integer.parseInt(request.getParameter("tlf"));
             //tempOrder = new Order(length, width, height, roofAngle, shedWidth, shedLength, dateString, tlf);
+            order.setPhone(tlf);
             LogicFacade.createOrder(order);   
         }
         return "confirmationpage";
