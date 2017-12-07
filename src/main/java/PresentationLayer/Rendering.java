@@ -129,15 +129,15 @@ public class Rendering {
      
      public String showOrderDetails(Order order){
          StringBuilder sb = new StringBuilder();
-         sb.append("<br><p>Id: " + order.getoId() + "</p><br>");
-         sb.append("<p>Længde: " + order.getLength() + "</p><br>");
-         sb.append("<p>Bredde: " + order.getWidth() + "</p><br>");
-         sb.append("<p>Højde: " + order.getHeight() + "</p><br>");
-         sb.append("<p>Taghældning: " + order.getRoofAngle() + "</p><br>");
-         sb.append("<p>Skurbredde: " + order.getShedWidth() + "</p><br>");
-         sb.append("<p>Skurlængde: " + order.getShedLength() + "</p><br>");
-         sb.append("<p>Ordredato: " + order.getOrderDate() + "</p><br>");
-         sb.append("<p>Telefonnummer: " + order.getPhone() + "</p><br>");
+         sb.append("<br><p>Id: " + order.getoId() + "</p>");
+         sb.append("<p>Længde: " + order.getLength() + "</p>");
+         sb.append("<p>Bredde: " + order.getWidth() + "</p>");
+         sb.append("<p>Højde: " + order.getHeight() + "</p>");
+         sb.append("<p>Taghældning: " + order.getRoofAngle() + "</p>");
+         sb.append("<p>Skurbredde: " + order.getShedWidth() + "</p>");
+         sb.append("<p>Skurlængde: " + order.getShedLength() + "</p>");
+         sb.append("<p>Ordredato: " + order.getOrderDate() + "</p>");
+         sb.append("<p>Telefonnummer: " + order.getPhone() + "</p>");
          if (order.getStatus().equals("confirmed")){
              sb.append("<p>Status: Bekræftet </p><br>");
          }else{

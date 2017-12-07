@@ -18,16 +18,20 @@
     <body>
         <%Order order = (Order) session.getAttribute("order");%>
         <%Rendering render = new Rendering();%>
-        Herunder ses detaljer for den valgte ordre:<br>
+        <h2>Herunder ses detaljer for den valgte ordre:</h2>
         <%=render.showOrderDetails(order)%>
-        <br><br>
-        Styklisten for den valgte ordre:<br>
+        <br>
+        <h2>Styklisten for den valgte ordre:</h2>
         <%BillOfMaterials bom = LogicFacade.getBillOfMaterials(order);%>
         <%double price = LogicFacade.getPrice(bom);%>
         
         <%=render.showPrice(price)%>
         
         <%=render.showBillOfMaterials(bom)%>
+        
+        <h2>Tegning for valgte ordre</h2>
+        
+        <%-- !TODO: indsæt tegning af ordren --%>
         
     </body>
 </html>
