@@ -56,6 +56,7 @@ public class MaterialMapperTest {
 
     @Test
     public void testGetPrice() throws Exception {
+        System.out.println("Test: Get price from database");
         String name = "19x100 mm. trykimp. bræt";
         double expResult = 6.95;
         double result = MaterialMapper.getPrice(name);
@@ -64,6 +65,7 @@ public class MaterialMapperTest {
 
     @Test(expected = DataMapperException.class)
     public void testGetPriceNoMatch() throws Exception {
+        System.out.println("Test: No material match in database");
         MaterialMapper.getPrice("Placebo");
     }
 

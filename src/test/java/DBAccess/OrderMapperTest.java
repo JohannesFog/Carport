@@ -5,6 +5,7 @@
  */
 package DBAccess;
 
+import Exceptions.DataMapperException;
 import FunctionLayer.Order;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -55,31 +56,22 @@ public class OrderMapperTest {
         }
     }
 
-//    @Test
-//    public void testCreateOrder() throws Exception {
-//        System.out.println("createOrder");
-//        Order order = null;
-//        OrderMapper.createOrder(order);
-//        fail("The test case is a prototype.");
-//    }
-//
-//    @Test
-//    public void testConfirmOrder() throws Exception {
-//        System.out.println("confirmOrder");
-//        Order order = null;
-//        OrderMapper.confirmOrder(order);
-//        fail("The test case is a prototype.");
-//    }
-//
-//    @Test
-//    public void testGetAllOrders() throws Exception {
-//        System.out.println("getAllOrders");
-//        ArrayList<Order> expResult = null;
-//        ArrayList<Order> result = OrderMapper.getAllOrders();
-//        assertEquals(expResult, result);
-//        fail("The test case is a prototype.");
-//    }
-//
+    @Test
+    public void testConfirmOrder() throws Exception {
+        System.out.println("Test: Change order status on order in database");
+        int oid = 1;
+        OrderMapper.confirmOrder(oid);
+        String expResult = "confirmed";
+        String result = OrderMapper.getSingleOrder(oid).getStatus();
+        assertEquals(expResult, result);
+    }
+
+    @Test(expected = DataMapperException.class)
+    public void testNoOrderMatch() throws Exception {
+        System.out.println("Test: No order id match for order in database");
+        OrderMapper.getSingleOrder(2);
+    }
+
 //    @Test
 //    public void testGetSingleOrder() throws Exception {
 //        System.out.println("getSingleOrder");
