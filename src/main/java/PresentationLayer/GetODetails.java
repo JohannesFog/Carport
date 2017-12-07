@@ -8,6 +8,7 @@ package PresentationLayer;
 import Exceptions.DataMapperException;
 import FunctionLayer.LogicFacade;
 import FunctionLayer.Order;
+import FunctionLayer.User;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -28,7 +29,8 @@ public class GetODetails extends Command {
         Order order = LogicFacade.getOrderById(oId);
         HttpSession session = request.getSession();
         session.setAttribute("order", order);
-        return "odetailsemployee";
+        User user = (User) session.getAttribute("user");
+        return "odetails"+ user.getRole();
     }
     
 }
