@@ -31,7 +31,7 @@ public class GetODetails extends Command {
         
         if(from.equals("customerpage")){
             return "customerOrderList";
-        }else if (from.equals("custList")){
+        }else if (from.equals("cust") || from.equals("emp") ){
             
         String id = request.getParameter("orderId");
         int oId = Integer.parseInt(id);
@@ -39,7 +39,7 @@ public class GetODetails extends Command {
         session.setAttribute("order", order);
         return "odetails"+ user.getRole();
         }
-        return "customerOrderList";
+        return user.getRole() + "page";
         }
         
     }

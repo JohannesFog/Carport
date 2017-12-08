@@ -17,15 +17,14 @@
     <body>
         <%Order order = (Order) session.getAttribute("order");%>
         <%Rendering render = new Rendering();%>
-        Herunder ses detaljer for den valgte ordre:<br>
         <%=render.showOrderDetails(order)%>
         <br><br>
-        Styklisten for den valgte ordre:<br>
+        
         <%BillOfMaterials bom = new BillOfMaterials();%>
         
         <%-- TODO: Her skal kaldes en beregning af bom med udgangspunkt i ordren --%>
         
         <%=render.showBillOfMaterials(bom)%>
-        
+        Styklisten for den valgte ordre:<br>
     </body>
 </html>

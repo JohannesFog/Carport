@@ -18,7 +18,7 @@
         <% User user = (User) session.getAttribute("user"); %>
         <h1>Hello <%=user.getName()%>!</h1>
         
-        <%render.getOrderlistTableUser(user);%>
+        <%=render.getOrderlistTableUser(user)%>
         
         
         

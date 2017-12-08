@@ -109,7 +109,7 @@ public class Rendering {
                sb.append("<td>");
                sb.append("<form action=\"FrontController\" method=\"POST\">"
                        + "<input type=\"hidden\" name=\"command\" value=\"GetConfirmOrder\">"
-                       + "<input type=\"hidden\" name=\"from\" value=\"fromEmpList\">"
+                       
                        + "<input type=\"hidden\" name=\"orderId\" value=\"" + o.getoId() + "\">"
                        + "<input type=\"submit\" value=\"Bekræft ordre\">"
                        + "</form>");
@@ -119,6 +119,7 @@ public class Rendering {
             sb.append("<td>");
             sb.append("<form action=\"FrontController\" method=\"POST\">"
                        + "<input type=\"hidden\" name=\"command\" value=\"GetODetails\">"
+                       + "<input type=\"hidden\" name=\"from\" value=\"emp\">"
                        + "<input type=\"hidden\" name=\"orderId\" value=\"" + o.getoId() + "\">"
                        + "<input type=\"submit\" value=\"Se Detaljer\">"
                        + "</form>");
@@ -133,54 +134,10 @@ public class Rendering {
     }
      
      public String showOrderDetails(Order order){
-         StringBuilder sb = new StringBuilder();
-         sb.append("<br><p>Id: " + order.getoId() + "</p><br>");
-         sb.append("<p>Længde: " + order.getLength() + "</p><br>");
-         sb.append("<p>Bredde: " + order.getWidth() + "</p><br>");
-         sb.append("<p>Højde: " + order.getHeight() + "</p><br>");
-         sb.append("<p>Taghældning: " + order.getRoofAngle() + "</p><br>");
-         sb.append("<p>Skurbredde: " + order.getShedWidth() + "</p><br>");
-         sb.append("<p>Skurlængde: " + order.getShedLength() + "</p><br>");
-         sb.append("<p>Ordredato: " + order.getOrderDate() + "</p><br>");
-         sb.append("<p>Telefonnummer: " + order.getPhone() + "</p><br>");
-         sb.append("<p>Status: " + order.getStatus() + "</p><br>");
-         
-         return sb.toString();
-     }
-    
-      public String getOrderlistTableUser(User user) throws DataMapperException {
         DecimalFormat df = new DecimalFormat("#");
         df.setRoundingMode(RoundingMode.CEILING);
         StringBuilder sb = new StringBuilder();
-        sb.append("<h1>Velkommen til Orderlisten</h1>");
-        ArrayList<Order> orders = LogicFacade.getAllOrdersUser(user);
-        sb.append("<table>");
-        sb.append("<tr><th>Order ID</th><th>Status</th><th>Dato</th><th>Detaljer</th></tr>");
-        for (Order o : orders) {
-            sb.append("<tr>");
-            sb.append("<td>" + o.getoId() + "</td>");
-            sb.append("<td>" + o.getStatus() + "</td>"
-                    + "<td>" + o.getOrderDate() + "</td>");
-            sb.append(
-            "<form action=\"FrontController\" method=\"POST\">"
-          + "<input type=\"hidden\" name=\"command\" value=\"GetODetail\">"
-          + "<input type=\"hidden\" name=\"from\" value=\"custList\">"    
-          + "<input type=\"hidden\" name=\"oId\" value=" + o.getoId() + ">"         
-          + "<input type=\"submit\" name=\"order\" value=\"Se Detaljer\">"
-          + "</form>" );
-
-            sb.append("</tr>");
-        }
-        sb.append("</table>");
-
-        return sb.toString();
-    }
-    
-    public void showUsersOwnOrder(Order order){
-        DecimalFormat df = new DecimalFormat("#");
-        df.setRoundingMode(RoundingMode.CEILING);
-        StringBuilder sb = new StringBuilder();
-        sb.append("<h1>Velkommen til Orderns Detaljer</h1>");
+        sb.append("<h1>Velkommen til Orderens Detaljer</h1>");
         
         sb.append("<table>");
         sb.append("<tr><th>Order ID</th><th>Længde</th><th>Bredde</th><th>Højde</th><th>Vinkel</th><th>Skur bredde</th><th>Skur Længde</th><th>Dato</th><th>Status</th></tr>");
@@ -199,7 +156,81 @@ public class Rendering {
         if (order.getRoofAngle()!= 0){
             
         }
+        return sb.toString();
+         
+         
+         
+         
+         
+         
+//         StringBuilder sb = new StringBuilder();
+//         sb.append("<br><p>Id: " + order.getoId() + "</p><br>");
+//         sb.append("<p>Længde: " + order.getLength() + "</p><br>");
+//         sb.append("<p>Bredde: " + order.getWidth() + "</p><br>");
+//         sb.append("<p>Højde: " + order.getHeight() + "</p><br>");
+//         sb.append("<p>Taghældning: " + order.getRoofAngle() + "</p><br>");
+//         sb.append("<p>Skurbredde: " + order.getShedWidth() + "</p><br>");
+//         sb.append("<p>Skurlængde: " + order.getShedLength() + "</p><br>");
+//         sb.append("<p>Ordredato: " + order.getOrderDate() + "</p><br>");
+//         sb.append("<p>Telefonnummer: " + order.getPhone() + "</p><br>");
+//         sb.append("<p>Status: " + order.getStatus() + "</p><br>");
+//         
+//         return sb.toString();
+     }
+    
+      public String getOrderlistTableUser(User user) throws DataMapperException {
+        DecimalFormat df = new DecimalFormat("#");
+        df.setRoundingMode(RoundingMode.CEILING);
+        StringBuilder sb = new StringBuilder();
+        sb.append("<h1>Velkommen til Orderlisten</h1>");
+        ArrayList<Order> orders = LogicFacade.getAllOrdersUser(user);
+        sb.append("<table>");
+        sb.append("<tr><th>Order ID</th><th>Status</th><th>Dato</th><th>Detaljer</th></tr>");
+        for (Order o : orders) {
+            sb.append("<tr>");
+            sb.append("<td>" + o.getoId() + "</td>");
+            sb.append("<td>" + o.getStatus() + "</td>"
+                    + "<td>" + o.getOrderDate() + "</td>");
+            sb.append("<td>");
+            sb.append(
+            "<form action=\"FrontController\" method=\"POST\">"
+          + "<input type=\"hidden\" name=\"command\" value=\"GetODetails\">"
+          + "<input type=\"hidden\" name=\"from\" value=\"cust\">"    
+          + "<input type=\"hidden\" name=\"orderId\" value=" + o.getoId() + ">"         
+          + "<input type=\"submit\" name=\"order\" value=\"Se Detaljer\">"
+          + "</form>" );
+        sb.append("</td>");
+            sb.append("</tr>");
+        }
+        sb.append("</table>");
+
+        return sb.toString();
+    }
+    
+    public String showUsersOwnOrder(Order order){
+        DecimalFormat df = new DecimalFormat("#");
+        df.setRoundingMode(RoundingMode.CEILING);
+        StringBuilder sb = new StringBuilder();
+        sb.append("<h1>Velkommen til Orderens Detaljer</h1>");
         
+        sb.append("<table>");
+        sb.append("<tr><th>Order ID</th><th>Længde</th><th>Bredde</th><th>Højde</th><th>Vinkel</th><th>Skur bredde</th><th>Skur Længde</th><th>Dato</th><th>Status</th></tr>");
+        sb.append("<tr>");
+        sb.append("<td>" + order.getoId() + "</td>");
+        sb.append("<td>" + order.getLength() + "</td>");
+        sb.append("<td>" + order.getWidth() + "</td>");
+        sb.append("<td>" + order.getHeight() + "</td>");
+        sb.append("<td>" + order.getRoofAngle() + "</td>");
+        sb.append("<td>" + order.getShedWidth() + "</td>");
+        sb.append("<td>" + order.getShedLength() + "</td>");
+        sb.append("<td>" + order.getOrderDate() + "</td>");
+        sb.append("<td>" + order.getStatus() + "</td>");
+        
+        
+        if (order.getRoofAngle()!= 0){
+            
+        }
+        return sb.toString();
         
     }
     

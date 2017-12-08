@@ -21,7 +21,7 @@ abstract class Command {
         commands.put( "Order", new CreateOrder());
         commands.put( "GetCarport", new GetCarport());
         commands.put( "GetConfirmOrder", new GetConfirmOrder());
-        commands.put("GetODetails", new GetODetails());
+        commands.put( "GetODetails", new GetODetails());
 
     }
 
