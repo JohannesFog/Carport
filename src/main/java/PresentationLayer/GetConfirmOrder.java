@@ -14,7 +14,7 @@ import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author Mikkel Lindstrøm <Mikkel.Lindstrøm>
+ * @author Mikkel Lindstrøm 
  */
 public class GetConfirmOrder extends Command {
 
