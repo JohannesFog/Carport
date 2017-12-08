@@ -47,33 +47,15 @@ public class GetPrice extends Command {
         
         
         BillOfMaterials bom = LogicFacade.getBillOfMaterials(order);
-        double price = LogicFacade.getCarportPrice(bom);
-        
-
-        String draw = LogicFacade.getDrawing(bom, length, width, height, skurLength, skurWidth, angle);
-
-                
-//        if (type.equals("fladt")) {
-//            DrawImplFlatAbove drawFlatAbove = new DrawImplFlatAbove(bom, width, length, skurLength, skurWidth); 
-//
-//            String drawingFlatAbove = drawFlatAbove.tegnTag(750, 750);
-//            DrawImplFlatSide drawFlatSide = new DrawImplFlatSide(bom, width, length, height, skurLength, skurWidth);
-//            String drawintFlatSide = drawFlatSide.tegnTag(750, 750, drawingFlatAbove, 
-//                    drawFlatAbove.XkoorLeftOppe, drawFlatAbove.XkoorLeftNede);
-//            
-//            draw = drawingFlatAbove + drawintFlatSide;
-//            
-//        } else {
-//            //DrawImplFlatAbove drawFlatAbove = new DrawImplFlatAbove(bom, width, length, skurLength, skurWidth); 
-//            //String drawingFlatAbove = drawFlatAbove.tegnTag(750, 750);
-//            draw = "ingen support for skraat tag endnu";
-//            //C:\chrdiv
-//        }
-        
-        session.setAttribute( "price", price );
         session.setAttribute( "bom", bom );
+
+        double price = LogicFacade.getCarportPrice(bom);
+        session.setAttribute( "price", price );      
+
+        String draw = LogicFacade.getDrawing(bom, order);
         session.setAttribute( "draw", draw );
-        
+
+    
         return "pricepage";
     }
 
