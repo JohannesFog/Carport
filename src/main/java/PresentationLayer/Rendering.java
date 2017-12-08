@@ -154,11 +154,7 @@ public class Rendering {
         sb.append("<td>" + order.getStatus() + "</td>");
         
         
-        if (order.getRoofAngle()!= 0){
-            
-        }else{
-            
-        }
+        
         return sb.toString();
          
          
