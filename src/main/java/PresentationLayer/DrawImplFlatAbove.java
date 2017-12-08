@@ -5,6 +5,7 @@
  */
 package PresentationLayer;
 
+import java.lang.*;
 import FunctionLayer.*;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
@@ -26,6 +27,10 @@ import java.util.Set;
  * 9: se om tegningen iøvrigt passer.
  */
 public class DrawImplFlatAbove implements Draw{
+    
+    //DECEMBER
+    public ArrayList XkoorLeftOppe;
+    public ArrayList XkoorLeftNede;
     
     public ArrayList<Double> stople3Test = new ArrayList<Double>();
     public double stolpeOppeDouble;
@@ -136,7 +141,6 @@ public class DrawImplFlatAbove implements Draw{
         this.bom = mynewBom;
     }
     
-    @Override
     public String tegnTag(int width, int height, String DrawFlatAbove) {
         return "";
     }
@@ -164,9 +168,9 @@ public class DrawImplFlatAbove implements Draw{
         }
         
         
-        
-        output = output + stolper();
-        output = output + stolper2();    
+        output += stolperDECEMBER();
+        //output = output + stolper();
+        //output = output + stolper2();    
         output = output + "</SVG>";
         
         /*
@@ -500,7 +504,184 @@ LineItem{name=45x95mm spærtræ ubh., length=300, quantity=2, unit=stk, descript
         return output;
     }
     
-    // denne omfatter kun 
+    //ØversteVenstreLeft, ØversteVenstreDistToTop, ØversteVenstreWidth, ØversteVenstreLength);
+    public String stolperDECEMBER() {
+        ArrayList<String> words = new ArrayList<String>();
+        words.add("Stolper");
+        ArrayList<LineItem> relevantItems = relevantBomLines(words, this.bom);
+        int quant = relevantItems.get(0).getQuantity();
+        stolpeLengthDECEMBER();
+        
+        //1 + 2: brug skurlængde og bredde til at beregne afstand oeverst og nederst
+        double pladsForOven = stolperDECEMBER_nr_1pladsOven();
+        double pladsForNeden = stolperDECEMBER_nr_2pladsNeden();
+        int stolperOppe = new Double(pladsForOven / 240).intValue();
+        int stolperNede = new Double(pladsForNeden / 240).intValue();
+        //lav to booleans: a: er der skur, b: rækker skuret op til oeverste side.
+        boolean skurFindes = (this.skurLength > 0) && (this.skurWidth > 0);
+        boolean ensAfstandOppeNede = pladsForOven == pladsForNeden;
+        
+        //3+4: tilføj hjørnestolper
+        //Tilfæj hjoerneStolper der ikke overlapper med skur;
+        stolperOppe += stolperDECEMBER_nr_3hjoernerOppe(skurFindes, ensAfstandOppeNede, pladsForOven);
+        //Tilfæj hjoerneStolper der ikke overlapper med skur;
+        stolperNede += stolperDECEMBER_nr_4hjoernerNede(skurFindes, ensAfstandOppeNede, pladsForNeden);
+                
+        //5: tegn stolper for oven -- tager parameter: stolper ope, plads for oven, skru findes, ens afstand.
+        this.XkoorLeftOppe = stolperDECEMBER_nr_5tegnXkoor(stolperOppe, pladsForOven, skurFindes, ensAfstandOppeNede);
+        this.XkoorLeftNede = stolperDECEMBER_nr_7tegnXkoor(stolperNede, pladsForNeden, skurFindes);
+        //String stolpetegningoppeDECEMEBER
+        double YkoorOppeOppe = this.sideUdhæng;
+        double YkoorNedeOppe = (this.carportWidth - this.sideUdhæng) - this.stolpeLength;
+        String tegningFraXkoorOppe = stolperDECEMBER_nr_6tegnFromXkoor(XkoorLeftOppe, YkoorOppeOppe);
+        String tegningFraXkoorNede = stolperDECEMBER_nr_6tegnFromXkoor(XkoorLeftNede, YkoorNedeOppe);
+        
+        
+        
+        //her er alle de beregninger jeg har brug for ***************
+        // når funktionen er færdig, skal output være en "tegnings String".
+        String myport = "carportWidth: " + this.carportWidth + " carportLength: " + this.carportLength + "\n";
+        String udhaeng = "endeUdhaeng: " + this.endeUdhæng + " sideUdhaeng: " + this.sideUdhæng + "\n";
+        String myskur = "skurWidth: " + this.skurWidth + " this.skurLength: " + this.skurLength + "\n";
+        String output = "her er december: " + quant + " \n" +
+                myport + " "+ udhaeng+" " + myskur + "\n" +
+                "pladsForOven: " + pladsForOven + " pladsForNeden: " + pladsForNeden + "\n" +
+                "boolean-skurFindes: " + skurFindes + " boolean-ensAfstandOppeNede: " + ensAfstandOppeNede + "\n" +
+                "stolperOppe: " + stolperOppe + " stolperNede: " + stolperNede + "\n" +
+                "stolpetegningoppeDECEMEBER: " + XkoorLeftOppe;      
+        
+        // beregninger slut *****************************************
+        
+        //return output;
+        return tegningFraXkoorOppe + tegningFraXkoorNede;//output;
+    }
+    
+    public ArrayList<Double> XkoorOppeDECEMBER() {
+        return this.XkoorLeftOppe;
+    }
+    
+    public ArrayList<Double> XkoorNedeDECEMBER() {
+        return this.XkoorLeftNede;
+    }
+    
+    public String stolperDECEMBER_nr_6tegnFromXkoor(ArrayList<Double> Xkoor, double Ykoor) {
+        String output = "";
+        for (int i = 0; i < Xkoor.size(); i++) {
+            String output1 = String.format("<rect x=\"%s\" y=\"%s\" height=\"%s\" width=\"%s\""+      
+                            "style=\"stroke:#000000; fill: #ff0000\"/>", 
+                            Xkoor.get(i), //ØversteVenstreLeft
+                            Ykoor, //ØversteVenstreDistToTop
+                            this.stolpeLength, //ØversteVenstreWidth
+                            this.stolpeLength); //ØversteVenstreLength
+            output += output1;
+        }
+        return output;
+    }
+    
+    public ArrayList stolperDECEMBER_nr_7tegnXkoor(int stolperNede, double pladsForNeden, boolean skurFindes) {
+        ArrayList nyoutput = new ArrayList<Double>();
+        if (pladsForNeden > 0 && skurFindes) {
+            //der er et skur == lav ikke stolpe nederst til hoejre
+            double smartDist = pladsForNeden/(stolperNede);
+            for (int i = 0; i < stolperNede; i++) {
+                nyoutput.add(((this.endeUdhæng) + ((smartDist-(this.stolpeLength/2))*i)));;
+            }
+            //*************************************************
+            // 2017-12-08: her laves en stolpe nederst til hoejre. Dette er et hack da der ikke er meget til til review med kasper
+            nyoutput.add((this.carportLength - this.endeUdhæng - this.stolpeLength));
+            //***********************************************/
+        }else if (pladsForNeden == 0) {
+        
+        }else {
+            //nederste række påvirkes ikke af et skur == lav en stolpe nederst til hoejre
+            double smartDist = pladsForNeden/(stolperNede-1);
+            for (int i = 0; i < (stolperNede-1); i++) {
+                nyoutput.add(((this.endeUdhæng) + ((smartDist-(this.stolpeLength/2))*i)));
+            }
+            nyoutput.add((pladsForNeden + this.endeUdhæng - this.stolpeLength));
+        }
+        return nyoutput;
+    }
+    
+    
+    public ArrayList stolperDECEMBER_nr_5tegnXkoor(int stolperOppe, double pladsForOven, boolean skurFindes, boolean ensAfstandOppeNede) {
+        String output = "X_koorinater: "; // skriv 
+        ArrayList nyoutput = new ArrayList<Double>();
+        String punktLeft = "0";
+        String punktLeftTilHoejre = "pladsForOven";
+        
+        if (pladsForOven>0 && skurFindes && ensAfstandOppeNede) {
+            //der er et skur der rækker op til toppen == lav ikke en stolpe oeverst til hoejre
+            double smartDist = pladsForOven/(stolperOppe); //pladsForoven delt med antallet af "mellemrum" mellemStolperne
+            for (int i = 0; i < stolperOppe; i++) {
+                nyoutput.add(((this.endeUdhæng) + ((smartDist-(this.stolpeLength/2))*i)));
+                output += " " + ((this.endeUdhæng) + ((smartDist-(this.stolpeLength/2))*i));//-this.stolpeLength
+            }
+        } else if (pladsForOven == 0) {
+            
+        } else {
+            //oeverste række påvirkes ikke af et skur == lav en stolpe oeverst til hoejre
+            double smartDist = pladsForOven/(stolperOppe-1); //pladsForoven delt med antallet af "mellemrum" mellemStolperne
+            
+            for (int i = 0; i < (stolperOppe-1); i++) {
+                nyoutput.add(((this.endeUdhæng) + ((smartDist-(this.stolpeLength/2))*i)));
+                output += " " + ((this.endeUdhæng) + ((smartDist-(this.stolpeLength/2))*i));//-this.stolpeLength
+            }
+            nyoutput.add((pladsForOven + this.endeUdhæng - this.stolpeLength));
+            output += " " + (pladsForOven + this.endeUdhæng - this.stolpeLength);
+            output += " stolpelength " + this.stolpeLength;
+        }     
+                
+        return nyoutput;
+        //return output;
+    }
+    
+    public int stolperDECEMBER_nr_4hjoernerNede(boolean skurFindes, boolean ensAfstand, double pladsForNeden) {
+        //hvis der ikke er skur: tilføj 2 stolper til PladsForneden
+        //hvis der er skur og skuret ikke fylder det hele: tilføj 1 stolpe til plads for neden
+        int output = 0;
+        if (!skurFindes) {output = 2;}
+        if (skurFindes) {output = 1;}
+        if (skurFindes && pladsForNeden == 0) {output = 0;}
+        return output;
+    }
+    
+    public int stolperDECEMBER_nr_3hjoernerOppe(boolean skurFindes, boolean ensAfstand, double pladsForOven) {
+        //hvis der ikke er skur: tilføj 2 stolper til PladsForoven.
+        //hvis der er skur og ikke ens afstand: tilføj 2 stolper til PladsForoven.
+        //hvis der er skur og ens afstand og skuret IKKE fylder det hele: tilføj 1 stolpe til pladsForOven
+        int output = 0;
+        if (!skurFindes) {output = 2;}
+        if (skurFindes && !ensAfstand) {output = 2;}
+        if (skurFindes && ensAfstand) {output = 1;}
+        if (skurFindes && ensAfstand && pladsForOven == 0) {output = 0;}
+        return output;
+    }
+    
+    //*****************************************
+    public Double stolperDECEMBER_nr_2pladsNeden() {
+       double normalDist = this.carportLength - (2 * this.endeUdhæng);
+       normalDist -= this.skurLength;     
+       return normalDist;
+    }
+    
+    public Double stolperDECEMBER_nr_1pladsOven() {
+       double normalDist = this.carportLength - (2 * this.endeUdhæng);
+       double skurPlads = this.carportWidth - (2 * this.sideUdhæng);
+       if (this.skurWidth >= skurPlads) {
+           normalDist -= this.skurLength;
+       }       
+       return normalDist;
+    }
+        
+    public void stolpeLengthDECEMBER() {
+        ArrayList<String> words = new ArrayList<String>();
+        words.add("Stolper");
+        ArrayList<LineItem> relevantItems = relevantBomLines(words, this.bom);
+        String ØversteVenstreLength = relevantItems.get(0).getName().substring(3, 4);//9 from description: "97x97mm trykimp. stolpe,..."
+        this.stolpeLength = Double.parseDouble(ØversteVenstreLength);
+    }
+    
     @Override
     public String stolper() {
         ArrayList<String> words = new ArrayList<String>();
@@ -748,33 +929,49 @@ LineItem{name=Hulbånd 1x20mm 10meter, length=0, quantity=2, unit=ruller, descri
 
     
     // main klasse til test.s
-    /*
-    public static void main(String[] args) {
-        System.out.println("start");
-        Calculator calc = new CalculatorImpl();
-        BillOfMaterials bom = calc.bomCalculator(240, 240, 210,"fladt", "uden");
-        DrawImplFlatAbove draw = new DrawImplFlatAbove(bom, 240, 240);
-        
-        System.out.println("****************  første bom liste:");
-        for (int k = 0; k < draw.bom.getBomList().size(); k++) {
-            System.out.println(draw.bom.getBomList().get(k));
-        }
-        
-        System.out.println("****************  result: bom liste:");
-        System.out.println(draw.remme());
-        System.out.println(draw.stolper());
-        System.out.println(draw.spaer());
-        System.out.println(draw.kryds());
-        
-        System.out.println("****************  anden bom liste:");
-        for (int k = 0; k < draw.bom.getBomList().size(); k++) {
-            System.out.println(draw.bom.getBomList().get(k));
-        }
-        
-        System.out.println("end");
-    }
-    */
     
+//    public static void main(String[] args) {
+//        System.out.println("start");
+//        Calculator calc = new CalculatorImpl();
+//        
+//        // BillOfMaterials bomCalculator(double length, double width, double height,
+//        //    String type, String material, double angle,
+//        //    double skurLength, double skurWidth)
+//        
+//        //BillOfMaterials bom = calc.bomCalculator(510, 510, 210,"fladt", "uden", 0, 0, 0);
+//        //BillOfMaterials bom = calc.bomCalculator(510, 510, 210,"fladt", "uden", 210, 210, 210);
+//        BillOfMaterials bom = calc.bomCalculator(510, 510, 210,"fladt", "uden", 210, 210, 510);
+//        //BillOfMaterials bom = calc.bomCalculator(510, 510, 210,"fladt", "uden", 210, 210, 210);
+//        //public DrawImplFlatAbove(BillOfMaterials bom, double carportWidth, double carportLength, double skurLength, double skurWidth) {
+//        //DrawImplFlatAbove draw = new DrawImplFlatAbove(bom, 510, 510, 0, 0);
+//        DrawImplFlatAbove draw = new DrawImplFlatAbove(bom, 510, 510, 210, 510);
+//        //DrawImplFlatAbove draw = new DrawImplFlatAbove(bom, 510, 510, 210, 210);
+//        
+//        
+//        System.out.println("****************  første bom liste:");
+//        for (int k = 0; k < draw.bom.getBomList().size(); k++) {
+//            System.out.println(draw.bom.getBomList().get(k));
+//        }
+//        
+//        System.out.println("*******************************************************");
+//        System.out.println("Her er det antal stolper der bliver tegnet (ikke det der er beregnet)");
+//        System.out.println("stolper: " + draw.stolperDECEMBER());
+//        
+//        System.out.println("****************  result: bom liste:");
+//        System.out.println(draw.remme());
+//        System.out.println(draw.stolper());
+//        System.out.println(draw.spaer());
+//        System.out.println(draw.kryds());
+//        
+//        System.out.println("****************  anden bom liste:");
+//        for (int k = 0; k < draw.bom.getBomList().size(); k++) {
+//            System.out.println(draw.bom.getBomList().get(k));
+//        }
+//        
+//        System.out.println("end");
+//    }
+
+   
     
     //******************************************************************
     // ******************************************************************

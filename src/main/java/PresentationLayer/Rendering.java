@@ -105,7 +105,6 @@ public class Rendering {
                 sb.append("<td>" + "Bekræftet" + "</td>");
             
             }else{
- 
                 
                sb.append("<td>");
                sb.append("<form action=\"FrontController\" method=\"POST\">"
@@ -152,41 +151,12 @@ public class Rendering {
         sb.append("<td>" + order.getShedLength() + "</td>");
         sb.append("<td>" + order.getOrderDate() + "</td>");
         sb.append("<td>" + order.getStatus() + "</td>");
-        
-        
-        //show bom list og drawing
-        
-        
-        return sb.toString();
-     }
      
-     public String showOrderDetailsUser(Order order){
-        DecimalFormat df = new DecimalFormat("#");
-        df.setRoundingMode(RoundingMode.CEILING);
-        StringBuilder sb = new StringBuilder();
-        sb.append("<h1>Velkommen til Orderens Detaljer</h1>");
-        
-        sb.append("<table>");
-        sb.append("<tr><th>Order ID</th><th>Længde</th><th>Bredde</th><th>Højde</th><th>Vinkel</th><th>Skur bredde</th><th>Skur Længde</th><th>Dato</th><th>Status</th></tr>");
-        sb.append("<tr>");
-        sb.append("<td>" + order.getoId() + "</td>");
-        sb.append("<td>" + order.getLength() + "</td>");
-        sb.append("<td>" + order.getWidth() + "</td>");
-        sb.append("<td>" + order.getHeight() + "</td>");
-        sb.append("<td>" + order.getRoofAngle() + "</td>");
-        sb.append("<td>" + order.getShedWidth() + "</td>");
-        sb.append("<td>" + order.getShedLength() + "</td>");
-        sb.append("<td>" + order.getOrderDate() + "</td>");
-        sb.append("<td>" + order.getStatus() + "</td>");
-        
-        
-        //show bom list(if orderstatyus=confirmed) and always drawing
-        
-        
         return sb.toString();
      }
      
     
+
       public String getOrderlistTableUser(User user) throws DataMapperException {
         DecimalFormat df = new DecimalFormat("#");
         df.setRoundingMode(RoundingMode.CEILING);
@@ -215,6 +185,11 @@ public class Rendering {
 
         return sb.toString();
     }
-    
+     public String showPrice(double price){
+         DecimalFormat df = new DecimalFormat("#");
+        df.setRoundingMode(RoundingMode.CEILING);
+        
+        return "<h3>Pris: " + df.format(price) + ",- kr." + "</h3>";
+     }   
     
 }

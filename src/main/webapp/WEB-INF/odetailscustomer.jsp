@@ -4,6 +4,8 @@
     Author     : Mikkel Lindstrøm <Mikkel.Lindstrøm>
 --%>
 
+<%@page import="FunctionLayer.LogicFacade"%>
+<%@page import="FunctionLayer.BillOfMaterials"%>
 <%@page import="FunctionLayer.Order"%>
 <%@page import="FunctionLayer.User"%>
 <%@page import="PresentationLayer.Rendering"%>
@@ -18,8 +20,18 @@
         <%Rendering render = new Rendering();%>
         <% Order order = (Order) session.getAttribute("order"); %>
         
-        <%=render.showOrderDetailsUser(order)%>
+        <%=render.showOrderDetails(order)%>
         
+        <% if(order.getStatus().equals("confirmed")){ 
+        
+            BillOfMaterials bom = LogicFacade.getBillOfMaterials(order);
+            double price = LogicFacade.getCarportPrice(bom); %>
+            
+            <%=render.showBillOfMaterials(bom)%>
+            
+            <%=render.showPrice(price)%>
+        
+        <% } %>
         
         
         

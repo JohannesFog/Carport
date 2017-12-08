@@ -14,7 +14,7 @@ import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author Mikkel Lindstrøm <Mikkel.Lindstrøm>
+ * @author Mikkel Lindstrøm 
  */
 public class GetConfirmOrder extends Command {
 
@@ -32,7 +32,7 @@ public class GetConfirmOrder extends Command {
         HttpSession session = request.getSession();
         session.setAttribute("order", order);
         
-        if (from.equals("fromEmpList")){
+        if (from.equals("emp")){
             return "employeepage";
         }else 
             return "odetailsemployee";

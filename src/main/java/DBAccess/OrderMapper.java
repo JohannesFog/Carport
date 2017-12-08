@@ -14,7 +14,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  *
@@ -123,7 +122,9 @@ public class OrderMapper {
                String status = rs.getString("status");
                
                order = new Order(oId,length, width, height, roofAngle, shedWidth, shedLength, orderDate, phone,status);
-           }
+           } else {
+                throw new DataMapperException( "No order in database with this order id" );
+            }
            return order;
         }catch(SQLException | ClassNotFoundException ex){
             throw new DataMapperException(ex.getMessage());

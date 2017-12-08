@@ -141,7 +141,7 @@ public class CalculatorImpl implements Calculator {
             newHeight += 30;
         }
         materiale = "97x97 mm. trykimp. stolpe";
-        meterPrice = LogicFacade.getPrice(materiale);
+        meterPrice = LogicFacade.getMaterialPrice(materiale);
         unitPrice = meterPrice * ((double) newHeight / 100);
         bom.addLineItem(new LineItem(materiale, newHeight, quantity, "stk", "Stolper nedgraves 90cm i jord.", unitPrice));
         return bom;
@@ -153,7 +153,7 @@ public class CalculatorImpl implements Calculator {
         int quantity = (int) Math.ceil(width / 100);
 
         materiale = "Plastmo Ecolite blåtonet";
-        unitPrice = LogicFacade.getPrice(materiale);
+        unitPrice = LogicFacade.getMaterialPrice(materiale);
         bom.addLineItem(new LineItem(materiale, 600, quantity, "stk", "Tagplader monteres på spær", unitPrice));
         if (length > 600) {
             double newUnitPrice = unitPrice * 600.0 / 360.0;
@@ -189,7 +189,7 @@ public class CalculatorImpl implements Calculator {
         }
 
         materiale = "38x73 mm. taglægte C18";
-        meterPrice = LogicFacade.getPrice(materiale);
+        meterPrice = LogicFacade.getMaterialPrice(materiale);
         unitPrice = meterPrice * ((double) lægteLength / 100);
 
         if (length < 540) {
@@ -218,7 +218,7 @@ public class CalculatorImpl implements Calculator {
         }
 
         materiale = "25x50 mm. trykimp. bræt";
-        meterPrice = LogicFacade.getPrice(materiale);
+        meterPrice = LogicFacade.getMaterialPrice(materiale);
         unitPrice = meterPrice * ((double) lægteLength / 100);
         bom.addLineItem(new LineItem(materiale, listeLength, antalLister, "stk", "Til montering oven på tagfodslægte", unitPrice));
 
@@ -227,11 +227,11 @@ public class CalculatorImpl implements Calculator {
         int antalPakkerSkruer = antalSkruer / 100 + 1;
 
         materiale = "5,0 x 100 mm. skruer 100 stk.";
-        unitPrice = LogicFacade.getPrice(materiale);
+        unitPrice = LogicFacade.getMaterialPrice(materiale);
         bom.addLineItem(new LineItem(materiale, 0, antalPakkerSkruer, "kasser", "Til taglægter", unitPrice));
 
         materiale = "5,0 x 40 mm. beslagskruer 250 stk.";
-        unitPrice = LogicFacade.getPrice(materiale);
+        unitPrice = LogicFacade.getMaterialPrice(materiale);
         bom.addLineItem(new LineItem(materiale, 0, 1, "stk", "Til montering af universalbeslag + toplægte", unitPrice));
 
         int antalStenOpad = antalLægterSide - 1;
@@ -242,21 +242,21 @@ public class CalculatorImpl implements Calculator {
         int antalRygSten = (int) Math.ceil(length / 28.5);
 
         materiale = "Vingetagsten Gl. Dansk";
-        unitPrice = LogicFacade.getPrice(materiale);
+        unitPrice = LogicFacade.getMaterialPrice(materiale);
         bom.addLineItem(new LineItem(materiale, 0, antalStenTotal, "stk", "Monteres på taglægter " + antalStenOpad + " rækker af " + antalStenHenad + " sten på hver side af taget", unitPrice));
 
         materiale = "5,0 x 100 mm. skruer 100 stk.";
-        unitPrice = LogicFacade.getPrice(materiale);
+        unitPrice = LogicFacade.getMaterialPrice(materiale);
         bom.addLineItem(new LineItem(materiale, 0, antalRygSten, "stk", "Monteres på toplægte med medfølgende beslag se tagstens vejledning", unitPrice));
 
         int antalToplægteHoldere = (int) (Math.ceil((length - 65) / 89.0));
 
         materiale = "Toplægte holder";
-        unitPrice = LogicFacade.getPrice(materiale);
+        unitPrice = LogicFacade.getMaterialPrice(materiale);
         bom.addLineItem(new LineItem(materiale, 0, antalToplægteHoldere, "stk", "Monteres på toppen af spæret (til toplægte)", unitPrice));
 
         materiale = "Rygstensbeslag";
-        unitPrice = LogicFacade.getPrice(materiale);
+        unitPrice = LogicFacade.getMaterialPrice(materiale);
         bom.addLineItem(new LineItem(materiale, 0, antalRygSten, "stk", "Til montering af rygsten", unitPrice));
 
         int antalBinderPakker;
@@ -267,7 +267,7 @@ public class CalculatorImpl implements Calculator {
         }
 
         materiale = "Tagstens bindere & nakkekroge 200 stk.";
-        unitPrice = LogicFacade.getPrice(materiale);
+        unitPrice = LogicFacade.getMaterialPrice(materiale);
         bom.addLineItem(new LineItem(materiale, 0, antalBinderPakker, "stk", "Til montering af tagsten, alle ydersten + hver anden fastgøres", unitPrice));
 
         return bom;
@@ -287,7 +287,7 @@ public class CalculatorImpl implements Calculator {
         }
 
         materiale = "45x195 mm. spærtræ ubh.";
-        meterPrice = LogicFacade.getPrice(materiale);
+        meterPrice = LogicFacade.getMaterialPrice(materiale);
         unitPrice = meterPrice * ((double) remLength / 100);
         bom.addLineItem(new LineItem(materiale, remLength, 2, "stk", "Remme i sider, sadles ned i stolper", unitPrice));
 
@@ -299,21 +299,21 @@ public class CalculatorImpl implements Calculator {
         BillOfMaterials bom = new BillOfMaterials();
 
         materiale = "25x200 mm. trykimp. bræt";
-        meterPrice = LogicFacade.getPrice(materiale);
+        meterPrice = LogicFacade.getMaterialPrice(materiale);
         unitPrice = meterPrice * 3.6;
         bom.addLineItem(new LineItem(materiale, 360, 4, "stk", "Understern brædder til for og bag ende", unitPrice));
         unitPrice = meterPrice * 5.4;
         bom.addLineItem(new LineItem(materiale, 540, 4, "stk", "Understern brædder til siderne", unitPrice));
 
         materiale = "25x125 mm. trykimp. bræt";
-        meterPrice = LogicFacade.getPrice(materiale);
+        meterPrice = LogicFacade.getMaterialPrice(materiale);
         unitPrice = meterPrice * 3.6;
         bom.addLineItem(new LineItem(materiale, 360, 2, "stk", "Overstern brædder til for enden", unitPrice));
         unitPrice = meterPrice * 5.4;
         bom.addLineItem(new LineItem(materiale, 540, 4, "stk", "Overstern brædder til siderne", unitPrice));
 
         materiale = "19x100 mm. trykimp. bræt";
-        meterPrice = LogicFacade.getPrice(materiale);
+        meterPrice = LogicFacade.getMaterialPrice(materiale);
         unitPrice = meterPrice * 3.6;
         bom.addLineItem(new LineItem(materiale, 540, 4, "stk", "Vandbrædt på stern i sider", unitPrice));
         unitPrice = meterPrice * 5.4;
@@ -345,7 +345,7 @@ public class CalculatorImpl implements Calculator {
         }
 
         materiale = "25x150 mm. trykimp. bræt";
-        meterPrice = LogicFacade.getPrice(materiale);
+        meterPrice = LogicFacade.getMaterialPrice(materiale);
         unitPrice = meterPrice * ((double) sternLength / 100);
         bom.addLineItem(new LineItem(materiale, sternLength, quantity, "stk", "Sternbrædder til siderne", unitPrice));
 
@@ -366,7 +366,7 @@ public class CalculatorImpl implements Calculator {
         }
 
         materiale = "25x150 mm. trykimp. bræt";
-        meterPrice = LogicFacade.getPrice(materiale);
+        meterPrice = LogicFacade.getMaterialPrice(materiale);
         unitPrice = meterPrice * ((double) vindskedeLength / 100);
         bom.addLineItem(new LineItem(materiale, vindskedeLength, quantity, "stk", "Vindskeder på rejsning ", unitPrice));
 
@@ -378,7 +378,7 @@ public class CalculatorImpl implements Calculator {
         }
 
         materiale = "19x100 mm. trykimp. bræt";
-        meterPrice = LogicFacade.getPrice(materiale);
+        meterPrice = LogicFacade.getMaterialPrice(materiale);
         unitPrice = meterPrice * ((double) vandBrætLength / 100);
         bom.addLineItem(new LineItem(materiale, vandBrætLength, quantityVand, "stk", "Vandbræt på vindskeder ", unitPrice));
 
@@ -398,7 +398,7 @@ public class CalculatorImpl implements Calculator {
         }
 
         materiale = "45x195 mm. spærtræ ubh.";
-        meterPrice = LogicFacade.getPrice(materiale);
+        meterPrice = LogicFacade.getMaterialPrice(materiale);
         unitPrice = meterPrice * ((double) spærWidth / 100);
         bom.addLineItem(new LineItem(materiale, spærWidth, quantity, "stk", "Spær monteres på rem", unitPrice));
         return bom;
@@ -410,7 +410,7 @@ public class CalculatorImpl implements Calculator {
         int quantity = (int) (Math.ceil((length - 65) / 89.0));
 
         materiale = "Færdigskåret (byg-selv spær)";
-        stkPrice = LogicFacade.getPrice(materiale);
+        stkPrice = LogicFacade.getMaterialPrice(materiale);
         unitPrice = stkPrice * quantity;
         bom.addLineItem(new LineItem(materiale, 0, 1, "sæt", "Byg-selv spær (skal samles) " + quantity + " stk.", unitPrice));
 
@@ -422,7 +422,7 @@ public class CalculatorImpl implements Calculator {
         BillOfMaterials bom = new BillOfMaterials();
 
         materiale = "Hulbånd 1x20 mm. 10 meter";
-        unitPrice = LogicFacade.getPrice(materiale);
+        unitPrice = LogicFacade.getMaterialPrice(materiale);
         bom.addLineItem(new LineItem(materiale, 0, 2, "ruller", "Til vindkryds på spær", unitPrice));
 
         return bom;
@@ -434,11 +434,11 @@ public class CalculatorImpl implements Calculator {
         int quantity = (int) (Math.ceil(length / 55.0));
 
         materiale = "Universal 190 mm. højre";
-        unitPrice = LogicFacade.getPrice(materiale);
+        unitPrice = LogicFacade.getMaterialPrice(materiale);
         bom.addLineItem(new LineItem(materiale, 0, quantity, "stk", "Til montering af spær på rem", unitPrice));
 
         materiale = "Universal 190 mm. venstre";
-        unitPrice = LogicFacade.getPrice(materiale);
+        unitPrice = LogicFacade.getMaterialPrice(materiale);
         bom.addLineItem(new LineItem(materiale, 0, quantity, "stk", "Til montering af spær på rem", unitPrice));
         return bom;
     }
@@ -449,10 +449,10 @@ public class CalculatorImpl implements Calculator {
         int quantity = (int) (Math.ceil((length - 65) / 89.0));
 
         materiale = "Universal 190 mm. højre";
-        unitPrice = LogicFacade.getPrice(materiale);
+        unitPrice = LogicFacade.getMaterialPrice(materiale);
         bom.addLineItem(new LineItem(materiale, 0, quantity, "stk", "Til montering af spær på rem", unitPrice));
         materiale = "Universal 190 mm. venstre";
-        unitPrice = LogicFacade.getPrice(materiale);
+        unitPrice = LogicFacade.getMaterialPrice(materiale);
         bom.addLineItem(new LineItem(materiale, 0, quantity, "stk", "Til montering af spær på rem", unitPrice));
 
         return bom;
@@ -472,7 +472,7 @@ public class CalculatorImpl implements Calculator {
         skruePakkerAntal = (skrueAntal / 200) + 1; // hvis antallet af skruer passer præcist, købes en ekstra pakke
 
         materiale = "4,5 x 60 mm. skruer 200 stk.";
-        unitPrice = LogicFacade.getPrice(materiale);
+        unitPrice = LogicFacade.getMaterialPrice(materiale);
         bom.addLineItem(new LineItem(materiale, 0, skruePakkerAntal, "pakker", "Til montering af stern & vandbrædt", unitPrice));
 
         return bom;
@@ -497,7 +497,7 @@ public class CalculatorImpl implements Calculator {
         skruePakkerAntal += (beslagStk / 30) + 1;
 
         materiale = "4,0 x 50 mm. beslagskruer 250 stk.";
-        unitPrice = LogicFacade.getPrice(materiale);
+        unitPrice = LogicFacade.getMaterialPrice(materiale);
         bom.addLineItem(new LineItem(materiale, 0, skruePakkerAntal, "pakker", "Til montering af universalbeslag + hulbånd", unitPrice));
 
         return bom;
@@ -513,7 +513,7 @@ public class CalculatorImpl implements Calculator {
         }
 
         materiale = "Bræddebolte 10*120 mm.";
-        unitPrice = LogicFacade.getPrice(materiale);
+        unitPrice = LogicFacade.getMaterialPrice(materiale);
         bom.addLineItem(new LineItem(materiale, 0, bræddebolte, "stk", "Til montering af rem på stolper", unitPrice));
 
         return bom;
@@ -529,7 +529,7 @@ public class CalculatorImpl implements Calculator {
         }
 
         materiale = "Firkantskiver 40x40x11 mm.";
-        unitPrice = LogicFacade.getPrice(materiale);
+        unitPrice = LogicFacade.getMaterialPrice(materiale);
         bom.addLineItem(new LineItem(materiale, 0, firkantskiver, "stk", "Til montering af rem på stolpers", unitPrice));
 
         return bom;
@@ -554,7 +554,7 @@ public class CalculatorImpl implements Calculator {
         }
 
         materiale = "45x95 mm. reglar ubh.";
-        meterPrice = LogicFacade.getPrice(materiale);
+        meterPrice = LogicFacade.getMaterialPrice(materiale);
         unitPrice = meterPrice * ((double) reglarLength / 100);
         bom.addLineItem(new LineItem(materiale, reglarLength, antalSide, "stk", "Løsholter i siderne af skur", unitPrice));
 
@@ -573,7 +573,7 @@ public class CalculatorImpl implements Calculator {
 
         int antalBeslag = (antalSide + antalGavl) * 2;
         materiale = "Vinkelbeslag";
-        unitPrice = LogicFacade.getPrice(materiale);
+        unitPrice = LogicFacade.getMaterialPrice(materiale);
         bom.addLineItem(new LineItem(materiale, 0, antalBeslag, "stk", "Til montering af løsholter", unitPrice));
 
         return bom;
@@ -588,33 +588,33 @@ public class CalculatorImpl implements Calculator {
         int quantity = (beklædningLength / 16) * 4 + (beklædningWidth / 16) * 4;
 
         materiale = "19x100 mm. trykimp. bræt";
-        meterPrice = LogicFacade.getPrice(materiale);
+        meterPrice = LogicFacade.getMaterialPrice(materiale);
         unitPrice = meterPrice * ((double) brætHeight / 100);
         bom.addLineItem(new LineItem(materiale, brætHeight, quantity, "stk", "Beklædning af skur 1 på 2", unitPrice));
 
         materiale = "38x73 mm. taglægte C18";
-        meterPrice = LogicFacade.getPrice(materiale);
+        meterPrice = LogicFacade.getMaterialPrice(materiale);
         unitPrice = meterPrice * 5.4;
         bom.addLineItem(new LineItem(materiale, 540, 1, "stk", "Til z på bagside af dør", unitPrice));
  
         materiale = "Stalddørsgreb 50x75 mm.";
-        unitPrice = LogicFacade.getPrice(materiale);        
+        unitPrice = LogicFacade.getMaterialPrice(materiale);        
         bom.addLineItem(new LineItem(materiale, 0, 1, "stk", "Til dør i skur", unitPrice));
  
         materiale = "T-hængsel 390 mm.";
-        unitPrice = LogicFacade.getPrice(materiale);        
+        unitPrice = LogicFacade.getMaterialPrice(materiale);        
         bom.addLineItem(new LineItem(materiale, 0, 2, "stk", "Til dør i skur", unitPrice));
 
         int skruerInderst = quantity / 2 * 3;
         int kasserInderst = skruerInderst / 200 + 2;
         materiale = "4,5 x 50 mm. Skruer Climate TX20 - 200 stk.";
-        unitPrice = LogicFacade.getPrice(materiale);        
+        unitPrice = LogicFacade.getMaterialPrice(materiale);        
         bom.addLineItem(new LineItem(materiale, 0, kasserInderst, "kasser", "Til montering af inderste bræt ved beklædning ", unitPrice));
 
         int skruerYderst = quantity / 2 * 6;
         int kasserYderst = skruerYderst / 200 + 2;
         materiale = "4,5 x 70 mm. Skruer Climate TX20 - 200 stk.";
-        unitPrice = LogicFacade.getPrice(materiale);        
+        unitPrice = LogicFacade.getMaterialPrice(materiale);        
         bom.addLineItem(new LineItem(materiale, 0, kasserYderst, "kasser", "Til montering af yderste bræt ved beklædning", unitPrice));
 
         return bom;
@@ -639,7 +639,7 @@ public class CalculatorImpl implements Calculator {
         int quantity = (((int) width / 16) * 2) / faktor;
 
         materiale = "19x100 mm. trykimp. bræt";
-        meterPrice = LogicFacade.getPrice(materiale);
+        meterPrice = LogicFacade.getMaterialPrice(materiale);
         unitPrice = meterPrice * ((double) brætHeight / 100);
         bom.addLineItem(new LineItem(materiale, brætHeight, quantity, "stk", "Beklædning af gavle 1 på 2", unitPrice));
 

@@ -4,6 +4,7 @@
     Author     : lene_
 --%>
 
+<%@page import="FunctionLayer.LogicFacade"%>
 <%@page import="FunctionLayer.BillOfMaterials"%>
 <%@page import="PresentationLayer.Rendering"%>
 <%@page import="FunctionLayer.Order"%>
@@ -20,11 +21,17 @@
         <%=render.showOrderDetails(order)%>
         <br><br>
         
-        <%BillOfMaterials bom = new BillOfMaterials();%>
+        <%BillOfMaterials bom = LogicFacade.getBillOfMaterials(order);%>
+        <%double price = LogicFacade.getCarportPrice(bom);%>
+
         
-        <%-- TODO: Her skal kaldes en beregning af bom med udgangspunkt i ordren --%>
+        <%=render.showPrice(price)%>
         
         <%=render.showBillOfMaterials(bom)%>
+        
+        <h2>Tegning for valgte ordre</h2>
+        
+        <%-- !TODO: indsæt tegning af ordren --%>
         
     </body>
 </html>
