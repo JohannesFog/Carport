@@ -60,14 +60,8 @@ public class UserMapperTest {
         System.out.println("Test: No user match in database");
         UserMapper.login("lars@email.com", "4321");
     }
+    
 
-//    @Test
-//    public void testCreateUser() throws Exception {
-//        System.out.println("createUser");
-//        User user = null;
-//        UserMapper.createUser(user);
-//        fail("The test case is a prototype.");
-//    }
     
     @Test
     public void testLoginEmployee() throws Exception {
@@ -75,7 +69,7 @@ public class UserMapperTest {
         String email = "lars@email.com";
         String password = "1234";
         String expNameResult = "Lars Larsen";
-        String expAdressResult = "Hveen Boulevard 8";
+        String expAddressResult = "Hveen Boulevard 8";
         int expZipResult = 2630;
         int expPhoneResult = 38383838;
         String expRoleResult = "employee";
@@ -89,7 +83,7 @@ public class UserMapperTest {
         String roleResult = testUser.getRole();
 
         assertEquals(expNameResult, nameResult);
-        assertEquals(expAdressResult, adressResult);
+        assertEquals(expAddressResult, adressResult);
         assertEquals(expZipResult, zipResult);
         assertEquals(expPhoneResult, phoneResult);
         assertEquals(expRoleResult, roleResult);
@@ -101,7 +95,7 @@ public class UserMapperTest {
         String email = "jens@mail.dk";
         String password = "5678";
         String expNameResult = "Jens Hansen";
-        String expAdressResult = "Sivsangervej 19";
+        String expAddressResult = "Sivsangervej 19";
         int expZipResult = 3080;
         int expPhoneResult = 49758900;
         String expRoleResult = "customer";
@@ -115,10 +109,41 @@ public class UserMapperTest {
         String roleResult = testUser.getRole();
 
         assertEquals(expNameResult, nameResult);
-        assertEquals(expAdressResult, adressResult);
+        assertEquals(expAddressResult, adressResult);
         assertEquals(expZipResult, zipResult);
         assertEquals(expPhoneResult, phoneResult);
         assertEquals(expRoleResult, roleResult);
+    }
+    
+    
+    @Test
+    public void testCreateUser() throws Exception {
+        System.out.println("Test: Create user in database");
+        String email = "test@mail.com";
+        String password = "pw1234";
+        String name = "Ole Olsen";
+        String address = "Landevejen 10";
+        int zip = 9000;
+        int phone = 11223344;
+        String role = "customer";   
+        User testUser = new User(phone, email, password, name, address, zip , role);
+        
+        UserMapper.createUser(testUser);
+       
+        User dbUser = UserMapper.login(email, password);
+        
+        String nameResult = dbUser.getName();
+        String adressResult = dbUser.getAddress();
+        int zipResult = dbUser.getZip();
+        int phoneResult = dbUser.getPhone();
+        String roleResult = dbUser.getRole();      
+        
+        assertEquals(name, nameResult);
+        assertEquals(address, adressResult);
+        assertEquals(zip, zipResult);
+        assertEquals(phone, phoneResult);
+        assertEquals(role, roleResult);
+     
     }
 
 }
