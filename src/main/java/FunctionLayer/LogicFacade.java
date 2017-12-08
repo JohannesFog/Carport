@@ -53,7 +53,7 @@ public class LogicFacade {
         return OrderMapper.getAllOrders();
     }
 
-    public static double getPrice(String name) throws DataMapperException {
+    public static double getMaterialPrice(String name) throws DataMapperException {
 
         return MaterialMapper.getPrice(name);
     }
@@ -72,7 +72,7 @@ public class LogicFacade {
 
     }
 
-    public static double getPrice(BillOfMaterials bom) {
+    public static double getCarportPrice(BillOfMaterials bom) {
         Calculator calc = new CalculatorImpl();
         return calc.calculatePrice(bom);
 

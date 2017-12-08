@@ -47,7 +47,7 @@ public class GetPrice extends Command {
         
         
         BillOfMaterials bom = LogicFacade.getBillOfMaterials(order);
-        double price = LogicFacade.getPrice(bom);
+        double price = LogicFacade.getCarportPrice(bom);
         
 
         String draw = LogicFacade.getDrawing(bom, length, width, height, skurLength, skurWidth, angle);
