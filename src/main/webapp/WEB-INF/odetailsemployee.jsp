@@ -31,6 +31,8 @@
         
         <h2>Tegning for valgte ordre</h2>
         
+        <%=LogicFacade.getDrawing(bom, order)%>
+        
         <%-- !TODO: indsæt tegning af ordren --%>
         
     </body>
