@@ -99,8 +99,8 @@ public class DrawImplFlatSide implements Draw{
         return "";
     }
     
-    @Override
-    public String tegnTag(int width, int height, String drawFlatAbove) {
+    public String tegnTag(int width, int height, String drawFlatAbove, 
+            ArrayList<Double> XkoorOppe, ArrayList<Double> XkoorNede) {
         String output = String.format("<SVG width=\"%s\" height=%s> "
                 + "<rect x=\"000\" y=\"00\" height=\"%s\" width=\"%s\"\n "
                 + "style=\"stroke:#000000; fill: #07beb8\"/>", width, height, height, width);
@@ -115,7 +115,8 @@ public class DrawImplFlatSide implements Draw{
             //output = output + "<p>"+skurLength + " " +skurWidth+"</p>";
             output = output + skur();
         }
-        output = output + stolper2Forneden(drawFlatAbove);
+        output = output + stolper2Forneden(drawFlatAbove, XkoorNede);
+        output = output;
         //output = output + rectangleTiltDownStraightSides("0", "0", "30", "700", slope);
         
         
@@ -227,7 +228,7 @@ LineItem{name=97x97mm trykimp. stolpe, length=300, quantity=4, unit=stk, descrip
         return "";
     }
     
-    public String stolper2Forneden(String DrawFlatAbove) {
+    public String stolper2Forneden(String DrawFlatAbove, ArrayList<Double> XkoorNede) {
         String output = "";
         
         ArrayList<String> words = new ArrayList<String>();
@@ -287,52 +288,38 @@ LineItem{name=97x97mm trykimp. stolpe, length=300, quantity=4, unit=stk, descrip
         double distFromTop = this.carportWidth - this.sideUdhæng - stolpelength;
         output = "";//"hello regex string: " + distFromTop;
         
-        double dubLeft = this.endeUdhæng;
+        //double dubLeft = this.endeUdhæng;
         double dubRight = this.carportLength - this.endeUdhæng - stolpelength;
         double dubSkur = dubRight + stolpelength - this.skurLength;
         
-        double DLheight = this.carportHeight - (dubLeft * slope); 
+        //double DLheight = this.carportHeight - (dubLeft * slope); 
         double DRheight = this.carportHeight - (dubRight * slope); 
         double DSheight = this.carportHeight - (dubSkur * slope); 
         
-        String stolpeLeft = String.format("<rect x=\"%s\" y=\"%s\" height=\"%s\" width=\"%s\""+      
-                            "style=\"stroke:#000000; fill: #ff0000\"/>", 
-                            dubLeft, (dubLeft * slope), DLheight, stolpelength);
+        //String stolpeLeft = String.format("<rect x=\"%s\" y=\"%s\" height=\"%s\" width=\"%s\""+      
+        //                    "style=\"stroke:#000000; fill: #ff0000\"/>", 
+        //                    dubLeft, (dubLeft * slope), DLheight, stolpelength);
         String stolpeRight = String.format("<rect x=\"%s\" y=\"%s\" height=\"%s\" width=\"%s\""+      
                             "style=\"stroke:#000000; fill: #ff0000\"/>", 
                             dubRight, (dubRight * slope), DRheight, stolpelength);
         String stolpeSkur = String.format("<rect x=\"%s\" y=\"%s\" height=\"%s\" width=\"%s\""+      
                             "style=\"stroke:#000000; fill: #ff0000\"/>", 
                             dubSkur, (dubSkur * slope), DSheight, stolpelength);
-        output += stolpeLeft + stolpeRight + stolpeSkur;
-        
-        //String VenstreHeight = Double.toString(this.carportHeight - 
-        //                        Double.parseDouble(VenstreDistToTop)) ; 
-        //String VenstreDistToTop = Double.toString(this.oversternHeight);
-        
-        /*
-        List<String> allMatches = new ArrayList<String>();
-        Matcher m = Pattern.compile("your regular expression here")
-            .matcher(yourStringHere);
-        while (m.find()) {
-          allMatches.add(m.group());
+        if (this.skurLength > 0 && this.skurWidth > 0) {
+            output += stolpeSkur;   //stolpeLeft + stolpeRight +    
         }
-        */
-        
-        //double distFromSide = this.; lav en regex der leder efter y=\"15.0\" height=\"9\" width=\"9\"
-                                        // herefter får den de 10 tegn der står før det. 
-                                        // herefter leder man efter tal som man typecaster til en double.
-                                        // så har man left-x værdien
-        // regResult:
-        //String pattern = "y=\""+Double.toString(this.sideUdhæng)+
-        //        "\" height=\"9\" width=\"9\"";
         
         
-        
-        //ArrayList<String> allMatches = new ArrayList<String>();
-        //String pattern = "y=\"15.0\" height=\"9\" width=\"9\"";
-        //boolean isMatch = Pattern.("", "");//localDrawAbove
-        //output = Boolean.toString(isMatch);
+        //**************************************************************************************************
+        //Brug af ArrayList<Double> XkoorNede  (2017-12-08 DECEMBER)
+        for (int i = 0; i < XkoorNede.size(); i++) {
+            double Xkoor = XkoorNede.get(i);
+            double eachHeight = this.carportHeight - (Xkoor*slope);
+            String eachStolpe = String.format("<rect x=\"%s\" y=\"%s\" height=\"%s\" width=\"%s\""+      
+                            "style=\"stroke:#000000; fill: #ff0000\"/>", 
+                            Xkoor, (Xkoor * slope), eachHeight, stolpelength);
+            output += eachStolpe;
+        }
         
         return output;
     }

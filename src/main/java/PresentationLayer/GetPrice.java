@@ -68,9 +68,27 @@ public class GetPrice extends Command {
 
             String drawingFlatAbove = drawFlatAbove.tegnTag(750, 750);
             DrawImplFlatSide drawFlatSide = new DrawImplFlatSide(bom, width, length, height, skurLength, skurWidth);
-            String drawintFlatSide = drawFlatSide.tegnTag(750, 750, drawingFlatAbove);
+            String drawintFlatSide = drawFlatSide.tegnTag(750, 750, drawingFlatAbove, 
+                    drawFlatAbove.XkoorLeftOppe, drawFlatAbove.XkoorLeftNede);
+            
             draw = drawingFlatAbove + drawintFlatSide;
-            /*
+            
+        } else {
+            //DrawImplFlatAbove drawFlatAbove = new DrawImplFlatAbove(bom, width, length, skurLength, skurWidth); 
+            //String drawingFlatAbove = drawFlatAbove.tegnTag(750, 750);
+            draw = "ingen support for skraat tag endnu";
+            //C:\chrdiv
+        }
+        
+        session.setAttribute( "price", price );
+        session.setAttribute( "bom", bom );
+        session.setAttribute( "draw", draw );
+        
+        return "pricepage";
+    }
+
+    
+    /*
             //****write to file -- debugging
             BufferedWriter out = null;
             try {
@@ -95,19 +113,6 @@ public class GetPrice extends Command {
                     Logger.getLogger(GetPrice.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
-            */
-        } else {
-            //DrawImplFlatAbove drawFlatAbove = new DrawImplFlatAbove(bom, width, length, skurLength, skurWidth); 
-            //String drawingFlatAbove = drawFlatAbove.tegnTag(750, 750);
-            draw = "ingen support for skraat tag endnu";
-            //C:\chrdiv
-        }
-        
-        session.setAttribute( "price", price );
-        session.setAttribute( "bom", bom );
-        session.setAttribute( "draw", draw );
-        
-        return "pricepage";
-    }
-
+            
+    */
 }
