@@ -109,7 +109,7 @@ public class Rendering {
                sb.append("<td>");
                sb.append("<form action=\"FrontController\" method=\"POST\">"
                        + "<input type=\"hidden\" name=\"command\" value=\"GetConfirmOrder\">"
-                       
+                       + "<input type=\"hidden\" name=\"from\" value=\"emp\">"
                        + "<input type=\"hidden\" name=\"orderId\" value=\"" + o.getoId() + "\">"
                        + "<input type=\"submit\" value=\"Bekræft ordre\">"
                        + "</form>");
