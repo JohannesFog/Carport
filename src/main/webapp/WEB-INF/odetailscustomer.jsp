@@ -4,6 +4,7 @@
     Author     : Mikkel Lindstrøm <Mikkel.Lindstrøm>
 --%>
 
+<%@page import="FunctionLayer.Order"%>
 <%@page import="FunctionLayer.User"%>
 <%@page import="PresentationLayer.Rendering"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -15,9 +16,13 @@
     </head>
     <body>
         <%Rendering render = new Rendering();%>
-        <% User user = (User) session.getAttribute("user"); %>
-        <h1>Hello <%=user.getName()%>!</h1>
-        <%render.getOrderlistTableUser(user);%>
+        <% Order order = (Order) session.getAttribute("order"); %>
+        
+        <% render.showUsersOwnOrder(order); %>
+        
+        
+        
+        
         
         
         

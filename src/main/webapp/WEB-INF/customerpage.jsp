@@ -22,6 +22,12 @@
             <input type="submit" name="cpType" value="Carport med fladt tag"><br><br>
             <input type="submit" name="cpType" value="Carport med rejsning">
         </form>
+        
+        <form action="FrontController" method="POST">
+            <input type="hidden" name="command" value="GetODetails">
+            <input type="hidden" name="from" value="customerpage">
+            <input type="submit" name="submit" value="Mine Ordre">
+        </form>
 
 
 

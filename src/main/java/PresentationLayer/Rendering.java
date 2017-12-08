@@ -92,7 +92,7 @@ public class Rendering {
         sb.append("<h1>Velkommen til Orderlisten</h1>");
         ArrayList<Order> orders = LogicFacade.getAllOrdersEmp();
         sb.append("<table>");
-        sb.append("<tr><th>Order ID</th><th>Telefon</th><th>Status</th><th>Dato</th>");
+        sb.append("<tr><th>Order ID</th><th>Telefon</th><th>Status</th><th>Dato</th></tr>");
         for (Order o : orders) {
             sb.append("<tr>");
             sb.append("<td>" + o.getoId() + "</td>");
@@ -155,21 +155,20 @@ public class Rendering {
         sb.append("<h1>Velkommen til Orderlisten</h1>");
         ArrayList<Order> orders = LogicFacade.getAllOrdersUser(user);
         sb.append("<table>");
-        sb.append("<tr><th>Order ID</th><th>Telefon</th><th>Status</th><th>Dato</th>");
+        sb.append("<tr><th>Order ID</th><th>Status</th><th>Dato</th><th>Detaljer</th></tr>");
         for (Order o : orders) {
             sb.append("<tr>");
             sb.append("<td>" + o.getoId() + "</td>");
-            sb.append("<td>" + o.getPhone() + "</td>");
             sb.append("<td>" + o.getStatus() + "</td>"
                     + "<td>" + o.getOrderDate() + "</td>");
             sb.append(
             "<form action=\"FrontController\" method=\"POST\">"
           + "<input type=\"hidden\" name=\"command\" value=\"GetODetail\">"
+          + "<input type=\"hidden\" name=\"from\" value=\"custList\">"    
+          + "<input type=\"hidden\" name=\"oId\" value=" + o.getoId() + ">"         
           + "<input type=\"submit\" name=\"order\" value=\"Se Detaljer\">"
           + "</form>" );
 
-            
-            
             sb.append("</tr>");
         }
         sb.append("</table>");
@@ -177,6 +176,31 @@ public class Rendering {
         return sb.toString();
     }
     
-    
+    public void showUsersOwnOrder(Order order){
+        DecimalFormat df = new DecimalFormat("#");
+        df.setRoundingMode(RoundingMode.CEILING);
+        StringBuilder sb = new StringBuilder();
+        sb.append("<h1>Velkommen til Orderns Detaljer</h1>");
+        
+        sb.append("<table>");
+        sb.append("<tr><th>Order ID</th><th>Længde</th><th>Bredde</th><th>Højde</th><th>Vinkel</th><th>Skur bredde</th><th>Skur Længde</th><th>Dato</th><th>Status</th></tr>");
+        sb.append("<tr>");
+        sb.append("<td>" + order.getoId() + "</td>");
+        sb.append("<td>" + order.getLength() + "</td>");
+        sb.append("<td>" + order.getWidth() + "</td>");
+        sb.append("<td>" + order.getHeight() + "</td>");
+        sb.append("<td>" + order.getRoofAngle() + "</td>");
+        sb.append("<td>" + order.getShedWidth() + "</td>");
+        sb.append("<td>" + order.getShedLength() + "</td>");
+        sb.append("<td>" + order.getOrderDate() + "</td>");
+        sb.append("<td>" + order.getStatus() + "</td>");
+        
+        
+        if (order.getRoofAngle()!= 0){
+            
+        }
+        
+        
+    }
     
 }

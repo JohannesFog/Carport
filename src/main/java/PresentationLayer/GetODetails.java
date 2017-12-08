@@ -24,13 +24,22 @@ public class GetODetails extends Command {
 
     @Override
     String execute(HttpServletRequest request, HttpServletResponse response) throws DataMapperException {
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("user");
+        
+        String from = request.getParameter("from");
+        
+        if(from.equals("customerpage")){
+            return "customerOrderList";
+        }else if (from.equals("custList")){
+            
         String id = request.getParameter("orderId");
         int oId = Integer.parseInt(id);
         Order order = LogicFacade.getOrderById(oId);
-        HttpSession session = request.getSession();
         session.setAttribute("order", order);
-        User user = (User) session.getAttribute("user");
         return "odetails"+ user.getRole();
+        }
+        return "customerOrderList";
+        }
+        
     }
-    
-}
