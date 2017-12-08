@@ -18,7 +18,7 @@
         <%Rendering render = new Rendering();%>
         <% Order order = (Order) session.getAttribute("order"); %>
         
-        <%=render.showOrderDetails(order)%>
+        <%=render.showOrderDetailsUser(order)%>
         
         
         
