@@ -25,6 +25,6 @@
         <%-- TODO: Her skal kaldes en beregning af bom med udgangspunkt i ordren --%>
         
         <%=render.showBillOfMaterials(bom)%>
-        Styklisten for den valgte ordre:<br>
+        
     </body>
 </html>

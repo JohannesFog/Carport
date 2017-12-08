@@ -65,6 +65,7 @@ public class Rendering {
     public String showBillOfMaterials(BillOfMaterials bom){
         StringBuilder sb = new StringBuilder();
         ArrayList<LineItem> items = bom.getBomList();
+        sb.append("<p>Styklisten for den valgte ordre:</p>");
         sb.append("<table>");
         sb.append("<tr><th>Navn</th><th>Længde</th><th>Antal</th><th>Enhed</th><th>Beskrivelse</th></tr>");
         for (LineItem li : items) {
@@ -155,6 +156,8 @@ public class Rendering {
         
         if (order.getRoofAngle()!= 0){
             
+        }else{
+            
         }
         return sb.toString();
          
@@ -207,31 +210,5 @@ public class Rendering {
         return sb.toString();
     }
     
-    public String showUsersOwnOrder(Order order){
-        DecimalFormat df = new DecimalFormat("#");
-        df.setRoundingMode(RoundingMode.CEILING);
-        StringBuilder sb = new StringBuilder();
-        sb.append("<h1>Velkommen til Orderens Detaljer</h1>");
-        
-        sb.append("<table>");
-        sb.append("<tr><th>Order ID</th><th>Længde</th><th>Bredde</th><th>Højde</th><th>Vinkel</th><th>Skur bredde</th><th>Skur Længde</th><th>Dato</th><th>Status</th></tr>");
-        sb.append("<tr>");
-        sb.append("<td>" + order.getoId() + "</td>");
-        sb.append("<td>" + order.getLength() + "</td>");
-        sb.append("<td>" + order.getWidth() + "</td>");
-        sb.append("<td>" + order.getHeight() + "</td>");
-        sb.append("<td>" + order.getRoofAngle() + "</td>");
-        sb.append("<td>" + order.getShedWidth() + "</td>");
-        sb.append("<td>" + order.getShedLength() + "</td>");
-        sb.append("<td>" + order.getOrderDate() + "</td>");
-        sb.append("<td>" + order.getStatus() + "</td>");
-        
-        
-        if (order.getRoofAngle()!= 0){
-            
-        }
-        return sb.toString();
-        
-    }
     
 }
