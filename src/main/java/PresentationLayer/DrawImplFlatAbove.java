@@ -29,8 +29,8 @@ import java.util.Set;
 public class DrawImplFlatAbove implements Draw{
     
     //DECEMBER
-    ArrayList XkoorLeftOppe;
-    ArrayList XkoorLeftNede;
+    public ArrayList XkoorLeftOppe;
+    public ArrayList XkoorLeftNede;
     
     public ArrayList<Double> stople3Test = new ArrayList<Double>();
     public double stolpeOppeDouble;
@@ -930,46 +930,46 @@ LineItem{name=Hulbånd 1x20mm 10meter, length=0, quantity=2, unit=ruller, descri
     
     // main klasse til test.s
     
-    public static void main(String[] args) {
-        System.out.println("start");
-        Calculator calc = new CalculatorImpl();
-        
-        // BillOfMaterials bomCalculator(double length, double width, double height,
-        //    String type, String material, double angle,
-        //    double skurLength, double skurWidth)
-        
-        //BillOfMaterials bom = calc.bomCalculator(510, 510, 210,"fladt", "uden", 0, 0, 0);
-        //BillOfMaterials bom = calc.bomCalculator(510, 510, 210,"fladt", "uden", 210, 210, 210);
-        BillOfMaterials bom = calc.bomCalculator(510, 510, 210,"fladt", "uden", 210, 210, 510);
-        //BillOfMaterials bom = calc.bomCalculator(510, 510, 210,"fladt", "uden", 210, 210, 210);
-        //public DrawImplFlatAbove(BillOfMaterials bom, double carportWidth, double carportLength, double skurLength, double skurWidth) {
-        //DrawImplFlatAbove draw = new DrawImplFlatAbove(bom, 510, 510, 0, 0);
-        DrawImplFlatAbove draw = new DrawImplFlatAbove(bom, 510, 510, 210, 510);
-        //DrawImplFlatAbove draw = new DrawImplFlatAbove(bom, 510, 510, 210, 210);
-        
-        
-        System.out.println("****************  første bom liste:");
-        for (int k = 0; k < draw.bom.getBomList().size(); k++) {
-            System.out.println(draw.bom.getBomList().get(k));
-        }
-        
-        System.out.println("*******************************************************");
-        System.out.println("Her er det antal stolper der bliver tegnet (ikke det der er beregnet)");
-        System.out.println("stolper: " + draw.stolperDECEMBER());
-        
-        System.out.println("****************  result: bom liste:");
-        System.out.println(draw.remme());
-        System.out.println(draw.stolper());
-        System.out.println(draw.spaer());
-        System.out.println(draw.kryds());
-        
-        System.out.println("****************  anden bom liste:");
-        for (int k = 0; k < draw.bom.getBomList().size(); k++) {
-            System.out.println(draw.bom.getBomList().get(k));
-        }
-        
-        System.out.println("end");
-    }
+//    public static void main(String[] args) {
+//        System.out.println("start");
+//        Calculator calc = new CalculatorImpl();
+//        
+//        // BillOfMaterials bomCalculator(double length, double width, double height,
+//        //    String type, String material, double angle,
+//        //    double skurLength, double skurWidth)
+//        
+//        //BillOfMaterials bom = calc.bomCalculator(510, 510, 210,"fladt", "uden", 0, 0, 0);
+//        //BillOfMaterials bom = calc.bomCalculator(510, 510, 210,"fladt", "uden", 210, 210, 210);
+//        BillOfMaterials bom = calc.bomCalculator(510, 510, 210,"fladt", "uden", 210, 210, 510);
+//        //BillOfMaterials bom = calc.bomCalculator(510, 510, 210,"fladt", "uden", 210, 210, 210);
+//        //public DrawImplFlatAbove(BillOfMaterials bom, double carportWidth, double carportLength, double skurLength, double skurWidth) {
+//        //DrawImplFlatAbove draw = new DrawImplFlatAbove(bom, 510, 510, 0, 0);
+//        DrawImplFlatAbove draw = new DrawImplFlatAbove(bom, 510, 510, 210, 510);
+//        //DrawImplFlatAbove draw = new DrawImplFlatAbove(bom, 510, 510, 210, 210);
+//        
+//        
+//        System.out.println("****************  første bom liste:");
+//        for (int k = 0; k < draw.bom.getBomList().size(); k++) {
+//            System.out.println(draw.bom.getBomList().get(k));
+//        }
+//        
+//        System.out.println("*******************************************************");
+//        System.out.println("Her er det antal stolper der bliver tegnet (ikke det der er beregnet)");
+//        System.out.println("stolper: " + draw.stolperDECEMBER());
+//        
+//        System.out.println("****************  result: bom liste:");
+//        System.out.println(draw.remme());
+//        System.out.println(draw.stolper());
+//        System.out.println(draw.spaer());
+//        System.out.println(draw.kryds());
+//        
+//        System.out.println("****************  anden bom liste:");
+//        for (int k = 0; k < draw.bom.getBomList().size(); k++) {
+//            System.out.println(draw.bom.getBomList().get(k));
+//        }
+//        
+//        System.out.println("end");
+//    }
     
     
     
