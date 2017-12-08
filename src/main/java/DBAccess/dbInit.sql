@@ -1,7 +1,7 @@
 create schema carport;
 
 create table `user`(
-	`id` integer not null auto_increment,
+    `id` integer not null auto_increment,
     `name` varchar(45) not null,
     `address` varchar(45) not null,
     `zipcode` integer not null,

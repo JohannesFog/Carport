@@ -1,5 +1,6 @@
 package FunctionLayer;
 
+import DBAccess.Connector;
 import DBAccess.MaterialMapper;
 import Exceptions.DataMapperException;
 import DBAccess.OrderMapper;
@@ -50,6 +51,7 @@ public class LogicFacade {
     }
     
     public static double getPrice(String name) throws DataMapperException{
+        
         return MaterialMapper.getPrice(name);
     }
     
@@ -60,6 +62,18 @@ public class LogicFacade {
     
     public static Order getOrderById(int id)throws DataMapperException{
         return OrderMapper.getSingleOrder(id);
+    }
+    
+    public static BillOfMaterials getBillOfMaterials(Order order) throws DataMapperException{
+        Calculator calc = new CalculatorImpl();
+        return calc.bomCalculator(order);
+        
+    }
+    
+    public static double getPrice(BillOfMaterials bom) {
+        Calculator calc = new CalculatorImpl();
+        return calc.calculatePrice(bom);
+        
     }
     
 }
