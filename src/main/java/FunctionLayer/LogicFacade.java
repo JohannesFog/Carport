@@ -87,6 +87,7 @@ public class LogicFacade {
     public static String getDrawing(BillOfMaterials bom, double length, double width, double height,
             double skurLength, double skurWidth, double angle) {
         String draw = "";
+        
 
         if (angle == 0.0) {
             DrawImplFlatAbove drawFlatAbove = new DrawImplFlatAbove(bom, width, length, skurLength, skurWidth);
