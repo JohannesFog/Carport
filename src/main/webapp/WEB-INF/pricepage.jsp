@@ -26,8 +26,12 @@
                 (BillOfMaterials) session.getAttribute("bom"))%>
 
         <%  User user = (User) session.getAttribute("user");
-            String role = user.getRole();  %>
-        <% if (role == null || role.equals("employee")) { %>
+            String role = "";
+            if (user != null) {
+            role = user.getRole();
+             } 
+        %>
+        <% if (role == "" || role.equals("employee")) { %>
             <form name="Order" action="FrontController" method="POST">
             <input type="hidden" name="command" value="Order">
             <h3>Navn:</h3>

@@ -49,7 +49,9 @@ public class GetPrice extends Command {
         BillOfMaterials bom = LogicFacade.getBillOfMaterials(order);
         double price = LogicFacade.getPrice(bom);
         
+
         String draw = LogicFacade.getDrawing(bom, length, width, height, skurLength, skurWidth, angle);
+
                 
 //        if (type.equals("fladt")) {
 //            DrawImplFlatAbove drawFlatAbove = new DrawImplFlatAbove(bom, width, length, skurLength, skurWidth); 
