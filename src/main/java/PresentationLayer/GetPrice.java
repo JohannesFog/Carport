@@ -50,6 +50,7 @@ public class GetPrice extends Command {
         double price = calc.calculatePrice(bom);
         
         String draw = "";
+        String tester = "";
                 
         if (type.equals("fladt")) {
             DrawImplFlatAbove drawFlatAbove = new DrawImplFlatAbove(bom, width, length, skurLength, skurWidth); 
