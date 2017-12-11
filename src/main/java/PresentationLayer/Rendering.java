@@ -90,7 +90,7 @@ public class Rendering {
         DecimalFormat df = new DecimalFormat("#");
         df.setRoundingMode(RoundingMode.CEILING);
         StringBuilder sb = new StringBuilder();
-        sb.append("<h1>Velkommen til Orderlisten</h1>");
+        //sb.append("<h1>Velkommen til Orderlisten</h1>");
         ArrayList<Order> orders = LogicFacade.getAllOrdersEmp();
         sb.append("<table>");
         sb.append("<tr><th>Order ID</th><th>Telefon</th><th>Status</th><th>Dato</th></tr>");
@@ -111,7 +111,7 @@ public class Rendering {
                        + "<input type=\"hidden\" name=\"command\" value=\"GetConfirmOrder\">"
                        + "<input type=\"hidden\" name=\"from\" value=\"emp\">"
                        + "<input type=\"hidden\" name=\"orderId\" value=\"" + o.getoId() + "\">"
-                       + "<input type=\"submit\" value=\"Bekræft ordre\">"
+                       + "<input class=\"submit-order\" type=\"submit\" value=\"Bekræft ordre\">"
                        + "</form>");
                sb.append("</td>");
             }

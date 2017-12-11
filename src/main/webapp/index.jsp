@@ -4,6 +4,7 @@
    Author     : kasper
 --%>
 
+<%@page import="FunctionLayer.User"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -73,6 +74,9 @@
                     </div>
                     <br> 
                     <br>
+
+                    <%User user = (User) session.getAttribute("user");%>
+                    <%if(user == null) {%>
                     <form name="Login" action="FrontController" method="POST">
                         <input type="hidden" name="command" value="Login">
                         Email:
@@ -81,6 +85,7 @@
                         <input class="input-login" type="password" name="password" value="">
                         <input class="submit-login" type="submit" name="Login" value="Login">
                     </form>
+                    <%}%>
 
                 </div>
                 <!-- /.col-lg-3 -->
@@ -103,7 +108,7 @@
                 <!-- /.col-lg-9 -->
 
 
-                
+
 
 
 

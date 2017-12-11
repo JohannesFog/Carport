@@ -38,3 +38,14 @@ input{
     border-radius: 4px;
     
 }
+
+.submit-order{
+    width: 125px;
+    background-color: navy;
+    color: white;
+    padding: 5px 5px;
+}
+
+table td{
+    padding: 4px 10px;
+}
