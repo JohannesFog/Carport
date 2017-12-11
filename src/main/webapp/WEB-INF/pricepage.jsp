@@ -135,7 +135,7 @@
                                 <p>Email</p>
                                 <input class="input-login" type="text" name="email" value="">
                                 <p>Bemærkninger</p>
-                                <input type="text" name="notice" value=""><br>
+                                <input class="input-login" type="text" name="notice" value=""><br>
                                 <input class="submit-login" type="submit" name="order" value="Bestil Carport">
                             </form> 
                             <br>
