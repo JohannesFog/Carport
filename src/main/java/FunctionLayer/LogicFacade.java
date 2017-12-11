@@ -107,7 +107,7 @@ public class LogicFacade {
         } else {
             //DrawImplFlatAbove drawFlatAbove = new DrawImplFlatAbove(bom, width, length, skurLength, skurWidth); 
             //String drawingFlatAbove = drawFlatAbove.tegnTag(750, 750);
-            draw = "ingen support for skraat tag endnu";
+            draw = "Ingen support for tegninger af skråt tag endnu";
             //C:\chrdiv
         }
 
