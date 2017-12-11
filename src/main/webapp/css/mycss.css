@@ -47,5 +47,9 @@ input{
 }
 
 table td{
-    padding: 4px 10px;
+    padding: 2px 15px;
+}
+table th {
+    text-align: center;
+    padding: 2px 15px;
 }
