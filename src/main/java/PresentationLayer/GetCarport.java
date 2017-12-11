@@ -22,9 +22,9 @@ public class GetCarport extends Command {
     String execute(HttpServletRequest request, HttpServletResponse response) throws DataMapperException {
         String out = "";
         String in = request.getParameter("cpType");
-        if(in.equals("Carport med fladt tag")){
+        if(in.equals("Fladt tag")){
             out="fladttag";
-        }else if(in.equals("Carport med rejsning")){
+        }else if(in.equals("Rejst tag")){
             out="rejsttag";
         }else{
             UnknownCommand uc = new UnknownCommand();
