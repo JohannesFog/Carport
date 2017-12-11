@@ -89,7 +89,7 @@
 
                     <div class="card mt-4">
                         <div class="card-body">
-                            <h3 class="card-title">Carport med rejst tag</h3>
+                            <h3 class="card-title">Prisoverslag og tegning</h3>
                             <!-- <h4>$24.99</h4> -->
                             <p class="card-text">
                                 <%Rendering render = new Rendering();%>
