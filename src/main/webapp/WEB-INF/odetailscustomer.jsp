@@ -25,7 +25,7 @@
         <link href="css/mycss.css" rel="stylesheet">
 
     </head>
-    <body>
+    
     <body>
         <%Order order = (Order) session.getAttribute("order");%>
         <%Rendering render = new Rendering();%>
