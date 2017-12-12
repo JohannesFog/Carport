@@ -34,7 +34,9 @@ public class GetConfirmOrder extends Command {
         
         if (from.equals("emp")){
             return "employeepage";
-        }else 
+        }else if (from.equals("empDetail")){
+            return "odetailsemployee";
+        }else
             return "odetailsemployee";
         }
         

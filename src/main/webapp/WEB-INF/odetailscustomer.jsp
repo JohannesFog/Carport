@@ -104,7 +104,7 @@
                             <p class="card-text">
                                 <%=render.showPrice(price)%>
                                 <br>
-                                <%=render.showOrderDetails(order)%>
+                                <%=render.showOrderDetailsUser(order)%>
 
                                 <br><br>
                                 <%if(order.getStatus().equals("confirmed")){%>
