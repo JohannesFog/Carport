@@ -147,10 +147,52 @@ public class DrawImplFlatAbove implements Draw{
     
     @Override
     public String tegnTag(int width, int height) {
-        String output = String.format("<SVG width=\"%s\" height=%s> "
+        int canvasX = width + 60;
+        int canvasY = height + 60;
+        int arrowXEnd = width+50;
+        int arrowYEnd = height+50;
+        int textMiddleX = width/2+50;
+        int textMiddleY = height/2+50;
+        
+        String output = String.format("<SVG width=\"%s\" height=\"%s\"> "
                 + "<rect x=\"000\" y=\"00\" height=\"%s\" width=\"%s\"\n "
-                + "style=\"stroke:#000000; fill: #ffff00\"/>", width, height, height, width);
-        output = output + remme();        
+                + "style=\"stroke:#000000; fill: #ffffff\"/>", canvasX, canvasY, canvasY, canvasX);
+        
+        output += "<defs> <marker id=\"beginArrow\" 	markerWidth=\"9\" markerHeight=\"9\" refX=\"0\" refY=\"4\" orient=\"auto\"> "
+                + "<path d=\"M0,4 L8,0 L8,8 L0,4\" style=\"fill: #000000s;\" /> </marker> <marker id=\"endArrow\" "
+                + "markerWidth=\"9\" markerHeight=\"9\" refX=\"8\" refY=\"4\" orient=\"auto\"> "
+                + "<path d=\"M0,0 L8,4 L0,8 L0,0\" style=\"fill: #000000;\" /> </marker> </defs> ";
+        
+        output += String.format("<line x1=\"50\"  y1=\"20\" x2=\"%s\" y2=\"20\" style=\"stroke:#000000; marker-start: url(#beginArrow);"
+                + "marker-end: url(#endArrow);\" />", arrowXEnd);
+               
+        output += String.format("<text x=\"%s\" y=\"30\" font-size=\"12\" text-anchor=\"middle\" alignment-baseline=\"middle\"> %s cm </text> "
+                , textMiddleX, width);; 
+                        
+        output += String.format("<line x1=\"20\"  y1=\"50\" x2=\"20\" y2=\"%s\" style=\"stroke:#000000; marker-start: url(#beginArrow);"
+                + "marker-end: url(#endArrow);\" />", arrowYEnd);
+
+        output += String.format("<text x=\"30\" y=\"%s\" font-size=\"12\" text-anchor=\"middle\" alignment-baseline=\"middle\" style=\"writing-mode: tb;\"> %s cm </text>"
+                , textMiddleY, height);; 
+        
+                
+        
+                
+                
+        output += String.format("<SVG x=\"50\" y=\"50\" width=\"%s\" height=\"%s\">", width, height);
+                
+                
+                   
+        
+   
+                   
+                   
+               
+                
+                
+        
+        
+        output += remme();        
         if (this.skurLength > 0 && this.skurWidth > 0) {
             //output = output + "<p>"+skurLength + " " +skurWidth+"</p>";
             output = output + skur();
