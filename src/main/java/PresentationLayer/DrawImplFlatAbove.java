@@ -15,16 +15,6 @@ import java.util.Set;
  *
  * @author Christian
  * 
- * changes: 
- * 1: (OK) lav hældning 
- * 2: (OK) lav kryds så det sidder lige
- * 3: (OK) lav udhæng for og bag,
- * 4: (OK) lav udhæng i siderne;
- * 5 : lav skur fra siden med ekstra stolpe
- * 6: lav skur fra oven med ekstra stolpe
- * 7: tjeck om antallet af stolper passer (nogle gange skal skuret kun bruge 1 stole, andre gange 2)
- * 8: lav pile
- * 9: se om tegningen iøvrigt passer.
  */
 public class DrawImplFlatAbove implements Draw{
     
@@ -158,14 +148,14 @@ public class DrawImplFlatAbove implements Draw{
         
         output = output + spaer();
         
-        if (carportWidth > 400 || carportLength > 400) {  
+        //if (carportWidth > 400 || carportLength > 400) {  
             // der sættes kun kryds på hvis den samlede længde eller bredde er over 400 cm.
             if (this.carportLength >= this.carportWidth) {
             output = output + kryds_2();
             } else {
                 output = output + kryds();
             }
-        }
+        //}
         
         
         output += stolperDECEMBER();
