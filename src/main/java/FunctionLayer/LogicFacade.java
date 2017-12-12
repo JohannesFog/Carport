@@ -93,16 +93,19 @@ public class LogicFacade {
         double angle = order.getRoofAngle();
         double skurLength = order.getShedLength();
         double skurWidth = order.getShedWidth();
+        int graphYUp = (int) width;
+        int graphYSide = (int) height;
+        int graphX = (int) length;
         
         if (angle == 0.0) {
             DrawImplFlatAbove drawFlatAbove = new DrawImplFlatAbove(bom, width, length, skurLength, skurWidth);
 
-            String drawingFlatAbove = drawFlatAbove.tegnTag(750, 750);
+            String drawingFlatAbove = drawFlatAbove.tegnTag(graphX, graphYUp);
             DrawImplFlatSide drawFlatSide = new DrawImplFlatSide(bom, width, length, height, skurLength, skurWidth);
-            String drawintFlatSide = drawFlatSide.tegnTag(750, 750, drawingFlatAbove,
+            String drawintFlatSide = drawFlatSide.tegnTag(graphX, graphYSide, drawingFlatAbove,
                     drawFlatAbove.XkoorLeftOppe, drawFlatAbove.XkoorLeftNede);
 
-            draw = drawingFlatAbove + drawintFlatSide;
+            draw = drawingFlatAbove + "<br><br>" + drawintFlatSide + "<br>";
 
         } else {
             //DrawImplFlatAbove drawFlatAbove = new DrawImplFlatAbove(bom, width, length, skurLength, skurWidth); 
