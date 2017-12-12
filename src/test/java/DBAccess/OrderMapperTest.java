@@ -72,13 +72,5 @@ public class OrderMapperTest {
         OrderMapper.getSingleOrder(2);
     }
 
-//    @Test
-//    public void testGetSingleOrder() throws Exception {
-//        System.out.println("getSingleOrder");
-//        int oid = 0;
-//        Order expResult = null;
-//        Order result = OrderMapper.getSingleOrder(oid);
-//        assertEquals(expResult, result);
-//        fail("The test case is a prototype.");
-//    }
+
 }
