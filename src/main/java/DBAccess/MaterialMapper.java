@@ -25,10 +25,10 @@ public class MaterialMapper {
  */    
 
         public static double getPrice( String name) throws DataMapperException {
-            try {
             Connection con = Connector.connection();
             String SQL = "SELECT `price` FROM materials "
                     + "WHERE name=?";
+            try {
             PreparedStatement ps = con.prepareStatement( SQL );
             ps.setString( 1, name );
             ResultSet rs = ps.executeQuery();
@@ -38,7 +38,7 @@ public class MaterialMapper {
             } else {
                 throw new DataMapperException( "Material not found" );
             }
-        } catch ( ClassNotFoundException | SQLException ex ) {
+        } catch ( SQLException ex ) {
             throw new DataMapperException(ex.getMessage());
         }
     }
