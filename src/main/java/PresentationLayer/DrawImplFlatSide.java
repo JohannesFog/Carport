@@ -92,7 +92,6 @@ public class DrawImplFlatSide implements Draw {
         this.bom = mynewBom;
     }
 
-    @Override
     public String tegnTag(int width, int height) {
         return "";
     }
@@ -221,7 +220,6 @@ public class DrawImplFlatSide implements Draw {
         return output2;
     }
 
-    @Override
     public String remme() {
         return "";
     }
@@ -350,7 +348,7 @@ LineItem{name=97x97mm trykimp. stolpe, length=300, quantity=4, unit=stk, descrip
                                 NedersteVenstreLeft, NedersteVenstreDistToTop, NedersteVenstreWidth, NedersteVenstreLength);
 
      */
-    @Override
+    
     public String stolper() {
         ArrayList<String> words = new ArrayList<String>();
         words.add("Stolper");
@@ -397,12 +395,10 @@ LineItem{name=97x97mm trykimp. stolpe, length=300, quantity=4, unit=stk, descrip
          */
     }
 
-    @Override
     public String spaer() {
         return "";
     }
 
-    @Override
     public String kryds() {
         return "";
     }

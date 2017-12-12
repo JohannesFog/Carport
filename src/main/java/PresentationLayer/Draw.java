@@ -10,17 +10,5 @@ package PresentationLayer;
  * @author Christian
  */
 public interface Draw {
-     
-    public String tegnTag(int width, int height);
-    //public String tegnTag(int width, int height, String drawFlatAbove);
-    
-    public String remme();
-    
-    public String stolper();
-    
-    public String spaer();
-    
-    public String kryds();
-    
     
 }
