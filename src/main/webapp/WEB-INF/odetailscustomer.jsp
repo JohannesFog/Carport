@@ -25,7 +25,7 @@
         <link href="css/mycss.css" rel="stylesheet">
 
     </head>
-    <body>
+    
     <body>
         <%Order order = (Order) session.getAttribute("order");%>
         <%Rendering render = new Rendering();%>
@@ -104,7 +104,7 @@
                             <p class="card-text">
                                 <%=render.showPrice(price)%>
                                 <br>
-                                <%=render.showOrderDetails(order)%>
+                                <%=render.showOrderDetailsUser(order)%>
 
                                 <br><br>
                                 <%if(order.getStatus().equals("confirmed")){%>

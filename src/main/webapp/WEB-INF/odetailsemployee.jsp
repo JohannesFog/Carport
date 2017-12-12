@@ -104,7 +104,7 @@
                             <h3 class="card-title">Detaljer for ordre med id: <%=order.getoId()%></h3>
                             <!-- <h4>$24.99</h4> -->
                             <p class="card-text">
-                                <%=render.showOrderDetails(order)%>
+                                <%=render.showOrderDetailsEmp(order)%>
                                 <br>
 
                                 <%BillOfMaterials bom = LogicFacade.getBillOfMaterials(order);%>

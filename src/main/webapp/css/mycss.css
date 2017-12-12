@@ -53,3 +53,10 @@ table th {
     text-align: center;
     padding: 2px 15px;
 }
+
+
+
+footer{
+    position: fixed;
+    bottom: 0;
+}
