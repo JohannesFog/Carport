@@ -12,6 +12,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -55,7 +56,12 @@ public class OrderMapperTest {
             System.out.println("Could not open connection to database: " + ex.getMessage());
         }
     }
-
+           
+    @After
+    public void tearDown() throws SQLException { 
+        testConnection.close();
+    }
+    
     @Test
     public void testConfirmOrder() throws Exception {
         System.out.println("Test: Change order status on order in database");

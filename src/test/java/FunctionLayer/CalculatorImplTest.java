@@ -11,6 +11,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -54,9 +55,11 @@ public class CalculatorImplTest {
             System.out.println("Could not open connection to database: " + ex.getMessage());
         }
     }
-
-
-
+    
+    @After
+    public void tearDown() throws SQLException { 
+        testConnection.close();
+    }
    
     @Test
     public void testCalculateStolperUdenSkurKortCarport() throws DataMapperException{
