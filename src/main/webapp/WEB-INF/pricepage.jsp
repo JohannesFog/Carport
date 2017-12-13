@@ -5,7 +5,6 @@
 --%>
 
 <%@page import="FunctionLayer.User"%>
-<%@page import="PresentationLayer.RenderDrawing"%>
 <%@page import="PresentationLayer.Rendering"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="FunctionLayer.LineItem"%>
