@@ -5,7 +5,12 @@
  */
 package FunctionLayer;
 
+import DBAccess.Connector;
 import Exceptions.DataMapperException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -15,12 +20,39 @@ import static org.junit.Assert.*;
  * @author GertLehmann
  */
 public class CalculatorImplTest {
+      
+    private static Connection testConnection;
+    private static String USER = "testuser";
+    private static String USERPW = "trytotest1234";
+    private static String DBNAME = "carportTest";
+    private static String HOST = "207.154.247.212";
     
     public CalculatorImplTest() {
     }
     
     @Before
     public void setUp() {
+        try {
+            // awoid making a new connection for each test
+            if (testConnection == null) {
+                String url = String.format("jdbc:mysql://%s:3306/%s", HOST, DBNAME);
+                Class.forName("com.mysql.jdbc.Driver");
+
+                testConnection = DriverManager.getConnection(url, USER, USERPW);
+                // Make mappers use test 
+                Connector.setConnection(testConnection);
+            }
+            // reset test database
+            try (Statement stmt = testConnection.createStatement()) {
+                stmt.execute("drop table if exists materials");
+                stmt.execute("create table materials like materialsTest");
+                stmt.execute("insert into materials select * from materialsTest");
+            }
+
+        } catch (ClassNotFoundException | SQLException ex) {
+            testConnection = null;
+            System.out.println("Could not open connection to database: " + ex.getMessage());
+        }
     }
 
 
@@ -28,6 +60,7 @@ public class CalculatorImplTest {
    
     @Test
     public void testCalculateStolperUdenSkurKortCarport() throws DataMapperException{
+        System.out.println("Test: Beregn stolper for kort carport uden skur");
         double length = 240.0;
         double width = 240.0;
         double height = 300.0;
@@ -45,6 +78,7 @@ public class CalculatorImplTest {
 
     @Test
     public void testCalculateStolperUdenSkurLangCarport() throws DataMapperException{
+        System.out.println("Test: Beregn stolper for lang carport uden skur");
         double length = 720.0;
         double width = 240.0;
         double height = 300.0;
@@ -62,6 +96,7 @@ public class CalculatorImplTest {
     
     @Test
     public void testCalculateStolperMedSkurSammeBreddeSomRemme() throws DataMapperException{
+        System.out.println("Test: Beregn stolper for carport med skur samme bredde som remmene");
         double length = 600.0;
         double width = 360.0;
         double height = 300.0;
@@ -79,6 +114,7 @@ public class CalculatorImplTest {
     
     @Test
     public void testCalculateStolperMedSkurSmallereEndRemme() throws DataMapperException{
+        System.out.println("Test: Beregn stolper for carport med skur smallere end remmene");
         double length = 600.0;
         double width = 360.0;
         double height = 300.0;
@@ -94,217 +130,4 @@ public class CalculatorImplTest {
         assertEquals(expResult, result);
     }
     
-    
-//    @Test
-//    public void testCalculateTagplader() {
-//        System.out.println("calculateTagplader");
-//        double length = 0.0;
-//        double width = 0.0;
-//        CalculatorImpl instance = new CalculatorImpl();
-//        BillOfMaterials expResult = null;
-//        BillOfMaterials result = instance.calculateTagplader(length, width);
-//        assertEquals(expResult, result);
-//        fail("The test case is a prototype.");
-//    }
-
-//    @Test
-//    public void testCalculateTagMedSten() {
-//        System.out.println("calculateTagMedSten");
-//        double length = 0.0;
-//        double width = 0.0;
-//        double hypotenuse = 0.0;
-//        CalculatorImpl instance = new CalculatorImpl();
-//        BillOfMaterials expResult = null;
-//        BillOfMaterials result = instance.calculateTagMedSten(length, width, hypotenuse);
-//        assertEquals(expResult, result);
-//        fail("The test case is a prototype.");
-//    }
-
-
-//    @Test
-//    public void testCalculateRemme() {
-//        System.out.println("calculateRemme");
-//        double length = 0.0;
-//        CalculatorImpl instance = new CalculatorImpl();
-//        BillOfMaterials expResult = null;
-//        BillOfMaterials result = instance.calculateRemme(length);
-//        assertEquals(expResult, result);
-//        fail("The test case is a prototype.");
-//    }
-//
-//    @Test
-//    public void testCalculateFladtStern() {
-//        System.out.println("calculateFladtStern");
-//        double length = 0.0;
-//        double width = 0.0;
-//        CalculatorImpl instance = new CalculatorImpl();
-//        BillOfMaterials expResult = null;
-//        BillOfMaterials result = instance.calculateFladtStern(length, width);
-//        assertEquals(expResult, result);
-//        fail("The test case is a prototype.");
-//    }
-
-//    @Test
-//    public void testCalculateSkråtStern() {
-//        System.out.println("calculateSkr\u00e5tStern");
-//        double length = 0.0;
-//        CalculatorImpl instance = new CalculatorImpl();
-//        BillOfMaterials expResult = null;
-//        BillOfMaterials result = instance.calculateSkråtStern(length);
-//        assertEquals(expResult, result);
-//        fail("The test case is a prototype.");
-//    }
-//
-//    @Test
-//    public void testCalculateVindskeder() {
-//        System.out.println("calculateVindskeder");
-//        double hypotenuse = 0.0;
-//        CalculatorImpl instance = new CalculatorImpl();
-//        BillOfMaterials expResult = null;
-//        BillOfMaterials result = instance.calculateVindskeder(hypotenuse);
-//        assertEquals(expResult, result);
-//        fail("The test case is a prototype.");
-//    }
-//
-//    @Test
-//    public void testCalculateFladtSpær() {
-//        System.out.println("calculateFladtSp\u00e6r");
-//        double length = 0.0;
-//        double width = 0.0;
-//        CalculatorImpl instance = new CalculatorImpl();
-//        BillOfMaterials expResult = null;
-//        BillOfMaterials result = instance.calculateFladtSpær(length, width);
-//        assertEquals(expResult, result);
-//        fail("The test case is a prototype.");
-//    }
-//
-//    @Test
-//    public void testCalculateSkråtSpær() {
-//        System.out.println("calculateSkr\u00e5tSp\u00e6r");
-//        double length = 0.0;
-//        double width = 0.0;
-//        CalculatorImpl instance = new CalculatorImpl();
-//        BillOfMaterials expResult = null;
-//        BillOfMaterials result = instance.calculateSkråtSpær(length, width);
-//        assertEquals(expResult, result);
-//        fail("The test case is a prototype.");
-//    }
-//
-//    @Test
-//    public void testCalculateHulbånd() {
-//        System.out.println("calculateHulb\u00e5nd");
-//        double width = 0.0;
-//        CalculatorImpl instance = new CalculatorImpl();
-//        BillOfMaterials expResult = null;
-//        BillOfMaterials result = instance.calculateHulbånd(width);
-//        assertEquals(expResult, result);
-//        fail("The test case is a prototype.");
-//    }
-//
-//    @Test
-//    public void testCalculateFladtBeslag() {
-//        System.out.println("calculateFladtBeslag");
-//        double length = 0.0;
-//        CalculatorImpl instance = new CalculatorImpl();
-//        BillOfMaterials expResult = null;
-//        BillOfMaterials result = instance.calculateFladtBeslag(length);
-//        assertEquals(expResult, result);
-//        fail("The test case is a prototype.");
-//    }
-//
-//    @Test
-//    public void testCalculateSkråtBeslag() {
-//        System.out.println("calculateSkr\u00e5tBeslag");
-//        double length = 0.0;
-//        CalculatorImpl instance = new CalculatorImpl();
-//        BillOfMaterials expResult = null;
-//        BillOfMaterials result = instance.calculateSkråtBeslag(length);
-//        assertEquals(expResult, result);
-//        fail("The test case is a prototype.");
-//    }
-//
-//    @Test
-//    public void testCalculateSkruerStern() {
-//        System.out.println("calculateSkruerStern");
-//        double length = 0.0;
-//        double width = 0.0;
-//        CalculatorImpl instance = new CalculatorImpl();
-//        BillOfMaterials expResult = null;
-//        BillOfMaterials result = instance.calculateSkruerStern(length, width);
-//        assertEquals(expResult, result);
-//        fail("The test case is a prototype.");
-//    }
-//
-//    @Test
-//    public void testCalculateFladtSkruerBeslag() {
-//        System.out.println("calculateFladtSkruerBeslag");
-//        double length = 0.0;
-//        double width = 0.0;
-//        CalculatorImpl instance = new CalculatorImpl();
-//        BillOfMaterials expResult = null;
-//        BillOfMaterials result = instance.calculateFladtSkruerBeslag(length, width);
-//        assertEquals(expResult, result);
-//        fail("The test case is a prototype.");
-//    }
-//
-//    @Test
-//    public void testCalculateBræddebolt() {
-//        System.out.println("calculateBr\u00e6ddebolt");
-//        double length = 0.0;
-//        CalculatorImpl instance = new CalculatorImpl();
-//        BillOfMaterials expResult = null;
-//        BillOfMaterials result = instance.calculateBræddebolt(length);
-//        assertEquals(expResult, result);
-//        fail("The test case is a prototype.");
-//    }
-//
-//    @Test
-//    public void testCalculateFirkantskiver() {
-//        System.out.println("calculateFirkantskiver");
-//        double length = 0.0;
-//        CalculatorImpl instance = new CalculatorImpl();
-//        BillOfMaterials expResult = null;
-//        BillOfMaterials result = instance.calculateFirkantskiver(length);
-//        assertEquals(expResult, result);
-//        fail("The test case is a prototype.");
-//    }
-//
-//    @Test
-//    public void testCalculateLøsholter() {
-//        System.out.println("calculateL\u00f8sholter");
-//        double width = 0.0;
-//        double skurLength = 0.0;
-//        double skurWidth = 0.0;
-//        CalculatorImpl instance = new CalculatorImpl();
-//        BillOfMaterials expResult = null;
-//        BillOfMaterials result = instance.calculateLøsholter(width, skurLength, skurWidth);
-//        assertEquals(expResult, result);
-//        fail("The test case is a prototype.");
-//    }
-//
-//    @Test
-//    public void testCalculateBeklædningSkur() {
-//        System.out.println("calculateBekl\u00e6dningSkur");
-//        double height = 0.0;
-//        double skurLength = 0.0;
-//        double skurWidth = 0.0;
-//        CalculatorImpl instance = new CalculatorImpl();
-//        BillOfMaterials expResult = null;
-//        BillOfMaterials result = instance.calculateBeklædningSkur(height, skurLength, skurWidth);
-//        assertEquals(expResult, result);
-//        fail("The test case is a prototype.");
-//    }
-//
-//    @Test
-//    public void testCalculateBeklædningGavl() {
-//        System.out.println("calculateBekl\u00e6dningGavl");
-//        double width = 0.0;
-//        double katete = 0.0;
-//        CalculatorImpl instance = new CalculatorImpl();
-//        BillOfMaterials expResult = null;
-//        BillOfMaterials result = instance.calculateBeklædningGavl(width, katete);
-//        assertEquals(expResult, result);
-//        fail("The test case is a prototype.");
-//    }
-//    
 }
