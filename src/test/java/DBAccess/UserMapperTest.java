@@ -56,12 +56,17 @@ public class UserMapperTest {
     }
 
     @Test(expected = DataMapperException.class)
-    public void testNoUserMatch() throws Exception {
-        System.out.println("Test: No user match in database");
+    public void testNoUserMatchWrongPassWord() throws Exception {
+        System.out.println("Test: No user match in database - Wrong password");
         UserMapper.login("lars@email.com", "4321");
     }
     
-
+    @Test(expected = DataMapperException.class)
+    public void testNoUserMatchWrongEmail() throws Exception {
+        System.out.println("Test: No user match in database - Wrong email");
+        UserMapper.login("lars@bmail.com", "1234");
+    }
+    
     
     @Test
     public void testLoginEmployee() throws Exception {
