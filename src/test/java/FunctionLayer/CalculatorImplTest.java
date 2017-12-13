@@ -55,14 +55,8 @@ public class CalculatorImplTest {
             System.out.println("Could not open connection to database: " + ex.getMessage());
         }
     }
-    
-    @After
-    public void tearDown() { 
-    }
 
 
-
-   
     @Test
     public void testCalculateStolperUdenSkurKortCarport() throws DataMapperException{
         System.out.println("Test: Beregn stolper for kort carport uden skur");
