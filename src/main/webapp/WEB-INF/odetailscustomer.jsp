@@ -4,10 +4,8 @@
     Author     : Mikkel Lindstrøm <Mikkel.Lindstrøm>
 --%>
 
+<%@page import="FunctionLayer.Entities.*"%>
 <%@page import="FunctionLayer.LogicFacade"%>
-<%@page import="FunctionLayer.BillOfMaterials"%>
-<%@page import="FunctionLayer.Order"%>
-<%@page import="FunctionLayer.User"%>
 <%@page import="PresentationLayer.Rendering"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>

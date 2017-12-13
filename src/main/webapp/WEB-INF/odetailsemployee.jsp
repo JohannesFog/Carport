@@ -4,11 +4,9 @@
     Author     : lene_
 --%>
 
-<%@page import="FunctionLayer.User"%>
+<%@page import="FunctionLayer.Entities.*"%>
 <%@page import="FunctionLayer.LogicFacade"%>
-<%@page import="FunctionLayer.BillOfMaterials"%>
 <%@page import="PresentationLayer.Rendering"%>
-<%@page import="FunctionLayer.Order"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>

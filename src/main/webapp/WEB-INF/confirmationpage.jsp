@@ -4,7 +4,7 @@
     Author     : lene_
 --%>
 
-<%@page import="FunctionLayer.User"%>
+<%@page import="FunctionLayer.Entities.User"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>

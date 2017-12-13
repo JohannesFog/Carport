@@ -4,11 +4,10 @@
     Author     : Mikkel Lindstrøm <Mikkel.Lindstrøm>
 --%>
 
-<%@page import="FunctionLayer.User"%>
+<%@page import="FunctionLayer.Entities.*"%>
+
 <%@page import="PresentationLayer.Rendering"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="FunctionLayer.LineItem"%>
-<%@page import="FunctionLayer.BillOfMaterials"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>

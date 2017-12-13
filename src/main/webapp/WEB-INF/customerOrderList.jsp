@@ -4,8 +4,8 @@
     Author     : Mikkel Lindstrøm <Mikkel.Lindstrøm>
 --%>
 
+<%@page import="FunctionLayer.Entities.User"%>
 <%@page import="PresentationLayer.Rendering"%>
-<%@page import="FunctionLayer.User"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>

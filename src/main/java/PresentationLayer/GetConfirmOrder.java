@@ -5,9 +5,9 @@
  */
 package PresentationLayer;
 
-import Exceptions.DataMapperException;
+import FunctionLayer.Exceptions.DataMapperException;
 import FunctionLayer.LogicFacade;
-import FunctionLayer.Order;
+import FunctionLayer.Entities.Order;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;

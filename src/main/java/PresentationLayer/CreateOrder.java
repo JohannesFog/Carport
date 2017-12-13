@@ -6,9 +6,9 @@
 package PresentationLayer;
 
 import FunctionLayer.LogicFacade;
-import Exceptions.DataMapperException;
-import FunctionLayer.Order;
-import FunctionLayer.User;
+import FunctionLayer.Exceptions.DataMapperException;
+import FunctionLayer.Entities.Order;
+import FunctionLayer.Entities.User;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
