@@ -5,7 +5,6 @@
 --%>
 
 <%@page import="FunctionLayer.User"%>
-<%@page import="PresentationLayer.RenderDrawing"%>
 <%@page import="PresentationLayer.Rendering"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="FunctionLayer.LineItem"%>
@@ -93,8 +92,7 @@
                             <!-- <h4>$24.99</h4> -->
                             <p class="card-text">
                                 <%Rendering render = new Rendering();%>
-                                <%RenderDrawing renderDrawing = new RenderDrawing();%>
-
+                                
                                 <%=render.showPrice((double) session.getAttribute("price"))%>
 
                                 <%  User user = (User) session.getAttribute("user");
@@ -105,7 +103,7 @@
                                 %>
 
 
-                                <%= renderDrawing.createDrawing((String) session.getAttribute("draw"))%>
+                                <%=session.getAttribute("draw")%>
 
                             </p>
                             <!--  <span class="text-warning">&#9733; &#9733; &#9733; &#9733; &#9734;</span> -->
