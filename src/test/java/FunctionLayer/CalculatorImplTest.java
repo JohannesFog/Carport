@@ -57,6 +57,7 @@ public class CalculatorImplTest {
     }
 
 
+
     @Test
     public void testCalculateStolperUdenSkurKortCarport() throws DataMapperException{
         System.out.println("Test: Beregn stolper for kort carport uden skur");
