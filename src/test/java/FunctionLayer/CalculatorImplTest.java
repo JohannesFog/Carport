@@ -24,76 +24,76 @@ public class CalculatorImplTest {
     }
 
 
-//
-//   
-//    @Test
-//    public void testCalculateStolperUdenSkurKortCarport() throws DataMapperException{
-//        double length = 240.0;
-//        double width = 240.0;
-//        double height = 300.0;
-//        double skurLength = 0.0;
-//        double skurWidth = 0.0;
-//        CalculatorImpl instance = new CalculatorImpl();
-//        int expResult = 4;
-//        BillOfMaterials bom = instance.calculateStolper(length, width, height, skurLength, skurWidth);
-//        int result = 0;
-//        for (LineItem li : bom.getBomList()) {
-//            result += li.getQuantity();
-//        }
-//        assertEquals(expResult, result);
-//    }
-//
-//    @Test
-//    public void testCalculateStolperUdenSkurLangCarport() throws DataMapperException{
-//        double length = 720.0;
-//        double width = 240.0;
-//        double height = 300.0;
-//        double skurLength = 0.0;
-//        double skurWidth = 0.0;
-//        CalculatorImpl instance = new CalculatorImpl();
-//        int expResult = 6;
-//        BillOfMaterials bom = instance.calculateStolper(length, width, height, skurLength, skurWidth);
-//        int result = 0;
-//        for (LineItem li : bom.getBomList()) {
-//            result += li.getQuantity();
-//        }
-//        assertEquals(expResult, result);
-//    }
-//    
-//    @Test
-//    public void testCalculateStolperMedSkurSammeBreddeSomRemme() throws DataMapperException{
-//        double length = 600.0;
-//        double width = 360.0;
-//        double height = 300.0;
-//        double skurLength = 240.0;
-//        double skurWidth = 330.0;
-//        CalculatorImpl instance = new CalculatorImpl();
-//        int expResult = 9;
-//        BillOfMaterials bom = instance.calculateStolper(length, width, height, skurLength, skurWidth);
-//        int result = 0;
-//        for (LineItem li : bom.getBomList()) {
-//            result += li.getQuantity();
-//        }
-//        assertEquals(expResult, result);
-//    }
-//    
-//    @Test
-//    public void testCalculateStolperMedSkurSmallereEndRemme() throws DataMapperException{
-//        double length = 600.0;
-//        double width = 360.0;
-//        double height = 300.0;
-//        double skurLength = 240.0;
-//        double skurWidth = 270.0;
-//        CalculatorImpl instance = new CalculatorImpl();
-//        int expResult = 10;
-//        BillOfMaterials bom = instance.calculateStolper(length, width, height, skurLength, skurWidth);
-//        int result = 0;
-//        for (LineItem li : bom.getBomList()) {
-//            result += li.getQuantity();
-//        }
-//        assertEquals(expResult, result);
-//    }
-//    
+
+   
+    @Test
+    public void testCalculateStolperUdenSkurKortCarport() throws DataMapperException{
+        double length = 240.0;
+        double width = 240.0;
+        double height = 300.0;
+        double skurLength = 0.0;
+        double skurWidth = 0.0;
+        CalculatorImpl instance = new CalculatorImpl();
+        int expResult = 4;
+        BillOfMaterials bom = instance.calculateStolper(length, width, height, skurLength, skurWidth);
+        int result = 0;
+        for (LineItem li : bom.getBomList()) {
+            result += li.getQuantity();
+        }
+        assertEquals(expResult, result);
+    }
+
+    @Test
+    public void testCalculateStolperUdenSkurLangCarport() throws DataMapperException{
+        double length = 720.0;
+        double width = 240.0;
+        double height = 300.0;
+        double skurLength = 0.0;
+        double skurWidth = 0.0;
+        CalculatorImpl instance = new CalculatorImpl();
+        int expResult = 6;
+        BillOfMaterials bom = instance.calculateStolper(length, width, height, skurLength, skurWidth);
+        int result = 0;
+        for (LineItem li : bom.getBomList()) {
+            result += li.getQuantity();
+        }
+        assertEquals(expResult, result);
+    }
+    
+    @Test
+    public void testCalculateStolperMedSkurSammeBreddeSomRemme() throws DataMapperException{
+        double length = 600.0;
+        double width = 360.0;
+        double height = 300.0;
+        double skurLength = 240.0;
+        double skurWidth = 330.0;
+        CalculatorImpl instance = new CalculatorImpl();
+        int expResult = 9;
+        BillOfMaterials bom = instance.calculateStolper(length, width, height, skurLength, skurWidth);
+        int result = 0;
+        for (LineItem li : bom.getBomList()) {
+            result += li.getQuantity();
+        }
+        assertEquals(expResult, result);
+    }
+    
+    @Test
+    public void testCalculateStolperMedSkurSmallereEndRemme() throws DataMapperException{
+        double length = 600.0;
+        double width = 360.0;
+        double height = 300.0;
+        double skurLength = 240.0;
+        double skurWidth = 270.0;
+        CalculatorImpl instance = new CalculatorImpl();
+        int expResult = 10;
+        BillOfMaterials bom = instance.calculateStolper(length, width, height, skurLength, skurWidth);
+        int result = 0;
+        for (LineItem li : bom.getBomList()) {
+            result += li.getQuantity();
+        }
+        assertEquals(expResult, result);
+    }
+    
     
 //    @Test
 //    public void testCalculateTagplader() {
