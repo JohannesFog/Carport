@@ -92,7 +92,7 @@
                             <!-- <h4>$24.99</h4> -->
                             <p class="card-text">
                                 <%Rendering render = new Rendering();%>
-                                
+
                                 <%=render.showPrice((double) session.getAttribute("price"))%>
 
                                 <%  User user = (User) session.getAttribute("user");

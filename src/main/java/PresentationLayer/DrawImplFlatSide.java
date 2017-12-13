@@ -22,10 +22,12 @@ public class DrawImplFlatSide implements Draw {
 
     private double skurLength;
     private double skurWidth;
-    private double sideUdhæng = 15;
-    private double endeUdhæng = 15;
+    private double SIDEUDHAENG = 15;
+    private double ENDEUDHAENG = 15;
+    private int ARROWSPACE = 60;
+    private int ARROWADJUST = 50;
 
-    private double slope = 10.0 / 780.0;
+    private double SLOPE = 10.0 / 780.0;
     private BillOfMaterials bom;
     private double carportWidth;
     private double carportLength;
@@ -92,34 +94,44 @@ public class DrawImplFlatSide implements Draw {
         this.bom = mynewBom;
     }
 
-    @Override
-    public String tegnTag(int width, int height) {
-        return "";
-    }
-
-    public String tegnTag(int width, int height, String drawFlatAbove,
-            ArrayList<Double> XkoorOppe, ArrayList<Double> XkoorNede) {
-        int canvasX = width + 60;
-        int canvasY = height + 60;
-        int arrowXEnd = width + 50;
-        int arrowYEnd = height + 50;
-        int textMiddleX = width / 2 + 50;
-        int textMiddleY = height / 2 + 50;
-
+    private String canvas(int width, int height) {
+        int canvasX = width + this.ARROWSPACE;
+        int canvasY = height + this.ARROWSPACE;
         String output = String.format("<SVG width=\"%s\" height=%s> "
                 + "<rect x=\"000\" y=\"00\" height=\"%s\" width=\"%s\"\n "
-                + "style=\"stroke:#000000; fill: #ffffff\"/>", canvasX, canvasY, canvasY, canvasX);
-
-        output += "<defs> <marker id=\"beginArrow\" 	markerWidth=\"9\" markerHeight=\"9\" refX=\"0\" refY=\"4\" orient=\"auto\"> "
+                + "style=\"stroke:#000000; fill: #ffffff\"/>", canvasX, canvasY, canvasY, canvasX);;
+        
+        return output;
+    }
+    
+    private String arrows(int width, int height) {
+        
+        int arrowXEnd = width + this.ARROWADJUST;
+        int arrowYEnd = height + this.ARROWADJUST;
+        
+        String output = "<defs> <marker id=\"beginArrow\" 	markerWidth=\"9\" markerHeight=\"9\" refX=\"0\" refY=\"4\" orient=\"auto\"> "
                 + "<path d=\"M0,4 L8,0 L8,8 L0,4\" style=\"fill: #000000s;\" /> </marker> <marker id=\"endArrow\" "
                 + "markerWidth=\"9\" markerHeight=\"9\" refX=\"8\" refY=\"4\" orient=\"auto\"> "
                 + "<path d=\"M0,0 L8,4 L0,8 L0,0\" style=\"fill: #000000;\" /> </marker> </defs> ";
-
+        
         output += String.format("<line x1=\"50\"  y1=\"20\" x2=\"%s\" y2=\"20\" style=\"stroke:#000000; marker-start: url(#beginArrow);"
                 + "marker-end: url(#endArrow);\" />", arrowXEnd);
-
+        
         output += String.format("<line x1=\"20\"  y1=\"50\" x2=\"20\" y2=\"%s\" style=\"stroke:#000000; marker-start: url(#beginArrow);"
                 + "marker-end: url(#endArrow);\" />", arrowYEnd);
+        
+        return output;
+    }
+    
+    public String tegnTag(int width, int height, String drawFlatAbove,
+            ArrayList<Double> XkoorOppe, ArrayList<Double> XkoorNede) {
+        
+        int textMiddleX = width / 2 + this.ARROWADJUST;
+        int textMiddleY = height / 2 + this.ARROWADJUST;
+
+        String output = canvas(width, height);
+
+        output += arrows(width, height);
 
         output += String.format("<text x=\"30\" y=\"%s\" font-size=\"12\" text-anchor=\"middle\" alignment-baseline=\"middle\" style=\"writing-mode: tb;\"> %s cm </text>",
                  textMiddleY, height);;
@@ -130,32 +142,23 @@ public class DrawImplFlatSide implements Draw {
         output += String.format("<SVG x=\"50\" y=\"50\" width=\"%s\" height=\"%s\">", width, height);
         output += floor();
 
-        output = output + stolper2Foroven();
-
         output = output + overSternSide();
         output = output + underSternSide();
         if (this.skurLength > 0 && this.skurWidth > 0) {
-            //output = output + "<p>"+skurLength + " " +skurWidth+"</p>";
             output = output + skur();
         }
         output = output + stolper2Forneden(drawFlatAbove, XkoorNede);
         output = output;
-        //output = output + rectangleTiltDownStraightSides("0", "0", "30", "700", slope);
 
         output = output + "</SVG>";
         return output;
     }
 
-    /*
-        double width = 50;
-        double slope = 0.012820513;
-        double height_decrease = (width/100)*slope;
-     */
-    public String rectangleTiltDownStraightSides(String topLeft_DistToLeft,
+    private String rectangleTiltDownStraightSides(String topLeft_DistToLeft,
             String topLeft_DistToTop,
             String height,
             String width,
-            double slope) // eg (d)10 / (d)780 = 0,012820513
+            double slope) 
     {
 
         double topRight_x = Double.parseDouble(topLeft_DistToLeft) + Double.parseDouble(width);
@@ -175,7 +178,7 @@ public class DrawImplFlatSide implements Draw {
         return mystr;
     }
 
-    public String overSternSide() {
+    private String overSternSide() {
         ArrayList<String> words = new ArrayList<String>();
         words.add("Overstern brædder til siderne");
         ArrayList<LineItem> relevantItems = relevantBomLines(words, this.bom);
@@ -183,25 +186,19 @@ public class DrawImplFlatSide implements Draw {
 
         this.oversternHeight = Double.parseDouble(relevantItems.get(0).getName().substring(3, 5));
         String ØversteHeight = Double.toString(this.oversternHeight);
-        String ØversteLength = Double.toString(this.carportLength); // user input.
+        String ØversteLength = Double.toString(this.carportLength); 
         String ØversteLeft = "0";
         String ØversteDistToTop = "0";
 
         String output1 = String.format("<rect x=\"%s\" y=\"%s\" height=\"%s\" width=\"%s\""
                 + "style=\"stroke:#000000; fill: #ff0000\"/>",
                 ØversteLeft, ØversteDistToTop, ØversteHeight, ØversteLength);
-        //String rectangleTiltDownStraightSides(String topLeft_DistToLeft, 
-        //    String topLeft_DistToTop, 
-        //    String height,
-        //    String width, 
-        //    double slope) // eg (d)10 / (d)780 = 0,012820513
-        //    {
-        output1 = rectangleTiltDownStraightSides(ØversteLeft, ØversteDistToTop, ØversteHeight, ØversteLength, slope);
+        output1 = rectangleTiltDownStraightSides(ØversteLeft, ØversteDistToTop, ØversteHeight, ØversteLength, SLOPE);
 
         return output1;
     }
 
-    public String underSternSide() {
+    private String underSternSide() {
         ArrayList<String> words = new ArrayList<String>();
         words.add("Understern brædder til siderne");
         ArrayList<LineItem> relevantItems = relevantBomLines(words, this.bom);
@@ -209,42 +206,27 @@ public class DrawImplFlatSide implements Draw {
 
         this.understernHeight = Double.parseDouble(relevantItems.get(0).getName().substring(3, 5));
         String NedersteHeight = Double.toString(this.understernHeight);
-        String NedersteLength = Double.toString(this.carportLength); // user input.
+        String NedersteLength = Double.toString(this.carportLength); 
         String NedersteLeft = "0";
         String NedersteDistToTop = Double.toString(this.oversternHeight);
 
         String output2 = String.format("<rect x=\"%s\" y=\"%s\" height=\"%s\" width=\"%s\""
                 + "style=\"stroke:#000000; fill: #ff0000\"/>",
                 NedersteLeft, NedersteDistToTop, NedersteHeight, NedersteLength);
-        output2 = rectangleTiltDownStraightSides(NedersteLeft, NedersteDistToTop, NedersteHeight, NedersteLength, slope);
+        output2 = rectangleTiltDownStraightSides(NedersteLeft, NedersteDistToTop, NedersteHeight, NedersteLength, SLOPE);
 
         return output2;
     }
 
-    @Override
-    public String remme() {
-        return "";
-    }
-
-    public String floor() {
+    private String floor() {
         String output2 = String.format("<rect x=\"%s\" y=\"%s\" height=\"%s\" width=\"%s\""
                 + "style=\"stroke:#000000; fill: #ff0000\"/>",
                 "0", this.carportHeight, "2", this.carportLength);
-        //output2 = rectangleTiltDownStraightSides(NedersteLeft, NedersteDistToTop, NedersteHeight, NedersteLength, slope);
-
+        
         return output2;
     }
 
-    /*
-        Eksempel på LineItem:
-        stolper()
-LineItem{name=97x97mm trykimp. stolpe, length=300, quantity=4, unit=stk, description=Stolper nedgraves 90cm i jord.}
-     */
-    public String stolper2Foroven() {
-        return "";
-    }
-
-    public String stolper2Forneden(String DrawFlatAbove, ArrayList<Double> XkoorNede) {
+    private String stolper2Forneden(String DrawFlatAbove, ArrayList<Double> XkoorNede) {
         String output = "";
 
         ArrayList<String> words = new ArrayList<String>();
@@ -292,66 +274,38 @@ LineItem{name=97x97mm trykimp. stolpe, length=300, quantity=4, unit=stk, descrip
                 + "stolpe3test: [187.5, 355.5, 523.5]\n"
                 + "</p>";
 
-        String localDrawAbove = port720720210210;
-
-        /*
-        String output2 = String.format("<rect x=\"%s\" y=\"%s\" height=\"%s\" width=\"%s\""+      
-                            "style=\"stroke:#000000; fill: #ff0000\"/>", 
-                            NedersteLeft, NedersteDistToTop, NedersteWidth, NedersteLength);
-         */
-        double distFromTop = this.carportWidth - this.sideUdhæng - stolpelength;
-        output = "";//"hello regex string: " + distFromTop;
-
-        //double dubLeft = this.endeUdhæng;
-        double dubRight = this.carportLength - this.endeUdhæng - stolpelength;
+        double distFromTop = this.carportWidth - this.SIDEUDHAENG - stolpelength;
+        output = "";
+        
+        double dubRight = this.carportLength - this.ENDEUDHAENG - stolpelength;
         double dubSkur = dubRight + stolpelength - this.skurLength;
 
-        //double DLheight = this.carportHeight - (dubLeft * slope); 
-        double DRheight = this.carportHeight - (dubRight * slope);
-        double DSheight = this.carportHeight - (dubSkur * slope);
-
-        //String stolpeLeft = String.format("<rect x=\"%s\" y=\"%s\" height=\"%s\" width=\"%s\""+      
-        //                    "style=\"stroke:#000000; fill: #ff0000\"/>", 
-        //                    dubLeft, (dubLeft * slope), DLheight, stolpelength);
+        double DRheight = this.carportHeight - (dubRight * SLOPE);
+        double DSheight = this.carportHeight - (dubSkur * SLOPE);
+        
         String stolpeRight = String.format("<rect x=\"%s\" y=\"%s\" height=\"%s\" width=\"%s\""
                 + "style=\"stroke:#000000; fill: #ff0000\"/>",
-                dubRight, (dubRight * slope), DRheight, stolpelength);
+                dubRight, (dubRight * SLOPE), DRheight, stolpelength);
         String stolpeSkur = String.format("<rect x=\"%s\" y=\"%s\" height=\"%s\" width=\"%s\""
                 + "style=\"stroke:#000000; fill: #ff0000\"/>",
-                dubSkur, (dubSkur * slope), DSheight, stolpelength);
+                dubSkur, (dubSkur * SLOPE), DSheight, stolpelength);
         if (this.skurLength > 0 && this.skurWidth > 0) {
-            output += stolpeSkur;   //stolpeLeft + stolpeRight +    
+            output += stolpeSkur;     
         }
-
-        //**************************************************************************************************
-        //Brug af ArrayList<Double> XkoorNede  (2017-12-08 DECEMBER)
+        
         for (int i = 0; i < XkoorNede.size(); i++) {
             double Xkoor = XkoorNede.get(i);
-            double eachHeight = this.carportHeight - (Xkoor * slope);
+            double eachHeight = this.carportHeight - (Xkoor * SLOPE);
             String eachStolpe = String.format("<rect x=\"%s\" y=\"%s\" height=\"%s\" width=\"%s\""
                     + "style=\"stroke:#000000; fill: #ff0000\"/>",
-                    Xkoor, (Xkoor * slope), eachHeight, stolpelength);
+                    Xkoor, (Xkoor * SLOPE), eachHeight, stolpelength);
             output += eachStolpe;
         }
 
         return output;
     }
-
-    /*
-            String NedersteVenstreWidth = relevantItems.get(0).getName().substring(0, 1);//9 from description: "97x97mm trykimp. stolpe,..."
-            String NedersteVenstreLength = relevantItems.get(0).getName().substring(3, 4);//9 from description: "97x97mm trykimp. stolpe,..."
-            String NedersteVenstreLeft = eachLeft;//Double.toString(this.endeUdhæng);
-            String NedersteVenstreDistToTop = Double.toString(this.carportWidth-
-                                    Integer.parseInt(NedersteVenstreWidth) - this.sideUdhæng);;//Double.toString(this.carportWidth-
-                                        //Integer.parseInt(NedersteVenstreWidth) - this.sideUdhæng);
-
-            output += String.format("<rect x=\"%s\" y=\"%s\" height=\"%s\" width=\"%s\""+      
-                                "style=\"stroke:#000000; fill: #ff0000\"/>", 
-                                NedersteVenstreLeft, NedersteVenstreDistToTop, NedersteVenstreWidth, NedersteVenstreLength);
-
-     */
-    @Override
-    public String stolper() {
+    
+    private String stolper() {
         ArrayList<String> words = new ArrayList<String>();
         words.add("Stolper");
         ArrayList<LineItem> relevantItems = relevantBomLines(words, this.bom);
@@ -365,102 +319,50 @@ LineItem{name=97x97mm trykimp. stolpe, length=300, quantity=4, unit=stk, descrip
         String VenstreHeight = Double.toString(this.carportHeight
                 - Double.parseDouble(VenstreDistToTop));
 
-        int antalBrædder = relevantItems.get(0).getQuantity() / 2; // antal brædder (normalt 5)
-        double tomLuft = this.carportLength - (antalBrædder * Integer.parseInt(VenstreLength)) - 30;
+        int antalBrædder = relevantItems.get(0).getQuantity() / 2; 
+        double tomLuft = this.carportLength - (antalBrædder * Integer.parseInt(VenstreLength)) - this.SIDEUDHAENG + this.ENDEUDHAENG;
         String AfstandMellemBraet = Double.toString(tomLuft / ((double) (antalBrædder - 1)));
 
         String output = "";
         for (int i = 0; i < antalBrædder; i++) {
-            double distToTop = 0; //////////////DIST TO Top SKAL RETTES !!
-            //VenstreSpærDistToTop
             VenstreLeft = Double.toString(15
                     + (i * (Double.parseDouble(AfstandMellemBraet) + Double.parseDouble(VenstreLength))));
 
             String VenstreDistToTopNew = Double.toString(Double.parseDouble(VenstreDistToTop)
-                    + (Double.parseDouble(VenstreLeft) * slope));
+                    + (Double.parseDouble(VenstreLeft) * SLOPE));
 
             String VenstreHeightNew = Double.toString(Double.parseDouble(VenstreHeight)
-                    - (Double.parseDouble(VenstreLeft) * slope));
+                    - (Double.parseDouble(VenstreLeft) * SLOPE));
 
             output += String.format("<rect x=\"%s\" y=\"%s\" height=\"%s\" width=\"%s\""
                     + "style=\"stroke:#000000; fill: #ff0000\"/>",
                     VenstreLeft, VenstreDistToTopNew,
-                     VenstreHeightNew, VenstreLength);//VenstreSpærWidth
+                     VenstreHeightNew, VenstreLength);
         }
 
         return output;
 
-        /*
-        String output1 = String.format("<rect x=\"%s\" y=\"%s\" height=\"%s\" width=\"%s\""+      
-                            "style=\"stroke:#000000; fill: #ff0000\"/>", 
-                            ØversteVenstreLeft, ØversteVenstreDistToTop, ØversteVenstreWidth, ØversteVenstreLength);
-         */
     }
 
-    @Override
-    public String spaer() {
-        return "";
-    }
-
-    @Override
-    public String kryds() {
-        return "";
-    }
-
-    public static void main(String[] args) {
-//        System.out.println("start");
-//        Calculator calc = new CalculatorImpl();
-//
-//        BillOfMaterials bom = calc.bomCalculator(240, 240, 210,"fladt", 0, 0);
-//        DrawImplFlatSide draw = new DrawImplFlatSide(bom, 240, 240, 240, 50, 50);
-        /*
-        System.out.println("****************  result: bom liste:");
-        System.out.println("overstern");
-        System.out.println(draw.overSternSide());
-        System.out.println(draw.stolper());
-        System.out.println("Understern");
-        System.out.println(draw.underSternSide());
-        System.out.println("*********************************************");
-        System.out.println("her er skur:");
-        System.out.println(draw.skur());
-        System.out.println("her slutter skur");
-        
-        double width = 50;
-        double slope = 0.012820513;
-        double height_decrease = (width/100)*slope;
-        System.out.println(height_decrease);
-         */
-        //output = output + overSternSide();
-        //output = output + underSternSide();
-//        //output = output + stolper();
-//        System.out.println(draw.stolper2Forneden(""));
-//        System.out.println("end");
-    }
-
-    //******************************************************************
-    // ******************************************************************
-    //              Sepperat afsnit til skurmetoder.
-    //********************************************************************
-    //*******************************************************************
-    public String skur() {
+    private String skur() {
         double Localskurlength = this.skurLength;
         double LocalcarportLength = this.carportLength;
 
         //Man kan ikke have et skur der er længere end Carporten  - 2 * udhæng på enderne
-        if (this.skurLength > (carportLength - this.endeUdhæng - this.endeUdhæng)) {
-            Localskurlength = carportLength - this.endeUdhæng - this.endeUdhæng;
+        if (this.skurLength > (carportLength - this.ENDEUDHAENG - this.ENDEUDHAENG)) {
+            Localskurlength = carportLength - this.ENDEUDHAENG - this.ENDEUDHAENG;
         } else {
             Localskurlength = this.skurLength;
         }
 
-        double skurTopRight_x = carportLength - this.endeUdhæng;
-        double skurTopRight_y = (skurTopRight_x * this.slope) + this.oversternHeight; //wrong this.carportHeight-(skurTopRight_x*this.slope);
+        double skurTopRight_x = carportLength - this.ENDEUDHAENG;
+        double skurTopRight_y = (skurTopRight_x * this.SLOPE) + this.oversternHeight; 
 
         double skurBottomRight_x = skurTopRight_x;
         double skurBottomRight_y = this.carportHeight;
 
-        double skurTopLeft_x = carportLength - this.endeUdhæng - Localskurlength;
-        double skurTopLeft_y = (skurTopLeft_x * this.slope) + this.oversternHeight; //wrong this.carportHeight-(skurTopLeft_x*this.slope); 
+        double skurTopLeft_x = carportLength - this.ENDEUDHAENG - Localskurlength;
+        double skurTopLeft_y = (skurTopLeft_x * this.SLOPE) + this.oversternHeight;   
 
         double skurBottomleft_x = skurTopLeft_x;
         double skurBottomleft_y = this.carportHeight;
@@ -468,14 +370,14 @@ LineItem{name=97x97mm trykimp. stolpe, length=300, quantity=4, unit=stk, descrip
         String output = String.format(
                 "<polygon points=\"%s,%s %s,%s %s,%s %s,%s\" style=\"stroke:#000000; fill: #099a0f\" />",
                 skurTopLeft_x,
-                skurTopLeft_y, //wrong
+                skurTopLeft_y, 
                 skurTopRight_x,
-                skurTopRight_y, //wrong
+                skurTopRight_y, 
                 skurBottomRight_x,
                 skurBottomRight_y,
                 skurBottomleft_x,
                 skurBottomleft_y);
 
-        return output;  //"<p>"+skurLength + " " +skurWidth+"</p>";
+        return output;  
     }
 }
