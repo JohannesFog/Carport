@@ -35,10 +35,12 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ml-auto">
-                        <li class="nav-item active">
-                            <a class="nav-link" href="index.jsp">Hjem
-                                <span class="sr-only">(current)</span>
-                            </a>
+                        <li class="nav-item">
+                            <form class ="nav-link" action="FrontController" method="POST">
+                             <input type="hidden" name="command" value="GetHome">
+                             <input type="hidden" name="from" value="home">
+                             <input type="submit" name="home" value="Hjem">
+                            </form> 
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">Om</a>
@@ -48,6 +50,13 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">Kontakt</a>
+                        </li>
+                        <li class="nav-item">
+                             <form class ="nav-link" action="FrontController" method="POST">
+                             <input type="hidden" name="command" value="GetHome">
+                             <input type="hidden" name="from" value="logout">
+                             <input type="submit" name="home" value="Log out">
+                            </form> 
                         </li>
                     </ul>
                 </div>
@@ -70,8 +79,8 @@
 
                         <form name="GetCarport" action="FrontController" method="POST">
                             <input type="hidden" name="command" value="GetCarport">
-                            <input class="list-group-item active" type="submit" name="cpType" value="Fladt tag">
-                            <input class="list-group-item" type="submit" name="cpType" value="Rejst tag">
+                            <input id ="tagknap" class="list-group-item active" type="submit" name="cpType" value="Fladt tag">
+                            <input id ="tagknap" class="list-group-item" type="submit" name="cpType" value="Rejst tag">
                         </form>
                         <br>
                         <br>
