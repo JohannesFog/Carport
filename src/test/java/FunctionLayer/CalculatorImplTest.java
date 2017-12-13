@@ -11,6 +11,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -56,8 +57,6 @@ public class CalculatorImplTest {
     }
 
 
-
-   
     @Test
     public void testCalculateStolperUdenSkurKortCarport() throws DataMapperException{
         System.out.println("Test: Beregn stolper for kort carport uden skur");
