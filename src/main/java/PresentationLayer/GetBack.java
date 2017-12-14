@@ -15,9 +15,9 @@ import javax.servlet.http.HttpSession;
  *
  * @author Mikkel Lindstrøm
  */
-public class GetHome extends Command{
+public class GetBack extends Command{
     
-    public GetHome(){
+    public GetBack(){
         
     }
     

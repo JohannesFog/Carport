@@ -15,7 +15,7 @@
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item">
                             <form class ="nav-link" action="FrontController" method="POST">
-                             <input type="hidden" name="command" value="GetHome">
+                             <input type="hidden" name="command" value="GetBack">
                              <input type="hidden" name="from" value="home">
                              <input type="submit" name="home" value="Hjem">
                             </form> 
@@ -31,7 +31,7 @@
                         </li>
                         <li class="nav-item">
                              <form class ="nav-link" action="FrontController" method="POST">
-                             <input type="hidden" name="command" value="GetHome">
+                             <input type="hidden" name="command" value="GetBack">
                              <input type="hidden" name="from" value="logout">
                              <input type="submit" name="home" value="Log out">
                             </form> 
