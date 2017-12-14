@@ -4,7 +4,7 @@
 
     <groupId>Chess</groupId>
     <artifactId>Carport</artifactId>
-    <version>0.1-Test</version>
+    <version>1.0</version>
     <packaging>war</packaging>
 
     <name>Carport</name>
