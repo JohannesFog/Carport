@@ -67,19 +67,11 @@
                 <div class="col-lg-3">
                     <h1 class="my-4">Johannes Fog Carporte</h1>
                     <div class="list-group">
-
-
-                        <!--<a href="#" class="list-group-item active">Fladt tag</a> -->
-                        <!--<a href="#" class="list-group-item">Rejst tag</a>-->
-
-
                         <form name="GetCarport" action="FrontController" method="POST">
                             <input type="hidden" name="command" value="GetCarport">
                             <input id ="tagknap" class="list-group-item active" type="submit" name="cpType" value="Fladt tag">
                             <input id ="tagknap" class="list-group-item" type="submit" name="cpType" value="Rejst tag">
                         </form>
-
-
                     </div>
                     <br> 
                     <br>
@@ -107,20 +99,11 @@
                             <h3 class="card-title">Carport</h3>
                             <!-- <h4>$24.99</h4> -->
                             <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente dicta fugit fugiat hic aliquam itaque facere, soluta. Totam id dolores, sint aperiam sequi pariatur praesentium animi perspiciatis molestias iure, ducimus!</p>
-                            <!--  <span class="text-warning">&#9733; &#9733; &#9733; &#9733; &#9734;</span> -->
-                            <!-- 4.0 stars -->
+                            
                         </div>
                     </div>
-
-
                 </div>
                 <!-- /.col-lg-9 -->
-
-
-
-
-
-
 
                 <% String error = (String) request.getAttribute("error");
                     if (error != null) {%>

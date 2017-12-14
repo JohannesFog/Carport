@@ -32,17 +32,11 @@
                     <h1 class="my-4">Johannes Fog Carporte</h1>
                     <div class="list-group">
 
-
-                        <!--<a href="#" class="list-group-item active">Fladt tag</a> -->
-                        <!--<a href="#" class="list-group-item">Rejst tag</a>-->
-
-
                         <form name="GetCarport" action="FrontController" method="POST">
                             <input type="hidden" name="command" value="GetCarport">
                             <input id ="tagknap" class="list-group-item active" type="submit" name="cpType" value="Fladt tag">
                             <input id ="tagknap" class="list-group-item" type="submit" name="cpType" value="Rejst tag">
                         </form>
-
 
                     </div>
                     <br> 
@@ -64,31 +58,19 @@
                 <!-- /.col-lg-3 -->
 
                 <div class="col-lg-9">
-
                     <div class="card mt-4">
-
                         <div class="card-body">
                             <h3 class="card-title">Ordrebekræftelse</h3>
                             <!-- <h4>$24.99</h4> -->
                             <p class="card-text">
                                 Mange tak for din ordre, du vil inden for kort tid modtage en ordrebekræftelse fra en af vores medarbejdere.
-                                
                             </p>
-                            <!--  <span class="text-warning">&#9733; &#9733; &#9733; &#9733; &#9734;</span> -->
-                            <!-- 4.0 stars -->
                         </div>
                     </div>
 
-
                 </div>
                 <!-- /.col-lg-9 -->
-
-
-
-
-
-
-
+                
                 <% String error = (String) request.getAttribute("error");
                     if (error != null) {%>
                 <H2>Error!</H2>
@@ -96,7 +78,6 @@
                 <%}%>
             </div>
         </div>
-
         <!-- /.container -->
 
         <%@ include file = "footer.jsp" %>
@@ -104,9 +85,5 @@
         <!-- Bootstrap core JavaScript -->
         <script src="vendor/jquery/jquery.min.js"></script>
         <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-
-
-
     </body>
 </html>
