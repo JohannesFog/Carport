@@ -22,43 +22,7 @@
 
     </head>
     <body>
-        <!-- Navigation -->
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-            <div class="container">
-                <a class="navbar-brand" href="index.jsp">Johannes Fog</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarResponsive">
-                    <ul class="navbar-nav ml-auto">
-                        <li class="nav-item">
-                            <form class ="nav-link" action="FrontController" method="POST">
-                             <input type="hidden" name="command" value="GetHome">
-                             <input type="hidden" name="from" value="home">
-                             <input type="submit" name="home" value="Hjem">
-                            </form> 
-                        </li>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Om</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Serviceydelser</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Kontakt</a>
-                        </li>
-                        <li class="nav-item">
-                             <form class ="nav-link" action="FrontController" method="POST">
-                             <input type="hidden" name="command" value="GetHome">
-                             <input type="hidden" name="from" value="logout">
-                             <input type="submit" name="home" value="Log out">
-                            </form> 
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
+       <%@ include file = "header.jsp" %>
 
         <div class="container">
             <div class="row">
@@ -135,13 +99,7 @@
 
         <!-- /.container -->
 
-        <!-- Footer -->
-        <footer class="py-5 bg-dark">
-            <div class="container">
-                <p class="m-0 text-center text-white">Copyright &copy; Johannes Fog 2017</p>
-            </div>
-            <!-- /.container -->
-        </footer>
+        <%@ include file = "footer.jsp" %>
 
         <!-- Bootstrap core JavaScript -->
         <script src="vendor/jquery/jquery.min.js"></script>
