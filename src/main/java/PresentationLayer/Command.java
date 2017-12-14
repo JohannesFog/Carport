@@ -1,6 +1,6 @@
 package PresentationLayer;
 
-import Exceptions.DataMapperException;
+import FunctionLayer.Exceptions.DataMapperException;
 import java.util.HashMap;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,7 +22,7 @@ abstract class Command {
         commands.put( "GetCarport", new GetCarport());
         commands.put( "GetConfirmOrder", new GetConfirmOrder());
         commands.put( "GetODetails", new GetODetails());
-        commands.put( "GetHome", new GetBack());
+        commands.put( "GetBack", new GetBack());
 
     }
 

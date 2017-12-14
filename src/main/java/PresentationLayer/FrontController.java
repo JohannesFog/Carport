@@ -6,7 +6,7 @@
 package PresentationLayer;
 
 import Configuration.Conf;
-import Exceptions.DataMapperException;
+import FunctionLayer.Exceptions.DataMapperException;
 import java.io.IOException;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.FileHandler;

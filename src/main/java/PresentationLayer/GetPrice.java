@@ -7,13 +7,13 @@ package PresentationLayer;
 
 import java.io.*;
 import java.util.*;
-import FunctionLayer.BillOfMaterials;
+import FunctionLayer.Entities.BillOfMaterials;
 import FunctionLayer.Calculator;
 import FunctionLayer.CalculatorImpl;
 import FunctionLayer.LogicFacade;
-import Exceptions.DataMapperException;
-import FunctionLayer.Order;
-import FunctionLayer.User;
+import FunctionLayer.Exceptions.DataMapperException;
+import FunctionLayer.Entities.Order;
+import FunctionLayer.Entities.User;
 import static java.lang.Compiler.command;
 import java.util.logging.Level;
 import java.util.logging.Logger;

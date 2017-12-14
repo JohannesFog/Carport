@@ -1,4 +1,4 @@
-package FunctionLayer;
+package FunctionLayer.Entities;
 
 /**
  * The purpose of User is to...

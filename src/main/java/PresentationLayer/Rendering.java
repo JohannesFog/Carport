@@ -5,12 +5,12 @@
  */
 package PresentationLayer;
 
-import FunctionLayer.BillOfMaterials;
-import FunctionLayer.LineItem;
+import FunctionLayer.Entities.BillOfMaterials;
+import FunctionLayer.Entities.LineItem;
 import FunctionLayer.LogicFacade;
-import Exceptions.DataMapperException;
-import FunctionLayer.Order;
-import FunctionLayer.User;
+import FunctionLayer.Exceptions.DataMapperException;
+import FunctionLayer.Entities.Order;
+import FunctionLayer.Entities.User;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.ArrayList;

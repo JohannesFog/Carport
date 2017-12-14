@@ -6,10 +6,10 @@
 package PresentationLayer;
 
 import java.util.regex.*;
-import FunctionLayer.BillOfMaterials;
+import FunctionLayer.Entities.BillOfMaterials;
 import FunctionLayer.Calculator;
 import FunctionLayer.CalculatorImpl;
-import FunctionLayer.LineItem;
+import FunctionLayer.Entities.LineItem;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.Set;

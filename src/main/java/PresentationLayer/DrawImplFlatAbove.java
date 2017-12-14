@@ -5,6 +5,8 @@
  */
 package PresentationLayer;
 
+import FunctionLayer.Entities.LineItem;
+import FunctionLayer.Entities.BillOfMaterials;
 import java.lang.*;
 import FunctionLayer.*;
 import java.util.ArrayList;

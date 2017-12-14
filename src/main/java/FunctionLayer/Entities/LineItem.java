@@ -1,4 +1,4 @@
-package FunctionLayer;
+package FunctionLayer.Entities;
 
 public class LineItem {
     

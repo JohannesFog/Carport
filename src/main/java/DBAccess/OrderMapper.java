@@ -5,9 +5,9 @@
  */
 package DBAccess;
 
-import Exceptions.DataMapperException;
-import FunctionLayer.Order;
-import FunctionLayer.User;
+import FunctionLayer.Exceptions.DataMapperException;
+import FunctionLayer.Entities.Order;
+import FunctionLayer.Entities.User;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

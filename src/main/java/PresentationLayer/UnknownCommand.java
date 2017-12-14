@@ -1,6 +1,6 @@
 package PresentationLayer;
 
-import Exceptions.DataMapperException;
+import FunctionLayer.Exceptions.DataMapperException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 

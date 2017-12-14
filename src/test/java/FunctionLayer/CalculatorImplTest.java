@@ -5,8 +5,10 @@
  */
 package FunctionLayer;
 
+import FunctionLayer.Entities.LineItem;
+import FunctionLayer.Entities.BillOfMaterials;
 import DBAccess.Connector;
-import Exceptions.DataMapperException;
+import FunctionLayer.Exceptions.DataMapperException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
