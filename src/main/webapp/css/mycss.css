@@ -8,10 +8,12 @@ and open the template in the editor.
     Author     : lene_
 */
 
-
+#tagknap{
+    width: 250px;
+}
 
 input{
-    width: 250px;
+/*    width: 250px;*/
     background: none;
     color: inherit;
     border: none;
@@ -38,7 +40,6 @@ input{
     border-radius: 4px;
     
 }
-
 .submit-order{
     width: 125px;
     background-color: navy;

@@ -25,38 +25,14 @@
     </head>
     
     <body>
+        <%@ include file = "header.jsp" %>
+        
         <%Order order = (Order) session.getAttribute("order");%>
         <%Rendering render = new Rendering();%>
         <%BillOfMaterials bom = LogicFacade.getBillOfMaterials(order);%>
         <%double price = LogicFacade.getCarportPrice(bom);%>
 
-        <!-- Navigation -->
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-            <div class="container">
-                <a class="navbar-brand" href="index.jsp">Johannes Fog</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarResponsive">
-                    <ul class="navbar-nav ml-auto">
-                        <li class="nav-item active">
-                            <a class="nav-link" href="index.jsp">Hjem
-                                <span class="sr-only">(current)</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Om</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Serviceydelser</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Kontakt</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
+        
 
         <div class="container">
             <div class="row">
@@ -71,8 +47,8 @@
 
                         <form name="GetCarport" action="FrontController" method="POST">
                             <input type="hidden" name="command" value="GetCarport">
-                            <input class="list-group-item active" type="submit" name="cpType" value="Fladt tag">
-                            <input class="list-group-item" type="submit" name="cpType" value="Rejst tag">
+                            <input id ="tagknap" class="list-group-item active" type="submit" name="cpType" value="Fladt tag">
+                            <input id ="tagknap" class="list-group-item" type="submit" name="cpType" value="Rejst tag">
                         </form>
 
 
@@ -141,13 +117,7 @@
 
 
 
-        <!-- Footer -->
-        <footer class="py-5 bg-dark">
-            <div class="container">
-                <p class="m-0 text-center text-white">Copyright &copy; Johannes Fog 2017</p>
-            </div>
-            <!-- /.container -->
-        </footer>
+        <%@ include file = "footer.jsp" %>
 
         <!-- Bootstrap core JavaScript -->
         <script src="vendor/jquery/jquery.min.js"></script>
