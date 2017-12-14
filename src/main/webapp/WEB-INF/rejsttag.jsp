@@ -25,31 +25,20 @@
         <div class="container">
             <div class="row">
 
-
                 <div class="col-lg-3">
                     <h1 class="my-4">Johannes Fog Carporte</h1>
                     <div class="list-group">
-
-
-                        <!--<a href="#" class="list-group-item active">Fladt tag</a> -->
-                        <!--<a href="#" class="list-group-item">Rejst tag</a>-->
-
-
                         <form name="GetCarport" action="FrontController" method="POST">
                             <input type="hidden" name="command" value="GetCarport">
                             <input id ="tagknap" class="list-group-item" type="submit" name="cpType" value="Fladt tag">
                             <input id ="tagknap" class="list-group-item active" type="submit" name="cpType" value="Rejst tag">
                         </form>
-
-
                     </div>
-
 
                 </div>
                 <!-- /.col-lg-3 -->
 
                 <div class="col-lg-9">
-
                     <div class="card mt-4">
                         <div class="card-body">
                             <h3 class="card-title">Carport med rejst tag</h3>
@@ -98,7 +87,6 @@
                                         }
                                     %>
                                 </select><br>            
-
 
                                 <br>Vælg tagmateriale<br>
                                 <select name="tagmateriale">
@@ -150,24 +138,16 @@
                             </form>
 
                             </p>
-                            <!--  <span class="text-warning">&#9733; &#9733; &#9733; &#9733; &#9734;</span> -->
-                            <!-- 4.0 stars -->
                         </div>
                     </div>
-
-
                 </div>
                 <!-- /.col-lg-9 -->
-
-
-
-
+                
                 <% String error = (String) request.getAttribute("error");
                     if (error != null) {%>
                 <H2>Error!</H2>
                 <p><%= error%></p>
                 <%}%>
-
             </div>
         </div>
 

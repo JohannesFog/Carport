@@ -3,16 +3,13 @@ package FunctionLayer;
 import FunctionLayer.Entities.BillOfMaterials;
 import FunctionLayer.Entities.User;
 import FunctionLayer.Entities.Order;
-import DBAccess.Connector;
 import DBAccess.MaterialMapper;
 import FunctionLayer.Exceptions.DataMapperException;
 import DBAccess.OrderMapper;
 import DBAccess.UserMapper;
 import PresentationLayer.DrawImplFlatAbove;
 import PresentationLayer.DrawImplFlatSide;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 /**
  * The purpose of LogicFacade is to...
@@ -41,23 +38,11 @@ public class LogicFacade {
         OrderMapper.createOrder(order);
     }
 
-    /*
-    public static void createOrder(double length, double width, double height, 
-           double roofAngle,double shedWidth, double shedLength, int phone) throws DataMapperException{
-      Date date = new Date();
-      SimpleDateFormat sdrf = new SimpleDateFormat("yyyy-MM-dd");
-      String dateString = sdrf.format(date);
-      
-      Order order = new Order(length,width,height,roofAngle,shedWidth,shedLength,dateString,phone);
-      OrderMapper.createOrder(order);
-    }
-     */
     public static ArrayList<Order> getAllOrdersEmp() throws DataMapperException {
         return OrderMapper.getAllOrders();
     }
 
     public static double getMaterialPrice(String name) throws DataMapperException {
-
         return MaterialMapper.getPrice(name);
     }
 
@@ -65,7 +50,6 @@ public class LogicFacade {
        ArrayList<Order> order = OrderMapper.getAllUserOrders(user);
        return order;
     }
-
 
     public static void doConfirmOrder(int id) throws DataMapperException {
         OrderMapper.confirmOrder(id);
@@ -78,13 +62,11 @@ public class LogicFacade {
     public static BillOfMaterials getBillOfMaterials(Order order) throws DataMapperException {
         Calculator calc = new CalculatorImpl();
         return calc.bomCalculator(order);
-
     }
 
     public static double getCarportPrice(BillOfMaterials bom) {
         Calculator calc = new CalculatorImpl();
         return calc.calculatePrice(bom);
-
     }
 
     public static String getDrawing(BillOfMaterials bom, Order order) {

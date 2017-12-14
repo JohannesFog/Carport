@@ -28,21 +28,13 @@
         <%Rendering render = new Rendering();%>
         <%User user = (User) session.getAttribute("user");%>
         
-       
         <!-- .container -->
         <div class="container">
             <div class="row">
-
-
+                
                 <div class="col-lg-3">
                     <h1 class="my-4">Johannes Fog Carporte</h1>
                     <div class="list-group">
-
-
-                        <!--<a href="#" class="list-group-item active">Fladt tag</a> -->
-                        <!--<a href="#" class="list-group-item">Rejst tag</a>-->
-
-
                         <form name="GetCarport" action="FrontController" method="POST">
                             <input type="hidden" name="command" value="GetCarport">
                             <input id ="tagknap" class="list-group-item active" type="submit" name="cpType" value="Fladt tag">
@@ -67,12 +59,8 @@
                                 Du er nu logget ind, og har derfor mulighed for at se alle dine tidligere ordre, samt nemmere placere end ordre.
                                 <%=render.getOrderlistTable()%>
                             </p>
-                            <!--  <span class="text-warning">&#9733; &#9733; &#9733; &#9733; &#9734;</span> -->
-                            <!-- 4.0 stars -->
                         </div>
                     </div>
-
-
                 </div>
                 <!-- /.col-lg-9 -->
 
@@ -85,7 +73,6 @@
         </div>
 
         <!-- /.container -->
-        
         
         <%@ include file = "footer.jsp" %>
 
