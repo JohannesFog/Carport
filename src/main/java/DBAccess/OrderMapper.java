@@ -28,11 +28,10 @@ public class OrderMapper {
 
     public static void createOrder(Order order) throws DataMapperException {
         Connection con = Connector.connection();
-        String SQL = "INSERT INTO `orders`(`length`,`width`,`height`,`roof_angle`,`shed_width`,`shed_length`,`orderdate`,`phonenumber`,`status`) "
+        String SQL = "INSERT INTO `orders`(`length`,`width`,`height`,`roof_angle`,"
+                + "`shed_width`,`shed_length`,`orderdate`,`phonenumber`,`status`) "
                 + "VALUES (?,?,?,?,?,?,?,?,?)";
-
         try {
-
             PreparedStatement ps = con.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
             con.setAutoCommit(false);
             ps.setDouble(1, order.getLength());
@@ -46,7 +45,6 @@ public class OrderMapper {
             ps.setString(9, order.getStatus());
             ps.executeUpdate();
             con.commit();
-
             ResultSet ids = ps.getGeneratedKeys();
             ids.next();
             int id = ids.getInt(1);

@@ -32,18 +32,17 @@ public class CalculatorImpl implements Calculator {
     @Override
 
     public BillOfMaterials bomCalculator(Order order) throws DataMapperException {
-        
+
         //double length, double width, double height,
         //    String type, String material, double angle,
         //    double skurLength, double skurWidth
-        
         double length = order.getLength();
         double width = order.getWidth();
         double height = order.getHeight();
         double angle = order.getRoofAngle();
         double skurLength = order.getShedLength();
         double skurWidth = order.getShedWidth();
-        
+
         BillOfMaterials totalBom = new BillOfMaterials();
 
         if (angle == 0) {
@@ -73,7 +72,6 @@ public class CalculatorImpl implements Calculator {
     @Override
     public BillOfMaterials bomCalculatorSkråtTag(double length, double width, double height,
             double angle, double skurLength, double skurWidth) throws DataMapperException {
-
 
         double hypotenuse = calculateHypotenuse(width, angle);
         double katete = calculateKatete(width, angle);
@@ -123,7 +121,8 @@ public class CalculatorImpl implements Calculator {
     }
 
     @Override
-    public BillOfMaterials calculateStolper(double length, double width, double height, double skurLength, double skurWidth) throws DataMapperException {
+    public BillOfMaterials calculateStolper(double length, double width, double height,
+            double skurLength, double skurWidth) throws DataMapperException {
         BillOfMaterials bom = new BillOfMaterials();
         int quantity = ((((int) length - 30) / 240) + 1) * 2;
         if (length < 270) {
@@ -146,7 +145,8 @@ public class CalculatorImpl implements Calculator {
         materiale = "97x97 mm. trykimp. stolpe";
         meterPrice = LogicFacade.getMaterialPrice(materiale);
         unitPrice = meterPrice * ((double) newHeight / 100);
-        bom.addLineItem(new LineItem(materiale, newHeight, quantity, "stk", "Stolper nedgraves 90cm i jord.", unitPrice));
+        bom.addLineItem(new LineItem(materiale, newHeight, quantity,
+                "stk", "Stolper nedgraves 90cm i jord.", unitPrice));
         return bom;
     }
 
@@ -275,7 +275,6 @@ public class CalculatorImpl implements Calculator {
 
         return bom;
     }
-
 
     @Override
     public BillOfMaterials calculateRemme(double length) throws DataMapperException {
@@ -599,25 +598,25 @@ public class CalculatorImpl implements Calculator {
         meterPrice = LogicFacade.getMaterialPrice(materiale);
         unitPrice = meterPrice * 5.4;
         bom.addLineItem(new LineItem(materiale, 540, 1, "stk", "Til z på bagside af dør", unitPrice));
- 
+
         materiale = "Stalddørsgreb 50x75 mm.";
-        unitPrice = LogicFacade.getMaterialPrice(materiale);        
+        unitPrice = LogicFacade.getMaterialPrice(materiale);
         bom.addLineItem(new LineItem(materiale, 0, 1, "stk", "Til dør i skur", unitPrice));
- 
+
         materiale = "T-hængsel 390 mm.";
-        unitPrice = LogicFacade.getMaterialPrice(materiale);        
+        unitPrice = LogicFacade.getMaterialPrice(materiale);
         bom.addLineItem(new LineItem(materiale, 0, 2, "stk", "Til dør i skur", unitPrice));
 
         int skruerInderst = quantity / 2 * 3;
         int kasserInderst = skruerInderst / 200 + 2;
         materiale = "4,5 x 50 mm. Skruer Climate TX20 - 200 stk.";
-        unitPrice = LogicFacade.getMaterialPrice(materiale);        
+        unitPrice = LogicFacade.getMaterialPrice(materiale);
         bom.addLineItem(new LineItem(materiale, 0, kasserInderst, "kasser", "Til montering af inderste bræt ved beklædning ", unitPrice));
 
         int skruerYderst = quantity / 2 * 6;
         int kasserYderst = skruerYderst / 200 + 2;
         materiale = "4,5 x 70 mm. Skruer Climate TX20 - 200 stk.";
-        unitPrice = LogicFacade.getMaterialPrice(materiale);        
+        unitPrice = LogicFacade.getMaterialPrice(materiale);
         bom.addLineItem(new LineItem(materiale, 0, kasserYderst, "kasser", "Til montering af yderste bræt ved beklædning", unitPrice));
 
         return bom;
