@@ -41,7 +41,7 @@ public class UserMapper {
                 try {
                     con.rollback();
                 } catch (SQLException ex1) {
-                    throw new DataMapperException(ex.getMessage());
+                    throw new DataMapperException(ex1.getMessage());
                 }
             }
             throw new DataMapperException(ex.getMessage());

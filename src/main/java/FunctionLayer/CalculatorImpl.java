@@ -32,11 +32,6 @@ public class CalculatorImpl implements Calculator {
     @Override
 
     public BillOfMaterials bomCalculator(Order order) throws DataMapperException {
-        
-        //double length, double width, double height,
-        //    String type, String material, double angle,
-        //    double skurLength, double skurWidth
-        
         double length = order.getLength();
         double width = order.getWidth();
         double height = order.getHeight();
@@ -58,13 +53,13 @@ public class CalculatorImpl implements Calculator {
         return totalBom;
     }
 
-    public double calculateHypotenuse(double width, double angle) {
+    private double calculateHypotenuse(double width, double angle) {
         double angleInRadian = Math.toRadians(angle);
         double hypotenuse = (width / 2) / Math.cos(angleInRadian);
         return hypotenuse;
     }
 
-    public double calculateKatete(double width, double angle) {
+    private double calculateKatete(double width, double angle) {
         double angleInRadian = Math.toRadians(angle);
         double katete = (width / 2) * Math.tan(angleInRadian);
         return katete;
@@ -73,7 +68,6 @@ public class CalculatorImpl implements Calculator {
     @Override
     public BillOfMaterials bomCalculatorSkråtTag(double length, double width, double height,
             double angle, double skurLength, double skurWidth) throws DataMapperException {
-
 
         double hypotenuse = calculateHypotenuse(width, angle);
         double katete = calculateKatete(width, angle);
@@ -279,7 +273,6 @@ public class CalculatorImpl implements Calculator {
 
     @Override
     public BillOfMaterials calculateRemme(double length) throws DataMapperException {
-
         BillOfMaterials bom = new BillOfMaterials();
         int remLength = (int) length;
         if (remLength < 300) {

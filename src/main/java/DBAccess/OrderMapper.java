@@ -14,8 +14,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -30,9 +28,7 @@ public class OrderMapper {
         Connection con = Connector.connection();
         String SQL = "INSERT INTO `orders`(`length`,`width`,`height`,`roof_angle`,`shed_width`,`shed_length`,`orderdate`,`phonenumber`,`status`) "
                 + "VALUES (?,?,?,?,?,?,?,?,?)";
-
         try {
-
             PreparedStatement ps = con.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
             con.setAutoCommit(false);
             ps.setDouble(1, order.getLength());
@@ -81,7 +77,6 @@ public class OrderMapper {
         } catch (SQLException ex) {
             throw new DataMapperException(ex.getMessage());
         }
-
     }
 
     public static ArrayList<Order> getAllOrders() throws DataMapperException {

@@ -23,20 +23,8 @@ public class Order {
     private String orderDate;
     private String status;
 
-        
-    public Order(double length, double width, double height,
-            double roofAngle, double shedWidth, double shedLength, String orderDate, int phone) {
-        this.length = length;
-        this.width = width;
-        this.height = height;
-        this.roofAngle = roofAngle;
-        this.shedWidth = shedWidth;
-        this.shedLength = shedLength;
-        this.orderDate = orderDate;
-        this.phone = phone;
-        this.status = "unconfirmed";
-    }
-    
+       
+       //Bruges når ordren bliver oprettet i systemet
        public Order(double length, double width, double height,
             double roofAngle, double shedWidth, double shedLength, String status) {
         this.length = length;
@@ -47,7 +35,8 @@ public class Order {
         this.shedLength = shedLength;
         this.status = status;
     }
-
+    
+    //Bruges når ordren bliver hentet i databasen
     public Order(int oId, double length, double width, double height,
             double roofAngle, double shedWidth, double shedLength, String orderDate, int phone,String status) {
         this.oId = oId;
