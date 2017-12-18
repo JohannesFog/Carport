@@ -1,23 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package PresentationLayer;
 
 import FunctionLayer.Entities.LineItem;
 import FunctionLayer.Entities.BillOfMaterials;
 import java.lang.*;
-import FunctionLayer.*;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-/**
- *
- * @author Christian
- * 
- */
 public class DrawImplFlatAbove implements Draw{
     
     public ArrayList XkoorLeftOppe;
@@ -167,7 +157,7 @@ public class DrawImplFlatAbove implements Draw{
         //øverste rem.
         String ØversteWidth = relevantItems.get(0).getName().substring(0, 2);//45 from description: "45x95mm spærtræ..."
         ØversteWidth = Double.toString(Double.parseDouble(ØversteWidth)/10.0);
-        String ØversteLength = Double.toString(this.carportLength); // user input.
+        String ØversteLength = Double.toString(this.carportLength); 
         String ØversteLeft = "0";
         String ØversteDistToTop = Double.toString(this.SIDEUDHAENG);
         
@@ -178,7 +168,7 @@ public class DrawImplFlatAbove implements Draw{
         //nederste rem.
         String NedersteWidth = relevantItems.get(0).getName().substring(0, 2);//45 from description: "45x95mm spærtræ..."
         NedersteWidth = Double.toString(Double.parseDouble(NedersteWidth)/10.0);
-        String NedersteLength = Double.toString(this.carportLength); // user input.
+        String NedersteLength = Double.toString(this.carportLength);
         String NedersteLeft = "0";
         String NedersteDistToTop = Double.toString(this.carportWidth-
                                     (Double.parseDouble(NedersteWidth))-this.SIDEUDHAENG)
@@ -207,9 +197,9 @@ public class DrawImplFlatAbove implements Draw{
         boolean skurFindes = (this.skurLength > 0) && (this.skurWidth > 0);
         boolean ensAfstandOppeNede = pladsForOven == pladsForNeden;
         
-        //Tilfæj hjoerneStolper der ikke overlapper med skur;
+        //Tilføj hjoerneStolper der ikke overlapper med skur;
         stolperOppe += stolpeHjoerneOppe(skurFindes, ensAfstandOppeNede, pladsForOven);
-        //Tilfæj hjoerneStolper der ikke overlapper med skur;
+        //Tilføj hjoerneStolper der ikke overlapper med skur;
         stolperNede += stolpeHjoerneNede(skurFindes, ensAfstandOppeNede, pladsForNeden);
                 
         this.XkoorLeftOppe = stolpePlaceringOppe(stolperOppe, pladsForOven, skurFindes, ensAfstandOppeNede);
@@ -499,8 +489,7 @@ LineItem{name=45x195mm spærtræ ubh., length=300, quantity=5, unit=stk, descrip
                 skurBottomRight_y, 
                 skurBottomleft_x, 
                 skurBottomleft_y);
-        
-        
+                
             // stolper til skuret:
             String TopLeftLeft = Double.toString(skurBottomleft_x);
             String TopLeftDistToTop = Double.toString(skurTopLeft_y);

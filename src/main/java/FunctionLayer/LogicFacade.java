@@ -86,7 +86,7 @@ public class LogicFacade {
             DrawImplFlatAbove drawFlatAbove = new DrawImplFlatAbove(bom, width, length, skurLength, skurWidth);
 
             String drawingFlatAbove = drawFlatAbove.tegnTag(graphX, graphYUp);
-            DrawImplFlatSide drawFlatSide = new DrawImplFlatSide(bom, width, length, height, skurLength, skurWidth);
+            DrawImplFlatSide drawFlatSide = new DrawImplFlatSide(bom, length, height, skurLength, skurWidth);
             String drawintFlatSide = drawFlatSide.tegnTag(graphX, graphYSide, drawingFlatAbove,
                     drawFlatAbove.XkoorLeftOppe, drawFlatAbove.XkoorLeftNede);
 
