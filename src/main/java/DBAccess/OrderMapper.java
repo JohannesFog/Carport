@@ -1,7 +1,4 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
  */
 package DBAccess;
 
@@ -22,7 +19,7 @@ import java.util.logging.Logger;
  * The purpose of OrderMapper is to transfer the order information from the
  * database to an order object or the other way around.
  *
- * @author lene
+ * @author Christian, Gert, Lene & Mikkel
  */
 public class OrderMapper {
 

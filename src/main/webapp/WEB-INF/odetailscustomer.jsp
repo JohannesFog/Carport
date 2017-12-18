@@ -1,7 +1,7 @@
 <%-- 
     Document   : odetailcustomer
     Created on : 07-12-2017, 10:36:50
-    Author     : Mikkel Lindstrøm <Mikkel.Lindstrøm>
+    Author     : Christian, Gert, Lene & Mikkel
 --%>
 
 <%@page import="FunctionLayer.Entities.*"%>

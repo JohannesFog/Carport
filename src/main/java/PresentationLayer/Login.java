@@ -8,9 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- The purpose of Login is to...
-
- @author kasper
+ @author Christian, Gert, Lene & Mikkel
  */
 public class Login extends Command {
 

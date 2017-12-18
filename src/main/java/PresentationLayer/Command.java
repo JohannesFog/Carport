@@ -6,9 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- The purpose of Command is to...
-
- @author kasper
+ @author Christian, Gert, Lene & Mikkel
  */
 abstract class Command {
 

@@ -1,7 +1,7 @@
 <%-- 
     Document   : fladttag
     Created on : 22-11-2017, 13:33:12
-    Author     : lene_
+    Author     : Christian, Gert, Lene & Mikkel
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>

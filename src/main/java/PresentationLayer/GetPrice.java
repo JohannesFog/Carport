@@ -1,29 +1,18 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
  */
 package PresentationLayer;
 
-import java.io.*;
-import java.util.*;
 import FunctionLayer.Entities.BillOfMaterials;
-import FunctionLayer.Calculator;
-import FunctionLayer.CalculatorImpl;
 import FunctionLayer.LogicFacade;
 import FunctionLayer.Exceptions.DataMapperException;
 import FunctionLayer.Entities.Order;
-import FunctionLayer.Entities.User;
-import static java.lang.Compiler.command;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author Mikkel Lindstrøm 
+ * @author Christian, Gert, Lene & Mikkel
  */
 public class GetPrice extends Command {
 

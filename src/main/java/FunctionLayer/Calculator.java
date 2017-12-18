@@ -6,7 +6,7 @@ import FunctionLayer.Exceptions.DataMapperException;
 
 /**
  * 
- * @author Mikkel Lindstrøm
+ * @author Christian, Gert, Lene & Mikkel
  */
 public interface Calculator {
     

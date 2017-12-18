@@ -3,21 +3,16 @@ package FunctionLayer;
 import FunctionLayer.Entities.BillOfMaterials;
 import FunctionLayer.Entities.User;
 import FunctionLayer.Entities.Order;
-import DBAccess.Connector;
 import DBAccess.MaterialMapper;
 import FunctionLayer.Exceptions.DataMapperException;
 import DBAccess.OrderMapper;
 import DBAccess.UserMapper;
 import PresentationLayer.DrawImplFlatAbove;
 import PresentationLayer.DrawImplFlatSide;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 /**
- * The purpose of LogicFacade is to...
- *
- * @author kasper
+ * @author Christian, Gert, Lene & Mikkel
  */
 public class LogicFacade {
 

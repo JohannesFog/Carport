@@ -1,7 +1,7 @@
 <%-- 
     Document   : rejsttag
     Created on : 22-11-2017, 13:32:28
-    Author     : lene_
+    Author     : Christian, Gert, Lene & Mikkel
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>

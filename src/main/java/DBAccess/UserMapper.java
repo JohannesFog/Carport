@@ -9,9 +9,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 /**
- * The purpose of UserMapper is to...
  *
- * @author kasper
+ * @author Christian, Gert, Lene & Mikkel
  */
 public class UserMapper {
 

@@ -1,8 +1,7 @@
 package FunctionLayer.Exceptions;
 
 /**
- * The purpose of LoginSampleException is to...
- * @author kasper
+ * @author Christian, Gert, Lene & Mikkel
  */
 public class DataMapperException extends Exception {
 

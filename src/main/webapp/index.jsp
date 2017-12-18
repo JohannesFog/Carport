@@ -1,7 +1,7 @@
 <%-- 
    Document   : index
    Created on : Aug 22, 2017, 2:01:06 PM
-   Author     : kasper
+   Author     : Christian, Gert, Lene & Mikkel
 --%>
 
 <%@page import="FunctionLayer.Entities.User"%>
