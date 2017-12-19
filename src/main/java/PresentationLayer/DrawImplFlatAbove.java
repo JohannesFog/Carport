@@ -202,7 +202,7 @@ public class DrawImplFlatAbove implements Draw{
         //Tilføj hjoerneStolper der ikke overlapper med skur;
         stolperOppe += stolpeHjoerneOppe(skurFindes, ensAfstandOppeNede, pladsForOven);
         //Tilføj hjoerneStolper der ikke overlapper med skur;
-        stolperNede += stolpeHjoerneNede(skurFindes, ensAfstandOppeNede, pladsForNeden);
+        stolperNede += stolpeHjoerneNede(skurFindes, pladsForNeden);
                 
         this.XkoorLeftOppe = stolpePlaceringOppe(stolperOppe, pladsForOven, skurFindes, ensAfstandOppeNede);
         this.XkoorLeftNede = stolpePlaceringNede(stolperNede, pladsForNeden, skurFindes);
@@ -273,7 +273,7 @@ public class DrawImplFlatAbove implements Draw{
         return output;
     }
     
-    private int stolpeHjoerneNede(boolean skurFindes, boolean ensAfstand, double pladsForNeden) {
+    private int stolpeHjoerneNede(boolean skurFindes, double pladsForNeden) {
         int output = 0;
         if (!skurFindes) {output = 2;}
         if (skurFindes) {output = 1;}
