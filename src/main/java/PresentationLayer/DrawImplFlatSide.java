@@ -2,10 +2,7 @@
  */
 package PresentationLayer;
 
-import java.util.regex.*;
 import FunctionLayer.Entities.BillOfMaterials;
-import FunctionLayer.Calculator;
-import FunctionLayer.CalculatorImpl;
 import FunctionLayer.Entities.LineItem;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
@@ -19,28 +16,24 @@ public class DrawImplFlatSide implements Draw {
 
     private double skurLength;
     private double skurWidth;
-    private double SIDEUDHAENG = 15;
     private double ENDEUDHAENG = 15;
     private int ARROWSPACE = 60;
     private int ARROWADJUST = 50;
 
     private double SLOPE = 10.0 / 780.0;
     private BillOfMaterials bom;
-    private double carportWidth;
     private double carportLength;
     private double carportHeight;
 
     private double oversternHeight;
     private double understernHeight;
 
-    public DrawImplFlatSide(BillOfMaterials bom, double carportWidth, double carportLength, double carportHeight,
+    public DrawImplFlatSide(BillOfMaterials bom, double carportLength, double carportHeight,
             double skurLength, double skurWidth) {
-        this.carportWidth = carportWidth;
 
         BillOfMaterials localBom = new BillOfMaterials();
         localBom.mergeBom(bom);
         this.bom = localBom;
-        //this.carportWidth = carportWidth;
         this.carportLength = carportLength;
         this.carportHeight = carportHeight;
 
@@ -52,7 +45,6 @@ public class DrawImplFlatSide implements Draw {
     private ArrayList<LineItem> relevantBomLines(ArrayList<String> wordsToTestFor, BillOfMaterials bom) {
         ArrayList<LineItem> output = new ArrayList<LineItem>();
         int wordNum = wordsToTestFor.size();
-        int lineItemNum = bom.getBomList().size();
 
         String test;
         for (int i = 0; i < wordNum; i++) {
@@ -144,7 +136,7 @@ public class DrawImplFlatSide implements Draw {
         if (this.skurLength > 0 && this.skurWidth > 0) {
             output = output + skur();
         }
-        output = output + stolper2Forneden(drawFlatAbove, XkoorNede);
+        output = output + stolper2Forneden(XkoorNede);
         output = output;
 
         output = output + "</SVG>";
@@ -223,7 +215,7 @@ public class DrawImplFlatSide implements Draw {
         return output2;
     }
 
-    private String stolper2Forneden(String DrawFlatAbove, ArrayList<Double> XkoorNede) {
+    private String stolper2Forneden(ArrayList<Double> XkoorNede) {
         String output = "";
 
         ArrayList<String> words = new ArrayList<String>();
@@ -231,48 +223,6 @@ public class DrawImplFlatSide implements Draw {
         ArrayList<LineItem> relevantItems = relevantBomLines(words, this.bom);
         String ØversteVenstreLength = relevantItems.get(0).getName().substring(3, 4);//9 from description: "97x97mm trykimp. stolpe,..."
         double stolpelength = Double.parseDouble(ØversteVenstreLength);
-
-        String port720720210210 = "<SVG width=\"750\" height=750> <rect x=\"000\" y=\"00\" height=\"750\" width=\"750\"\n"
-                + " style=\"stroke:#000000; fill: #ffff00\"/>"
-                + "<rect x=\"0\" y=\"15.0\" height=\"4.5\" width=\"720.0\"style=\"stroke:#000000; fill: #ff0000\"/>"
-                + "<rect x=\"0\" y=\"700.5\" height=\"4.5\" width=\"720.0\"style=\"stroke:#000000; fill: #ff0000\"/>"
-                + "<polygon points=\"495.0,495.0 705.0,495.0 705.0,705.0 495.0,705.0\" style=\"stroke:#000000; fill: #099a0f\" />"
-                + "<rect x=\"495.0\" y=\"495.0\" height=\"9\" width=\"9\"style=\"stroke:#000000; fill: #ff0000\"/>"
-                + "<rect x=\"696.0\" y=\"495.0\" height=\"9\" width=\"9\"style=\"stroke:#000000; fill: #ff0000\"/>"
-                + "<rect x=\"495.0\" y=\"696.0\" height=\"9\" width=\"9\"style=\"stroke:#000000; fill: #ff0000\"/>"
-                + "<rect x=\"696.0\" y=\"595.5\" height=\"9\" width=\"9\"style=\"stroke:#000000; fill: #ff0000\"/>"
-                + "<rect x=\"595.5\" y=\"495.0\" height=\"9\" width=\"9\"style=\"stroke:#000000; fill: #ff0000\"/>"
-                + "<rect x=\"0.0\" y=\"0\" height=\"720.0\" width=\"4.5\"style=\"stroke:#000000; fill: #ff0000\"/>"
-                + "<rect x=\"55.03846153846154\" y=\"0\" height=\"720.0\" width=\"4.5\"style=\"stroke:#000000; fill: #ff0000\"/>"
-                + "<rect x=\"110.07692307692308\" y=\"0\" height=\"720.0\" width=\"4.5\"style=\"stroke:#000000; fill: #ff0000\"/>"
-                + "<rect x=\"165.1153846153846\" y=\"0\" height=\"720.0\" width=\"4.5\"style=\"stroke:#000000; fill: #ff0000\"/>"
-                + "<rect x=\"220.15384615384616\" y=\"0\" height=\"720.0\" width=\"4.5\"style=\"stroke:#000000; fill: #ff0000\"/>"
-                + "<rect x=\"275.1923076923077\" y=\"0\" height=\"720.0\" width=\"4.5\"style=\"stroke:#000000; fill: #ff0000\"/>"
-                + "<rect x=\"330.2307692307692\" y=\"0\" height=\"720.0\" width=\"4.5\"style=\"stroke:#000000; fill: #ff0000\"/>"
-                + "<rect x=\"385.2692307692308\" y=\"0\" height=\"720.0\" width=\"4.5\"style=\"stroke:#000000; fill: #ff0000\"/>"
-                + "<rect x=\"440.3076923076923\" y=\"0\" height=\"720.0\" width=\"4.5\"style=\"stroke:#000000; fill: #ff0000\"/>"
-                + "<rect x=\"495.34615384615387\" y=\"0\" height=\"720.0\" width=\"4.5\"style=\"stroke:#000000; fill: #ff0000\"/>"
-                + "<rect x=\"550.3846153846154\" y=\"0\" height=\"720.0\" width=\"4.5\"style=\"stroke:#000000; fill: #ff0000\"/>"
-                + "<rect x=\"605.4230769230769\" y=\"0\" height=\"720.0\" width=\"4.5\"style=\"stroke:#000000; fill: #ff0000\"/>"
-                + "<rect x=\"660.4615384615385\" y=\"0\" height=\"720.0\" width=\"4.5\"style=\"stroke:#000000; fill: #ff0000\"/>"
-                + "<rect x=\"715.5\" y=\"0\" height=\"720.0\" width=\"4.5\"style=\"stroke:#000000; fill: #ff0000\"/><line x1=\"17.0\" y1=\"15.0\" x2=\"707.0\" y2=\"705.0\" stroke=\"black\" stroke-width=\"2\" stroke-dasharray=\"2, 5\"/><line x1=\"15.0\" y1=\"15.0\" x2=\"705.0\" y2=\"705.0\" stroke=\"black\" stroke-width=\"2\" stroke-dasharray=\"2, 5\"/><line x1=\"15.0\" y1=\"705.0\" x2=\"705.0\" y2=\"15.0\" stroke=\"black\" stroke-width=\"2\" stroke-dasharray=\"2, 5\"/><line x1=\"17.0\" y1=\"705.0\" x2=\"707.0\" y2=\"15.0\" stroke=\"black\" stroke-width=\"2\" stroke-dasharray=\"2, 5\"/><rect x=\"15.0\" y=\"15.0\" height=\"9\" width=\"9\"style=\"stroke:#000000; fill: #ff0000\"/>"
-                + "<rect x=\"696.0\" y=\"15.0\" height=\"9\" width=\"9\"style=\"stroke:#000000; fill: #ff0000\"/><rect x=\"15.0\" y=\"696.0\" height=\"9\" width=\"9\"style=\"stroke:#000000; fill: #ff0000\"/><rect x=\"696.0\" y=\"696.0\" height=\"9\" width=\"9\"style=\"stroke:#000000; fill: #ff0000\"/><rect x=\"187.5\" y=\"15.0\" height=\"9\" width=\"9\"style=\"stroke:#000000; fill: #ff0000\"/><rect x=\"355.5\" y=\"15.0\" height=\"9\" width=\"9\"style=\"stroke:#000000; fill: #ff0000\"/><rect x=\"523.5\" y=\"15.0\" height=\"9\" width=\"9\"style=\"stroke:#000000; fill: #ff0000\"/><rect x=\"250.5\" y=\"696.0\" height=\"9\" width=\"9\"style=\"stroke:#000000; fill: #ff0000\"/></SVG>"
-                + "<p> start-Stolpe2: 187.5\n"
-                + "355.5\n"
-                + "523.5\n"
-                + "elems: 3\n"
-                + "stolperOppe: 3\n"
-                + "stolperNede: 1\n"
-                + "afstand oppe: 672.0\n"
-                + "afstand nede: 462.0\n"
-                + "stolpeOppeDouble: 2.358974358974359\n"
-                + "stolpeNedeDouble: 1.641025641025641\n"
-                + "ratio: 1.4375\n"
-                + "stolpe3test: [187.5, 355.5, 523.5]\n"
-                + "</p>";
-
-        double distFromTop = this.carportWidth - this.SIDEUDHAENG - stolpelength;
-        output = "";
         
         double dubRight = this.carportLength - this.ENDEUDHAENG - stolpelength;
         double dubSkur = dubRight + stolpelength - this.skurLength;
@@ -280,9 +230,6 @@ public class DrawImplFlatSide implements Draw {
         double DRheight = this.carportHeight - (dubRight * SLOPE);
         double DSheight = this.carportHeight - (dubSkur * SLOPE);
         
-        String stolpeRight = String.format("<rect x=\"%s\" y=\"%s\" height=\"%s\" width=\"%s\""
-                + "style=\"stroke:#000000; fill: #ff0000\"/>",
-                dubRight, (dubRight * SLOPE), DRheight, stolpelength);
         String stolpeSkur = String.format("<rect x=\"%s\" y=\"%s\" height=\"%s\" width=\"%s\""
                 + "style=\"stroke:#000000; fill: #ff0000\"/>",
                 dubSkur, (dubSkur * SLOPE), DSheight, stolpelength);
@@ -302,48 +249,8 @@ public class DrawImplFlatSide implements Draw {
         return output;
     }
     
-    private String stolper() {
-        ArrayList<String> words = new ArrayList<String>();
-        words.add("Stolper");
-        ArrayList<LineItem> relevantItems = relevantBomLines(words, this.bom);
-        removeLineItemsFromBom(relevantItems);
-
-        // alle afstande regnes i centimeter
-        //øverste-venstre stolpe.
-        String VenstreLeft = "0";
-        String VenstreDistToTop = Double.toString(this.oversternHeight);
-        String VenstreLength = relevantItems.get(0).getName().substring(3, 4);//9 from description: "97x97mm trykimp. stolpe,..."
-        String VenstreHeight = Double.toString(this.carportHeight
-                - Double.parseDouble(VenstreDistToTop));
-
-        int antalBrædder = relevantItems.get(0).getQuantity() / 2; 
-        double tomLuft = this.carportLength - (antalBrædder * Integer.parseInt(VenstreLength)) - this.SIDEUDHAENG + this.ENDEUDHAENG;
-        String AfstandMellemBraet = Double.toString(tomLuft / ((double) (antalBrædder - 1)));
-
-        String output = "";
-        for (int i = 0; i < antalBrædder; i++) {
-            VenstreLeft = Double.toString(15
-                    + (i * (Double.parseDouble(AfstandMellemBraet) + Double.parseDouble(VenstreLength))));
-
-            String VenstreDistToTopNew = Double.toString(Double.parseDouble(VenstreDistToTop)
-                    + (Double.parseDouble(VenstreLeft) * SLOPE));
-
-            String VenstreHeightNew = Double.toString(Double.parseDouble(VenstreHeight)
-                    - (Double.parseDouble(VenstreLeft) * SLOPE));
-
-            output += String.format("<rect x=\"%s\" y=\"%s\" height=\"%s\" width=\"%s\""
-                    + "style=\"stroke:#000000; fill: #ff0000\"/>",
-                    VenstreLeft, VenstreDistToTopNew,
-                     VenstreHeightNew, VenstreLength);
-        }
-
-        return output;
-
-    }
-
     private String skur() {
         double Localskurlength = this.skurLength;
-        double LocalcarportLength = this.carportLength;
 
         //Man kan ikke have et skur der er længere end Carporten  - 2 * udhæng på enderne
         if (this.skurLength > (carportLength - this.ENDEUDHAENG - this.ENDEUDHAENG)) {

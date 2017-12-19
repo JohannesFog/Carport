@@ -4,7 +4,6 @@ package PresentationLayer;
 
 import FunctionLayer.Entities.LineItem;
 import FunctionLayer.Entities.BillOfMaterials;
-import java.lang.*;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -14,6 +13,7 @@ import java.util.Set;
  * @author Christian, Gert, Lene & Mikkel
  * 
  */
+
 public class DrawImplFlatAbove implements Draw{
     
     public ArrayList XkoorLeftOppe;
@@ -163,7 +163,7 @@ public class DrawImplFlatAbove implements Draw{
         //øverste rem.
         String ØversteWidth = relevantItems.get(0).getName().substring(0, 2);//45 from description: "45x95mm spærtræ..."
         ØversteWidth = Double.toString(Double.parseDouble(ØversteWidth)/10.0);
-        String ØversteLength = Double.toString(this.carportLength); // user input.
+        String ØversteLength = Double.toString(this.carportLength); 
         String ØversteLeft = "0";
         String ØversteDistToTop = Double.toString(this.SIDEUDHAENG);
         
@@ -174,7 +174,7 @@ public class DrawImplFlatAbove implements Draw{
         //nederste rem.
         String NedersteWidth = relevantItems.get(0).getName().substring(0, 2);//45 from description: "45x95mm spærtræ..."
         NedersteWidth = Double.toString(Double.parseDouble(NedersteWidth)/10.0);
-        String NedersteLength = Double.toString(this.carportLength); // user input.
+        String NedersteLength = Double.toString(this.carportLength);
         String NedersteLeft = "0";
         String NedersteDistToTop = Double.toString(this.carportWidth-
                                     (Double.parseDouble(NedersteWidth))-this.SIDEUDHAENG)
@@ -189,10 +189,6 @@ public class DrawImplFlatAbove implements Draw{
     }
     
     private String stolper() {
-        ArrayList<String> words = new ArrayList<String>();
-        words.add("Stolper");
-        ArrayList<LineItem> relevantItems = relevantBomLines(words, this.bom);
-        int quant = relevantItems.get(0).getQuantity();
         stolpeLaengde();
         
         double pladsForOven = stolpePladsOppe();
@@ -203,9 +199,9 @@ public class DrawImplFlatAbove implements Draw{
         boolean skurFindes = (this.skurLength > 0) && (this.skurWidth > 0);
         boolean ensAfstandOppeNede = pladsForOven == pladsForNeden;
         
-        //Tilfæj hjoerneStolper der ikke overlapper med skur;
+        //Tilføj hjoerneStolper der ikke overlapper med skur;
         stolperOppe += stolpeHjoerneOppe(skurFindes, ensAfstandOppeNede, pladsForOven);
-        //Tilfæj hjoerneStolper der ikke overlapper med skur;
+        //Tilføj hjoerneStolper der ikke overlapper med skur;
         stolperNede += stolpeHjoerneNede(skurFindes, ensAfstandOppeNede, pladsForNeden);
                 
         this.XkoorLeftOppe = stolpePlaceringOppe(stolperOppe, pladsForOven, skurFindes, ensAfstandOppeNede);
@@ -215,17 +211,7 @@ public class DrawImplFlatAbove implements Draw{
         double YkoorNedeOppe = (this.carportWidth - this.SIDEUDHAENG) - this.stolpeLength;
         String tegningFraXkoorOppe = stolpeTegnFraXkoor(XkoorLeftOppe, YkoorOppeOppe);
         String tegningFraXkoorNede = stolpeTegnFraXkoor(XkoorLeftNede, YkoorNedeOppe);
-        
-        String myport = "carportWidth: " + this.carportWidth + " carportLength: " + this.carportLength + "\n";
-        String udhaeng = "endeUdhaeng: " + this.ENDEUDHAENG + " sideUdhaeng: " + this.SIDEUDHAENG + "\n";
-        String myskur = "skurWidth: " + this.skurWidth + " this.skurLength: " + this.skurLength + "\n";
-        String output = "her er december: " + quant + " \n" +
-                myport + " "+ udhaeng+" " + myskur + "\n" +
-                "pladsForOven: " + pladsForOven + " pladsForNeden: " + pladsForNeden + "\n" +
-                "boolean-skurFindes: " + skurFindes + " boolean-ensAfstandOppeNede: " + ensAfstandOppeNede + "\n" +
-                "stolperOppe: " + stolperOppe + " stolperNede: " + stolperNede + "\n" +
-                "stolpetegningoppeDECEMEBER: " + XkoorLeftOppe;      
-        
+                
         return tegningFraXkoorOppe + tegningFraXkoorNede;
         
     }
@@ -343,24 +329,15 @@ LineItem{name=45x195mm spærtræ ubh., length=300, quantity=5, unit=stk, descrip
         VenstreSpærWidth = Double.toString(Double.parseDouble(VenstreSpærWidth)/10.0);
         String VenstreSpærLength = Double.toString(this.carportWidth); 
         
-        double portLaengde = this.carportLength;
         String VenstreSpærLeft = "0";
         String VenstreSpærDistToTop = "0";
         
         int antalBrædder = relevantItems.get(0).getQuantity(); 
         double tomLuft = this.carportLength - (antalBrædder * Double.parseDouble(VenstreSpærWidth));
         String AfstandMellemBraet = Double.toString(  tomLuft/((double) (antalBrædder-1)));
-        
-        String outputTest = "antal: "
-                + antalBrædder
-                + "tomluft: "
-                + tomLuft
-                + "AfstandMellemBraet"
-                + AfstandMellemBraet;
-        
+                
         String output = "";
         for (int i = 0; i < antalBrædder; i++) {
-            double distToTop = 0;
             VenstreSpærLeft = Double.toString( 
                                 (i*(Double.parseDouble(AfstandMellemBraet)+Double.parseDouble(VenstreSpærWidth))));
             output += String.format("<rect x=\"%s\" y=\"%s\" height=\"%s\" width=\"%s\""+      
@@ -371,53 +348,6 @@ LineItem{name=45x195mm spærtræ ubh., length=300, quantity=5, unit=stk, descrip
         
         return output;
        
-    }
-
-    private String kryds_2() {
-        double lengthOfKryds = this.carportWidth - this.SIDEUDHAENG - this.SIDEUDHAENG; 
-        double distFromLeft = (this.carportLength - lengthOfKryds) / 2.0;
-        
-        String output = "";
-        
-        //kryds -- Top Left - Bottom Right --Øverst
-        String x1 = Double.toString(distFromLeft+BONDDIST); 
-        String y1 = Double.toString(this.SIDEUDHAENG); 
-        String x2 = Double.toString(distFromLeft+BONDDIST+lengthOfKryds); 
-        String y2 = Double.toString(this.SIDEUDHAENG+lengthOfKryds); 
-        output += String.format("<line x1=\"%s\" y1=\"%s\" x2=\"%s\" y2=\"%s\" "
-                + "stroke=\"black\" stroke-width=\"2\" stroke-dasharray=\"2, 5\"/>", 
-                            x1, y1, x2, y2);
-        
-        //kryds -- Top Left - Bottom Right --Nederst
-        x1 = Double.toString(distFromLeft); 
-        y1 = Double.toString(this.SIDEUDHAENG); 
-        x2 = Double.toString(distFromLeft+lengthOfKryds);
-        y2 = Double.toString(this.SIDEUDHAENG+lengthOfKryds); 
-        output += String.format("<line x1=\"%s\" y1=\"%s\" x2=\"%s\" y2=\"%s\" "
-                + "stroke=\"black\" stroke-width=\"2\" stroke-dasharray=\"2, 5\"/>", 
-                            x1, y1, x2, y2);
-        
-        
-        // kryds -- Bottom Left - Top Right --Øverst
-        x1 = Double.toString(distFromLeft); 
-        y1 = Double.toString(this.SIDEUDHAENG + lengthOfKryds); 
-        x2 = Double.toString(distFromLeft+lengthOfKryds); 
-        y2 = Double.toString(this.SIDEUDHAENG ); 
-        output += String.format("<line x1=\"%s\" y1=\"%s\" x2=\"%s\" y2=\"%s\" "
-                + "stroke=\"black\" stroke-width=\"2\" stroke-dasharray=\"2, 5\"/>", 
-                            x1, y1, x2, y2);
-        
-        
-        // kryds -- Bottom Left - Top Right --Nederst
-        x1 = Double.toString(distFromLeft +BONDDIST ); 
-        y1 = Double.toString(this.SIDEUDHAENG + lengthOfKryds); 
-        x2 = Double.toString(distFromLeft+BONDDIST+lengthOfKryds); 
-        y2 = Double.toString(this.SIDEUDHAENG); 
-        output += String.format("<line x1=\"%s\" y1=\"%s\" x2=\"%s\" y2=\"%s\" "
-                + "stroke=\"black\" stroke-width=\"2\" stroke-dasharray=\"2, 5\"/>", 
-                            x1, y1, x2, y2);
-        
-        return output;
     }
     
     private String kryds() {
@@ -495,8 +425,7 @@ LineItem{name=45x195mm spærtræ ubh., length=300, quantity=5, unit=stk, descrip
                 skurBottomRight_y, 
                 skurBottomleft_x, 
                 skurBottomleft_y);
-        
-        
+                
             // stolper til skuret:
             String TopLeftLeft = Double.toString(skurBottomleft_x);
             String TopLeftDistToTop = Double.toString(skurTopLeft_y);
