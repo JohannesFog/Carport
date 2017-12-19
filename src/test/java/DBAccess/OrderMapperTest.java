@@ -1,24 +1,19 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
  */
 package DBAccess;
 
 import FunctionLayer.Exceptions.DataMapperException;
-import FunctionLayer.Entities.Order;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
  *
- * @author GertLehmann
+ * @author Christian, Gert, Lene & Mikkel
  */
 public class OrderMapperTest {
 

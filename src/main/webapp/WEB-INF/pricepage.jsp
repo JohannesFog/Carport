@@ -1,7 +1,7 @@
 <%-- 
     Document   : pricepage
     Created on : 14-11-2017, 10:18:17
-    Author     : Mikkel Lindstrøm <Mikkel.Lindstrøm>
+    Author     : Christian, Gert, Lene & Mikkel
 --%>
 
 <%@page import="FunctionLayer.Entities.*"%>

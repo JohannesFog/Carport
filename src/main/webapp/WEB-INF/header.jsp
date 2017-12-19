@@ -1,7 +1,7 @@
 <%-- 
     Document   : header
     Created on : 14-12-2017, 09:20:08
-    Author     : Mikkel Lindstrøm <Mikkel.Lindstrøm>
+    Author     : Christian, Gert, Lene & Mikkel
 --%>
 
         <!-- Navigation -->

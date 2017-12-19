@@ -12,7 +12,7 @@ import java.sql.SQLException;
  * The purpose of MaterialMapper is to obtain material prices
  * from the database and return this to the logic layer.
  * 
- * @author Gert Lehmann Madsen
+ * @author Christian, Gert, Lene & Mikkel
  */
 public class MaterialMapper {
     

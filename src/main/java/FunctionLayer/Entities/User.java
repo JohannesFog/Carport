@@ -1,8 +1,8 @@
 package FunctionLayer.Entities;
 
 /**
- * The purpose of User is to...
- * @author kasper
+ * 
+ * @author Christian, Gert, Lene & Mikkel
  */
 public class User {
 

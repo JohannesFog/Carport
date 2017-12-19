@@ -1,7 +1,7 @@
 <%-- 
     Document   : odetailsemployee
     Created on : 05-12-2017, 10:24:29
-    Author     : lene_
+    Author     : Christian, Gert, Lene & Mikkel
 --%>
 
 <%@page import="FunctionLayer.Entities.*"%>

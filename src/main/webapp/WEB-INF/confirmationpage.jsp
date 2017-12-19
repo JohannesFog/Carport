@@ -1,7 +1,7 @@
 <%-- 
     Document   : confirmationpage
     Created on : 21-11-2017, 11:34:35
-    Author     : lene_
+    Author     : Christian, Gert, Lene & Mikkel
 --%>
 
 <%@page import="FunctionLayer.Entities.User"%>

@@ -1,7 +1,7 @@
 <%-- 
     Document   : employeepage.jsp
-    Created on : Aug 24, 2017, 6:31:57 AM
-    Author     : kasper
+    Created on : 21-11-2017, 6:31:57
+    Author     : Christian, Gert, Lene & Mikkel
 --%>
 
 <%@page import="FunctionLayer.Entities.User"%>

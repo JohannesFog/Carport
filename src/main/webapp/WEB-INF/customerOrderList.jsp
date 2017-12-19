@@ -1,7 +1,7 @@
 <%-- 
     Document   : customerOrderList
     Created on : 08-12-2017, 12:27:31
-    Author     : Mikkel Lindstrøm <Mikkel.Lindstrøm>
+    Author     : Christian, Gert, Lene & Mikkel
 --%>
 
 <%@page import="FunctionLayer.Entities.User"%>

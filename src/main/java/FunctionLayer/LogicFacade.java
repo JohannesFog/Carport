@@ -12,9 +12,7 @@ import PresentationLayer.DrawImplFlatSide;
 import java.util.ArrayList;
 
 /**
- * The purpose of LogicFacade is to...
- *
- * @author kasper
+ * @author Christian, Gert, Lene & Mikkel
  */
 public class LogicFacade {
 

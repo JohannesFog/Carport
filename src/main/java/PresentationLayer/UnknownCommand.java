@@ -5,9 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- The purpose of UnknownCommand is to...
-
- @author kasper
+ @author Christian, Gert, Lene & Mikkel
  */
 public class UnknownCommand extends Command {
 

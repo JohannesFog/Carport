@@ -1,5 +1,10 @@
 package FunctionLayer.Entities;
 
+/**
+ *
+ * @author Christian, Gert, Lene & Mikkel
+ */
+
 public class LineItem {
     
     String name;

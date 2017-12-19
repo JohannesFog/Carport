@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 /**
  *
- * @author GertLehmann
+ * @author Christian, Gert, Lene & Mikkel
  */
 public class CalculatorImpl implements Calculator {
 
