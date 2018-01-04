@@ -48,7 +48,6 @@ public class CreateOrder extends Command {
             int zip = Integer.parseInt(request.getParameter("zip"));
             int tlf = Integer.parseInt(request.getParameter("tlf"));
             String email = request.getParameter("email");
-            String notice = request.getParameter("notice");
             role = "customer";
 
             LogicFacade.createNewUserWithoutPassword(tlf, email, name, adresse, zip, role);
