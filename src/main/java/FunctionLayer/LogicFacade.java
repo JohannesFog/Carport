@@ -26,7 +26,7 @@ public class LogicFacade {
         return user;
     }
 
-    public static User createNewUserWithoutPassword(int phone, String email, String password, String name, String address, int zip, String role) throws DataMapperException {
+    public static User createNewUserWithoutPassword(int phone, String email, String name, String address, int zip, String role) throws DataMapperException {
         User user = new User(phone, email, null, name, address, zip, role);
         UserMapper.createUser(user);
         return user;

@@ -45,13 +45,13 @@ public class CreateOrder extends Command {
         if (user == null || role.equals("employee")) {
             String name = request.getParameter("name");
             String adresse = request.getParameter("address");
-            String zip = request.getParameter("zip");
+            int zip = Integer.parseInt(request.getParameter("zip"));
             int tlf = Integer.parseInt(request.getParameter("tlf"));
             String email = request.getParameter("email");
             String notice = request.getParameter("notice");
             role = "customer";
 
-            LogicFacade.createNewUserWithoutPassword(tlf, email, adresse, name, adresse, tlf, role);
+            LogicFacade.createNewUserWithoutPassword(tlf, email, name, adresse, zip, role);
             
             order.setPhone(tlf);
             LogicFacade.createOrder(order);
